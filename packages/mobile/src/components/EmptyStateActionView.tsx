@@ -5,7 +5,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native';
-import {Colors, M_500_16_20, R_Normal_16_20} from 'components-library';
+import {Colors, M_500_16_20, R_Normal_16_20} from 'shared-ui';
 
 type Props = {
   title?: string;

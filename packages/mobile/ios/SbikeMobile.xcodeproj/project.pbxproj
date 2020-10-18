@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* TransactionMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TransactionMobileTests.m */; };
+		00E356F31AD99517003FC87E /* SbikeMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SbikeMobileTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -15,11 +15,11 @@
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* TransactionMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TransactionMobileTests.m */; };
-		34060264D84E3E26D1A7BAD5 /* libPods-TransactionMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6464B86511DF6DCEE2731BC2 /* libPods-TransactionMobile.a */; };
-		3B061B4810C6C65BCF810CDE /* libPods-TransactionMobile-TransactionMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 204BB59C9FE7D25D2B9AD489 /* libPods-TransactionMobile-TransactionMobileTests.a */; };
-		9BFA3C179BBFD1C61A767BFF /* libPods-TransactionMobile-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9B9295B83ABDBD930E8ED3 /* libPods-TransactionMobile-tvOS.a */; };
-		B040879D64AA7B6C77429266 /* libPods-TransactionMobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFFCD3DBDC218372BCFBF06C /* libPods-TransactionMobile-tvOSTests.a */; };
+		2DCD954D1E0B4F2C00145EB5 /* SbikeMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SbikeMobileTests.m */; };
+		34060264D84E3E26D1A7BAD5 /* libPods-SbikeMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6464B86511DF6DCEE2731BC2 /* libPods-SbikeMobile.a */; };
+		3B061B4810C6C65BCF810CDE /* libPods-SbikeMobile-SbikeMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 204BB59C9FE7D25D2B9AD489 /* libPods-SbikeMobile-SbikeMobileTests.a */; };
+		9BFA3C179BBFD1C61A767BFF /* libPods-SbikeMobile-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9B9295B83ABDBD930E8ED3 /* libPods-SbikeMobile-tvOS.a */; };
+		B040879D64AA7B6C77429266 /* libPods-SbikeMobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFFCD3DBDC218372BCFBF06C /* libPods-SbikeMobile-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,45 +28,45 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = TransactionMobile;
+			remoteInfo = SbikeMobile;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "TransactionMobile-tvOS";
+			remoteInfo = "SbikeMobile-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* TransactionMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransactionMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* SbikeMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SbikeMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* TransactionMobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransactionMobileTests.m; sourceTree = "<group>"; };
-		0A5D6E4EE6C000B1CEBD3E20 /* Pods-TransactionMobile-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransactionMobile-tvOS.release.xcconfig"; path = "Target Support Files/Pods-TransactionMobile-tvOS/Pods-TransactionMobile-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		12E1A871076C331B989CCE71 /* Pods-TransactionMobile-TransactionMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransactionMobile-TransactionMobileTests.release.xcconfig"; path = "Target Support Files/Pods-TransactionMobile-TransactionMobileTests/Pods-TransactionMobile-TransactionMobileTests.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* TransactionMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransactionMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = TransactionMobile/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = TransactionMobile/AppDelegate.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* SbikeMobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SbikeMobileTests.m; sourceTree = "<group>"; };
+		0A5D6E4EE6C000B1CEBD3E20 /* Pods-SbikeMobile-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SbikeMobile-tvOS.release.xcconfig"; path = "Target Support Files/Pods-SbikeMobile-tvOS/Pods-SbikeMobile-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		12E1A871076C331B989CCE71 /* Pods-SbikeMobile-SbikeMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SbikeMobile-SbikeMobileTests.release.xcconfig"; path = "Target Support Files/Pods-SbikeMobile-SbikeMobileTests/Pods-SbikeMobile-SbikeMobileTests.release.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* SbikeMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SbikeMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = SbikeMobile/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = SbikeMobile/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TransactionMobile/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TransactionMobile/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TransactionMobile/main.m; sourceTree = "<group>"; };
-		204BB59C9FE7D25D2B9AD489 /* libPods-TransactionMobile-TransactionMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TransactionMobile-TransactionMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E47B1E0B4A5D006451C7 /* TransactionMobile-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TransactionMobile-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* TransactionMobile-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TransactionMobile-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6464B86511DF6DCEE2731BC2 /* libPods-TransactionMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TransactionMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E2AEA9909D3A8282375FD9B /* Pods-TransactionMobile-TransactionMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransactionMobile-TransactionMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-TransactionMobile-TransactionMobileTests/Pods-TransactionMobile-TransactionMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
-		AE9B9295B83ABDBD930E8ED3 /* libPods-TransactionMobile-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TransactionMobile-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B13624143EB710AF86447A53 /* Pods-TransactionMobile-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransactionMobile-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-TransactionMobile-tvOSTests/Pods-TransactionMobile-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		BAC86CAC042602B8BEAF0E53 /* Pods-TransactionMobile-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransactionMobile-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-TransactionMobile-tvOSTests/Pods-TransactionMobile-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D8BB4BDAA361B330D258178E /* Pods-TransactionMobile-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransactionMobile-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-TransactionMobile-tvOS/Pods-TransactionMobile-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		ECC5AE379E6BAEB72C771FEF /* Pods-TransactionMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransactionMobile.debug.xcconfig"; path = "Target Support Files/Pods-TransactionMobile/Pods-TransactionMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SbikeMobile/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SbikeMobile/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SbikeMobile/main.m; sourceTree = "<group>"; };
+		204BB59C9FE7D25D2B9AD489 /* libPods-SbikeMobile-SbikeMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SbikeMobile-SbikeMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* SbikeMobile-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SbikeMobile-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* SbikeMobile-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SbikeMobile-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6464B86511DF6DCEE2731BC2 /* libPods-SbikeMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SbikeMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E2AEA9909D3A8282375FD9B /* Pods-SbikeMobile-SbikeMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SbikeMobile-SbikeMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-SbikeMobile-SbikeMobileTests/Pods-SbikeMobile-SbikeMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AE9B9295B83ABDBD930E8ED3 /* libPods-SbikeMobile-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SbikeMobile-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B13624143EB710AF86447A53 /* Pods-SbikeMobile-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SbikeMobile-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-SbikeMobile-tvOSTests/Pods-SbikeMobile-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		BAC86CAC042602B8BEAF0E53 /* Pods-SbikeMobile-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SbikeMobile-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-SbikeMobile-tvOSTests/Pods-SbikeMobile-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D8BB4BDAA361B330D258178E /* Pods-SbikeMobile-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SbikeMobile-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-SbikeMobile-tvOS/Pods-SbikeMobile-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		ECC5AE379E6BAEB72C771FEF /* Pods-SbikeMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SbikeMobile.debug.xcconfig"; path = "Target Support Files/Pods-SbikeMobile/Pods-SbikeMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		EFFCD3DBDC218372BCFBF06C /* libPods-TransactionMobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TransactionMobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FED268ED2EDB9709229F4606 /* Pods-TransactionMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransactionMobile.release.xcconfig"; path = "Target Support Files/Pods-TransactionMobile/Pods-TransactionMobile.release.xcconfig"; sourceTree = "<group>"; };
+		EFFCD3DBDC218372BCFBF06C /* libPods-SbikeMobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SbikeMobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FED268ED2EDB9709229F4606 /* Pods-SbikeMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SbikeMobile.release.xcconfig"; path = "Target Support Files/Pods-SbikeMobile/Pods-SbikeMobile.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B061B4810C6C65BCF810CDE /* libPods-TransactionMobile-TransactionMobileTests.a in Frameworks */,
+				3B061B4810C6C65BCF810CDE /* libPods-SbikeMobile-SbikeMobileTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34060264D84E3E26D1A7BAD5 /* libPods-TransactionMobile.a in Frameworks */,
+				34060264D84E3E26D1A7BAD5 /* libPods-SbikeMobile.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BFA3C179BBFD1C61A767BFF /* libPods-TransactionMobile-tvOS.a in Frameworks */,
+				9BFA3C179BBFD1C61A767BFF /* libPods-SbikeMobile-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,20 +98,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B040879D64AA7B6C77429266 /* libPods-TransactionMobile-tvOSTests.a in Frameworks */,
+				B040879D64AA7B6C77429266 /* libPods-SbikeMobile-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* TransactionMobileTests */ = {
+		00E356EF1AD99517003FC87E /* SbikeMobileTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* TransactionMobileTests.m */,
+				00E356F21AD99517003FC87E /* SbikeMobileTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = TransactionMobileTests;
+			path = SbikeMobileTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -122,7 +122,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* TransactionMobile */ = {
+		13B07FAE1A68108700A75B9A /* SbikeMobile */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -133,20 +133,20 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = TransactionMobile;
+			name = SbikeMobile;
 			sourceTree = "<group>";
 		};
 		269A0E7F9E34C11CFD02D24B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				ECC5AE379E6BAEB72C771FEF /* Pods-TransactionMobile.debug.xcconfig */,
-				FED268ED2EDB9709229F4606 /* Pods-TransactionMobile.release.xcconfig */,
-				6E2AEA9909D3A8282375FD9B /* Pods-TransactionMobile-TransactionMobileTests.debug.xcconfig */,
-				12E1A871076C331B989CCE71 /* Pods-TransactionMobile-TransactionMobileTests.release.xcconfig */,
-				D8BB4BDAA361B330D258178E /* Pods-TransactionMobile-tvOS.debug.xcconfig */,
-				0A5D6E4EE6C000B1CEBD3E20 /* Pods-TransactionMobile-tvOS.release.xcconfig */,
-				BAC86CAC042602B8BEAF0E53 /* Pods-TransactionMobile-tvOSTests.debug.xcconfig */,
-				B13624143EB710AF86447A53 /* Pods-TransactionMobile-tvOSTests.release.xcconfig */,
+				ECC5AE379E6BAEB72C771FEF /* Pods-SbikeMobile.debug.xcconfig */,
+				FED268ED2EDB9709229F4606 /* Pods-SbikeMobile.release.xcconfig */,
+				6E2AEA9909D3A8282375FD9B /* Pods-SbikeMobile-SbikeMobileTests.debug.xcconfig */,
+				12E1A871076C331B989CCE71 /* Pods-SbikeMobile-SbikeMobileTests.release.xcconfig */,
+				D8BB4BDAA361B330D258178E /* Pods-SbikeMobile-tvOS.debug.xcconfig */,
+				0A5D6E4EE6C000B1CEBD3E20 /* Pods-SbikeMobile-tvOS.release.xcconfig */,
+				BAC86CAC042602B8BEAF0E53 /* Pods-SbikeMobile-tvOSTests.debug.xcconfig */,
+				B13624143EB710AF86447A53 /* Pods-SbikeMobile-tvOSTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -157,10 +157,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				6464B86511DF6DCEE2731BC2 /* libPods-TransactionMobile.a */,
-				204BB59C9FE7D25D2B9AD489 /* libPods-TransactionMobile-TransactionMobileTests.a */,
-				AE9B9295B83ABDBD930E8ED3 /* libPods-TransactionMobile-tvOS.a */,
-				EFFCD3DBDC218372BCFBF06C /* libPods-TransactionMobile-tvOSTests.a */,
+				6464B86511DF6DCEE2731BC2 /* libPods-SbikeMobile.a */,
+				204BB59C9FE7D25D2B9AD489 /* libPods-SbikeMobile-SbikeMobileTests.a */,
+				AE9B9295B83ABDBD930E8ED3 /* libPods-SbikeMobile-tvOS.a */,
+				EFFCD3DBDC218372BCFBF06C /* libPods-SbikeMobile-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -175,9 +175,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* TransactionMobile */,
+				13B07FAE1A68108700A75B9A /* SbikeMobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* TransactionMobileTests */,
+				00E356EF1AD99517003FC87E /* SbikeMobileTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				269A0E7F9E34C11CFD02D24B /* Pods */,
@@ -190,10 +190,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* TransactionMobile.app */,
-				00E356EE1AD99517003FC87E /* TransactionMobileTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* TransactionMobile-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* TransactionMobile-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* SbikeMobile.app */,
+				00E356EE1AD99517003FC87E /* SbikeMobileTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* SbikeMobile-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* SbikeMobile-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,9 +201,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* TransactionMobileTests */ = {
+		00E356ED1AD99517003FC87E /* SbikeMobileTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "TransactionMobileTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SbikeMobileTests" */;
 			buildPhases = (
 				2FC5E926A987CF5A1D5A35C9 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -215,14 +215,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = TransactionMobileTests;
-			productName = TransactionMobileTests;
-			productReference = 00E356EE1AD99517003FC87E /* TransactionMobileTests.xctest */;
+			name = SbikeMobileTests;
+			productName = SbikeMobileTests;
+			productReference = 00E356EE1AD99517003FC87E /* SbikeMobileTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* TransactionMobile */ = {
+		13B07F861A680F5B00A75B9A /* SbikeMobile */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TransactionMobile" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SbikeMobile" */;
 			buildPhases = (
 				B563BA5A35C033228B8EC799 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -235,14 +235,14 @@
 			);
 			dependencies = (
 			);
-			name = TransactionMobile;
-			productName = TransactionMobile;
-			productReference = 13B07F961A680F5B00A75B9A /* TransactionMobile.app */;
+			name = SbikeMobile;
+			productName = SbikeMobile;
+			productReference = 13B07F961A680F5B00A75B9A /* SbikeMobile.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* TransactionMobile-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* SbikeMobile-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "TransactionMobile-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "SbikeMobile-tvOS" */;
 			buildPhases = (
 				00259C378EF5F9A238326216 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -255,14 +255,14 @@
 			);
 			dependencies = (
 			);
-			name = "TransactionMobile-tvOS";
-			productName = "TransactionMobile-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* TransactionMobile-tvOS.app */;
+			name = "SbikeMobile-tvOS";
+			productName = "SbikeMobile-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* SbikeMobile-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* TransactionMobile-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* SbikeMobile-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "TransactionMobile-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "SbikeMobile-tvOSTests" */;
 			buildPhases = (
 				4994E94A3EA49DFC2F635DA5 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -274,9 +274,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "TransactionMobile-tvOSTests";
-			productName = "TransactionMobile-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* TransactionMobile-tvOSTests.xctest */;
+			name = "SbikeMobile-tvOSTests";
+			productName = "SbikeMobile-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* SbikeMobile-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -305,7 +305,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TransactionMobile" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SbikeMobile" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -318,10 +318,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* TransactionMobile */,
-				00E356ED1AD99517003FC87E /* TransactionMobileTests */,
-				2D02E47A1E0B4A5D006451C7 /* TransactionMobile-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* TransactionMobile-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* SbikeMobile */,
+				00E356ED1AD99517003FC87E /* SbikeMobileTests */,
+				2D02E47A1E0B4A5D006451C7 /* SbikeMobile-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* SbikeMobile-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -376,7 +376,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TransactionMobile-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SbikeMobile-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -426,7 +426,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TransactionMobile-TransactionMobileTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SbikeMobile-SbikeMobileTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -448,7 +448,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TransactionMobile-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SbikeMobile-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -470,7 +470,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TransactionMobile-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SbikeMobile-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -522,7 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* TransactionMobileTests.m in Sources */,
+				00E356F31AD99517003FC87E /* SbikeMobileTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,7 +548,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* TransactionMobileTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* SbikeMobileTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,12 +557,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* TransactionMobile */;
+			target = 13B07F861A680F5B00A75B9A /* SbikeMobile */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* TransactionMobile-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* SbikeMobile-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -574,7 +574,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = TransactionMobile;
+			path = SbikeMobile;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -582,14 +582,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E2AEA9909D3A8282375FD9B /* Pods-TransactionMobile-TransactionMobileTests.debug.xcconfig */;
+			baseConfigurationReference = 6E2AEA9909D3A8282375FD9B /* Pods-SbikeMobile-SbikeMobileTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TransactionMobileTests/Info.plist;
+				INFOPLIST_FILE = SbikeMobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -599,17 +599,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransactionMobile.app/TransactionMobile";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SbikeMobile.app/SbikeMobile";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 12E1A871076C331B989CCE71 /* Pods-TransactionMobile-TransactionMobileTests.release.xcconfig */;
+			baseConfigurationReference = 12E1A871076C331B989CCE71 /* Pods-SbikeMobile-SbikeMobileTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = TransactionMobileTests/Info.plist;
+				INFOPLIST_FILE = SbikeMobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -619,13 +619,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransactionMobile.app/TransactionMobile";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SbikeMobile.app/SbikeMobile";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ECC5AE379E6BAEB72C771FEF /* Pods-TransactionMobile.debug.xcconfig */;
+			baseConfigurationReference = ECC5AE379E6BAEB72C771FEF /* Pods-SbikeMobile.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -635,7 +635,7 @@
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
-				INFOPLIST_FILE = TransactionMobile/Info.plist;
+				INFOPLIST_FILE = SbikeMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -643,7 +643,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = TransactionMobile;
+				PRODUCT_NAME = SbikeMobile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -652,12 +652,12 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FED268ED2EDB9709229F4606 /* Pods-TransactionMobile.release.xcconfig */;
+			baseConfigurationReference = FED268ED2EDB9709229F4606 /* Pods-SbikeMobile.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = TransactionMobile/Info.plist;
+				INFOPLIST_FILE = SbikeMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -665,7 +665,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = TransactionMobile;
+				PRODUCT_NAME = SbikeMobile;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -673,7 +673,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D8BB4BDAA361B330D258178E /* Pods-TransactionMobile-tvOS.debug.xcconfig */;
+			baseConfigurationReference = D8BB4BDAA361B330D258178E /* Pods-SbikeMobile-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -684,14 +684,14 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "TransactionMobile-tvOS/Info.plist";
+				INFOPLIST_FILE = "SbikeMobile-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.TransactionMobile-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.SbikeMobile-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -701,7 +701,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A5D6E4EE6C000B1CEBD3E20 /* Pods-TransactionMobile-tvOS.release.xcconfig */;
+			baseConfigurationReference = 0A5D6E4EE6C000B1CEBD3E20 /* Pods-SbikeMobile-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -712,14 +712,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "TransactionMobile-tvOS/Info.plist";
+				INFOPLIST_FILE = "SbikeMobile-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.TransactionMobile-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.SbikeMobile-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -729,7 +729,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BAC86CAC042602B8BEAF0E53 /* Pods-TransactionMobile-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = BAC86CAC042602B8BEAF0E53 /* Pods-SbikeMobile-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -739,24 +739,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "TransactionMobile-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "SbikeMobile-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.TransactionMobile-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.SbikeMobile-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransactionMobile-tvOS.app/TransactionMobile-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SbikeMobile-tvOS.app/SbikeMobile-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B13624143EB710AF86447A53 /* Pods-TransactionMobile-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = B13624143EB710AF86447A53 /* Pods-SbikeMobile-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -766,17 +766,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "TransactionMobile-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "SbikeMobile-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.TransactionMobile-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.SbikeMobile-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransactionMobile-tvOS.app/TransactionMobile-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SbikeMobile-tvOS.app/SbikeMobile-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -897,7 +897,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "TransactionMobileTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SbikeMobileTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -906,7 +906,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TransactionMobile" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SbikeMobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -915,7 +915,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "TransactionMobile-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "SbikeMobile-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -924,7 +924,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "TransactionMobile-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "SbikeMobile-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -933,7 +933,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TransactionMobile" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SbikeMobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

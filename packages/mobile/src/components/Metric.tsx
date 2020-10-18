@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Colors, L4, L4_Bold} from 'components-library';
+import {Colors, L4, L4_Bold} from 'shared-ui';
 
 type Props = {
   amount: number | string;

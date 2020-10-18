@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Colors, L3_Bold, L4} from 'components-library';
+import {Colors, L3_Bold, L4} from 'shared-ui';
 import {Article} from 'shared-logic';
 import {TouchableOpacity, View, Image, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Provider as ComponentsProvider} from 'components-library';
+import {Provider as ComponentsProvider} from 'shared-ui';
 import {useTranslation} from 'react-i18next';
 import {Apartment} from 'shared-logic';
 import Home from './screens/Home';

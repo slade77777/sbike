@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, TouchableWithoutFeedback, StyleSheet, View} from 'react-native';
-import {Colors} from 'components-library';
+import {Colors} from 'shared-ui';
 
 export type MarkerType = 'primary' | 'filled' | 'dark';
 

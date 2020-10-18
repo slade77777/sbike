@@ -1,5 +1,5 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {Button, Colors, L3, L3_Bold, L5_Bold} from 'components-library';
+import {Button, Colors, L3, L3_Bold, L5_Bold} from 'shared-ui';
 import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, View} from 'react-native';

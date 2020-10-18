@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {Colors, H2} from 'components-library';
+import {Colors, H2} from 'shared-ui';
 import {
   Apartment,
   projectActions,

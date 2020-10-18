@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Colors, H2} from 'components-library';
+import {Colors, H2} from 'shared-ui';
 import {Project} from 'shared-logic';
 import {useTranslation} from 'react-i18next';
 

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Colors, H3} from 'components-library';
+import {Colors, H3} from 'shared-ui';
 
 type Props = {
   id: string;

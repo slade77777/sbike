@@ -1,4 +1,4 @@
-import {Colors, L3, L3_Bold} from 'components-library';
+import {Colors, L3, L3_Bold} from 'shared-ui';
 import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 

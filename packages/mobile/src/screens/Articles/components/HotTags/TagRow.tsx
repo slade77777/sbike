@@ -1,5 +1,5 @@
 import React from 'react';
-import {Colors, L3} from 'components-library';
+import {Colors, L3} from 'shared-ui';
 import {
   StyleProp,
   StyleSheet,

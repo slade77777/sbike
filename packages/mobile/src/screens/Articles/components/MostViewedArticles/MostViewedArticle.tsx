@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Colors, H3, L3_Bold} from 'components-library';
+import {Colors, H3, L3_Bold} from 'shared-ui';
 import {StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';

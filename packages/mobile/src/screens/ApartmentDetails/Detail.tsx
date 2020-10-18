@@ -1,4 +1,4 @@
-import {L3, L3_Bold} from 'components-library';
+import {L3, L3_Bold} from 'shared-ui';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Colors} from 'components-library';
+import {Colors} from 'shared-ui';
 import {StyleSheet, View} from 'react-native';
 
 const Divider: React.FC = () => {

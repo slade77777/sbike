@@ -6,7 +6,7 @@ import {
   ArticleTag,
 } from 'shared-logic';
 import {useDispatch, useSelector} from 'react-redux';
-import {L1_Bold} from 'components-library';
+import {L1_Bold} from 'shared-ui';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, View} from 'react-native';
 import ArticlesList from './ArticlesList';

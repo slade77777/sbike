@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {ImageBackground, ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import {Colors, Button} from 'components-library';
+import {Colors, Button} from 'shared-ui';
 import {
   agentActions,
   galleryActions,

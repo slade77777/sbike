@@ -1,5 +1,5 @@
 import React from 'react';
-import {H4, L2} from 'components-library';
+import {H4, L2} from 'shared-ui';
 import {View, Image, StyleSheet} from 'react-native';
 const Checkmark = '../../assets/checkmark.png';
 

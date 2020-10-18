@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Colors} from 'components-library';
+import {Colors} from 'shared-ui';
 import LottieView from 'lottie-react-native';
 
 type Props = {

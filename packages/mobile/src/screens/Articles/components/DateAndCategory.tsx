@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {dateUtils} from 'shared-logic';
-import {Colors, L4} from 'components-library';
+import {Colors, L4} from 'shared-ui';
 import {StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 

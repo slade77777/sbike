@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "TransactionMobile-tvOS.app"
-               BlueprintName = "TransactionMobile-tvOS"
-               ReferencedContainer = "container:TransactionMobile.xcodeproj">
+               BuildableName = "SbikeMobile-tvOS.app"
+               BlueprintName = "SbikeMobile-tvOS"
+               ReferencedContainer = "container:SbikeMobile.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "TransactionMobile-tvOSTests.xctest"
-               BlueprintName = "TransactionMobile-tvOSTests"
-               ReferencedContainer = "container:TransactionMobile.xcodeproj">
+               BuildableName = "SbikeMobile-tvOSTests.xctest"
+               BlueprintName = "SbikeMobile-tvOSTests"
+               ReferencedContainer = "container:SbikeMobile.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "TransactionMobile-tvOS.app"
-            BlueprintName = "TransactionMobile-tvOS"
-            ReferencedContainer = "container:TransactionMobile.xcodeproj">
+            BuildableName = "SbikeMobile-tvOS.app"
+            BlueprintName = "SbikeMobile-tvOS"
+            ReferencedContainer = "container:SbikeMobile.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "TransactionMobile-tvOS.app"
-            BlueprintName = "TransactionMobile-tvOS"
-            ReferencedContainer = "container:TransactionMobile.xcodeproj">
+            BuildableName = "SbikeMobile-tvOS.app"
+            BlueprintName = "SbikeMobile-tvOS"
+            ReferencedContainer = "container:SbikeMobile.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

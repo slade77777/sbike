@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {FAB} from 'react-native-paper';
-import {Colors, Icon} from 'components-library';
+import {Colors, Icon} from 'shared-ui';
 import {projectActions, apartmentActions} from 'shared-logic';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';

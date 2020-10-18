@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Colors} from 'components-library';
+import {Colors} from 'shared-ui';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import TabBarIcon from '../components/TabBarIcon';

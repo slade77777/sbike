@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {Colors} from 'components-library';
+import {Colors} from 'shared-ui';
 
 type Props = {
   style?: any;

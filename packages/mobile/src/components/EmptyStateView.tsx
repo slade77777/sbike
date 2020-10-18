@@ -1,7 +1,7 @@
 import {View, StyleSheet, Image, ImageProps} from 'react-native';
 import React from 'react';
 import {Keyboard, TouchableWithoutFeedback} from 'react-native';
-import {Colors, M_500_16_24, R_Normal_16_24} from 'components-library';
+import {Colors, M_500_16_24, R_Normal_16_24} from 'shared-ui';
 
 type Props = {
   errorMessage?: string;

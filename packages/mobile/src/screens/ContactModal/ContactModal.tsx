@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from 'components-library';
+import {Colors} from 'shared-ui';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {MainStackParamList} from '../../RootNavigator';
 import ContactForm from './ContactForm';

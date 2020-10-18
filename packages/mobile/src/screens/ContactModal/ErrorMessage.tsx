@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {L4, Colors} from 'components-library';
+import {L4, Colors} from 'shared-ui';
 
 type Props = {
   children?: string;

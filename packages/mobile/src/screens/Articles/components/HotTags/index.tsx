@@ -6,7 +6,7 @@ import {
   articlesActions,
 } from 'shared-logic';
 import {useTranslation} from 'react-i18next';
-import {L1_Bold} from 'components-library';
+import {L1_Bold} from 'shared-ui';
 import {StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import TagRow from './TagRow';

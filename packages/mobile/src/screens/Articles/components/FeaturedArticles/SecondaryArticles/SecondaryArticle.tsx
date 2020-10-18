@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Image, StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
-import {L3_Bold} from 'components-library';
+import {L3_Bold} from 'shared-ui';
 import {useNavigation} from '@react-navigation/native';
 import DateAndCategory from '../../DateAndCategory';
 import {NewsArticle} from '..';

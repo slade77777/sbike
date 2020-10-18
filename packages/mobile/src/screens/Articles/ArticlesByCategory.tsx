@@ -1,5 +1,5 @@
 import {useFocusEffect, useRoute} from '@react-navigation/native';
-import {Colors} from 'components-library';
+import {Colors} from 'shared-ui';
 import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';

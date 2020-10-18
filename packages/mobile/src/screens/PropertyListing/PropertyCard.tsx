@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import {L4, L1_Bold, Colors} from 'components-library';
+import {L4, L1_Bold, Colors} from 'shared-ui';
 
 import Card from '../../components/Card';
 import Metric from '../../components/Metric';

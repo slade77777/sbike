@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, H2} from 'components-library';
+import {Button, H2} from 'shared-ui';
 import {View, StyleSheet} from 'react-native';
 import Bulletpoint from './Bulletpoint';
 

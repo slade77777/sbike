@@ -1,4 +1,4 @@
-import {Button, H2, L1, L3_Bold} from 'components-library';
+import {Button, H2, L1, L3_Bold} from 'shared-ui';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, ScrollView, StyleSheet, View, Text} from 'react-native';

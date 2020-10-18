@@ -3,7 +3,7 @@ import {View, StyleSheet, SafeAreaView} from 'react-native';
 import {useSelector} from 'react-redux';
 import {Formik} from 'formik';
 import {StoreState, ContactFormType} from 'shared-logic';
-import {Button, L3, L4} from 'components-library';
+import {Button, L3, L4} from 'shared-ui';
 import {Switch, TextInput} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';

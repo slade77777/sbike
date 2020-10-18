@@ -1,5 +1,5 @@
 import {useRoute} from '@react-navigation/native';
-import {Colors, L1_Bold, L2} from 'components-library';
+import {Colors, L1_Bold, L2} from 'shared-ui';
 import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ScrollView, StyleSheet} from 'react-native';

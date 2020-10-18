@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Colors, L3} from 'components-library';
+import {Colors, L3} from 'shared-ui';
 
 type Props = {
   address: string;

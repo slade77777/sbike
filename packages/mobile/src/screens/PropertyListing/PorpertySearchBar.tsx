@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {Colors, Icon, SearchInput, L4} from 'components-library';
+import {Colors, Icon, SearchInput, L4} from 'shared-ui';
 
 const PropertySearchBar: React.FC = () => {
   const handleFilterPress = () => {

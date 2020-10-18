@@ -1,4 +1,4 @@
-# components-library
+# shared-ui
 
 ![App Version](https://img.shields.io/badge/version-0.0.0-green.svg)
 ![Bob Version](https://img.shields.io/badge/bob_version-0.14.5-yellow.svg)

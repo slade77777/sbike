@@ -1,4 +1,4 @@
-import {Colors} from 'components-library';
+import {Colors} from 'shared-ui';
 import React from 'react';
 import {
   ImageBackground,

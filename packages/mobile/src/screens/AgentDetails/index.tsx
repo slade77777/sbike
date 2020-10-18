@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {RouteProp} from '@react-navigation/native';
 import {Text, View, StyleSheet, Image, ScrollView} from 'react-native';
-import {Button, Colors, L1_Bold, L2, L3} from 'components-library';
+import {Button, Colors, L1_Bold, L2, L3} from 'shared-ui';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {agentDetailsActions, StoreState} from 'shared-logic';
 import {useDispatch, useSelector} from 'react-redux';

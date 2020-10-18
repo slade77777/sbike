@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {Icon, L2} from 'components-library';
+import {Icon, L2} from 'shared-ui';
 import {useNavigation} from '@react-navigation/native';
 
 type Props = {

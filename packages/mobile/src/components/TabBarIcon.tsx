@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Icon, M_500_10_12} from 'components-library';
+import {Icon, M_500_10_12} from 'shared-ui';
 
 type Props = {
   title?: string;

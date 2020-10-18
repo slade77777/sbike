@@ -4,7 +4,7 @@ import {StoreState, agentActions, Agent} from 'shared-logic';
 import {useSelector, useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Colors} from 'components-library';
+import {Colors} from 'shared-ui';
 import ListHeader from '../../components/ListHeader';
 import Divider from '../../components/Divider';
 import {MainStackParamList} from '../../RootNavigator';

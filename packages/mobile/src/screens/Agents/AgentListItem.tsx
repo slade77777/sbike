@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
-import {Button, Colors, L3, L3_Bold, L4} from 'components-library';
+import {Button, Colors, L3, L3_Bold, L4} from 'shared-ui';
 import {useTranslation} from 'react-i18next';
 import Card from '../../components/Card';
 const placeholder = require('../../assets/fallback-desktop.jpg');

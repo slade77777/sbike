@@ -1,5 +1,5 @@
 import React from 'react';
-import {Colors, L3_Bold, L4} from 'components-library';
+import {Colors, L3_Bold, L4} from 'shared-ui';
 import {StyleSheet, View} from 'react-native';
 
 type Props = {

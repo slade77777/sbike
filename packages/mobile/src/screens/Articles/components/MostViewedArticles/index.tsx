@@ -1,5 +1,5 @@
 import React, {FC, useEffect} from 'react';
-import {L1_Bold} from 'components-library';
+import {L1_Bold} from 'shared-ui';
 import {useTranslation} from 'react-i18next';
 import {StoreState, Article, articlesActions} from 'shared-logic';
 import {useSelector, useDispatch} from 'react-redux';

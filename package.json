@@ -12,7 +12,7 @@
     "test": "jest",
     "postinstall": "yarn prepare && patch-package",
     "prettier": "prettier",
-    "prepare-shared-ui": "cd packages/components-library && yarn prepare",
+    "prepare-shared-ui": "cd packages/shared-ui && yarn prepare",
     "prepare-shared-logic": "cd packages/shared-logic && yarn prepare",
     "prepare": "yarn setup && yarn prepare-shared-ui && yarn prepare-shared-logic",
     "setup": "node ./config/setup.js"

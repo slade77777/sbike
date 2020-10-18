@@ -1,10 +1,10 @@
-# transaction-mobile
+# sbike-mobile
 
 ![App Version](https://img.shields.io/badge/version-0.0.1-green.svg)
 ![React Version](https://img.shields.io/badge/react-16.13.1-blue.svg)
 ![React Native Version](https://img.shields.io/badge/react_native-0.62.2-black.svg)
 
-Mobile application for transactions, developed using React Native. UI components are from the [`components-library`](../components-library).
+Mobile application for SBIKE, developed using React Native. UI components are from the [`components-library`](../components-library).
 
 ## Development
 

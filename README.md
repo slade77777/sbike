@@ -1,6 +1,6 @@
-# One-H Prototype
+# S-BIKE
 
-Prototype for the 1H Prototype. This project is set up using the [Yarn workspaces](https://github.com/jamiebuilds/rfcs-1/blob/workspaces/accepted/0000-workspaces.md) feature, maintaining the various prototypes (called packages) in the same repo. This allows for these projects to share common components, such as utility methods, UI components and API calls.
+This project is set up using the [Yarn workspaces](https://github.com/jamiebuilds/rfcs-1/blob/workspaces/accepted/0000-workspaces.md) feature, maintaining the various prototypes (called packages) in the same repo. This allows for these projects to share common components, such as utility methods, UI components and API calls.
 
 ## Setup
 
@@ -34,26 +34,15 @@ Prototype for the 1H Prototype. This project is set up using the [Yarn workspace
 └─ tsconfig.json    # Global Typescript configuration
 ```
 
-> 1 - Since we do not want to test the components inside the `components-library` outside its package, i.e. since we do not want to test components that are found in `components-library` outside this package, we mock mock the libraries for use inside tests.
-
 ### Packages
 
 The packages involved in the project are found in the [`packages`](./packages/) directory and are as follows:
 
-- [`agent-business-logic`](./packages/agent-business-logic): Contains the business logic shared across the `agent-web` and the `agent-mobile` packages.
+- [`shared-logic`](./packages/shared-logic): Contains the business logic shared across the `web` and the `mobile` packages.
 
-- [`agent-mobile`](./packages/agent-mobile): Contains the mobile application for agents.
+- [`mobile`](./packages/mobile): Contains the mobile application.
 
-- [`agent-web`](./packages/agent-web): Contains the web application for agents.
+- [`web`](./packages/web): Contains the web application.
 
-- [`components-library`](./packages/components-library): Contains the UI componennt library that is shared across both mobile and web versions of either the agent or the transaction.
+- [`components-library`](./packages/components-library): Contains the UI component library that is shared across both mobile and web.
 
-- [`shared-logic`](./packages/shared-logic): Contains the business logic shared across `transaction-web` and `transaction-mobile` packages.
-
-- [`transaction-mobile`](./packages/transaction-mobile): Contains the mobile application for transactions.
-
-- [`transaction-web`](./packages/transaction-web): Contains the web application for transactions.
-
-### Common libraries
-
-As a way to utilize the full power of Yarn workspaces, certain packages have been moved to the project root and are shared across the entire monorepository. There are also configurations such as a root `tsconfig` for Typescript configuration (this is inherited by most packages and certain details are included)

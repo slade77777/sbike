@@ -68,10 +68,9 @@ module.exports = (env) => {
             {
               loader: require.resolve('babel-loader'),
               options: {
-                plugins: [
-                  process.env.NODE_ENV !== 'production' &&
-                    require.resolve('react-refresh/babel'),
-                ].filter(Boolean),
+                plugins: [dev && require.resolve('react-refresh/babel')].filter(
+                  Boolean,
+                ),
               },
             },
           ],

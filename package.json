@@ -1,5 +1,5 @@
 {
-  "name": "1h-prototype",
+  "name": "sbike",
   "private": true,
   "workspaces": {
     "packages": [
@@ -40,7 +40,6 @@
     "qs": "^6.9.4",
     "react": "16.9.0",
     "react-dom": "^16.13.1",
-    "react-gtm-module": "^2.0.10",
     "react-native-web": "^0.12.3"
   },
   "version": "0.0.0"

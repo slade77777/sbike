@@ -1,5 +1,5 @@
 {
-  "name": "components-library",
+  "name": "shared-ui",
   "version": "0.0.0",
   "main": "src/index.tsx",
   "module": "lib/module/index.js",

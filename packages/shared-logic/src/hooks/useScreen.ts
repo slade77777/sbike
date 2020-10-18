@@ -1,4 +1,4 @@
-import {DeviceSizes} from 'components-library';
+import {DeviceSizes} from 'shared-ui';
 import useMedia from './useMedia';
 
 export enum SCREENS {

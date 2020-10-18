@@ -5,7 +5,6 @@ import {useStore} from './redux/createStore';
 export * from './hooks';
 export * from './redux/postPropertySaleForm/actions';
 export * from './utils/stringUtils';
-export * from './utils/fileUtils';
 
 import * as dateUtils from './utils/dateUtils';
 export {dateUtils};

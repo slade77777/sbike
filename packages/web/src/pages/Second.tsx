@@ -1,6 +1,6 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import {L1_Bold, Button} from 'components-library';
+import {L1_Bold, Button} from 'shared-ui';
 
 export default function Second() {
   const history = useHistory();

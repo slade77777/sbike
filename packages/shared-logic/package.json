@@ -15,11 +15,8 @@
     "typescript": "tsc --noEmit"
   },
   "dependencies": {
-    "@types/file-saver": "^2.0.1",
-    "file-saver": "^2.0.2",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "xlsx": "^0.16.5"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@react-native-community/bob": "^0.16.2",
@@ -31,7 +28,7 @@
     "axios-logger": "*",
     "qs": "*",
     "dayjs": "*",
-    "components-library": "*",
+    "shared-ui": "*",
     "react": "*"
   },
   "@react-native-community/bob": {

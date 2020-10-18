@@ -1,4 +1,4 @@
-import {LoanCalculateResult, MortgageType} from 'components-library';
+import {LoanCalculateResult, MortgageType} from 'shared-ui';
 
 export type calculatorInput = {
   limit: number; // Số tiền vay tối đa (Loan amount)

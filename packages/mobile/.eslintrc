@@ -1,0 +1,25 @@
+{
+  "extends": ["@callstack", "../../.eslintrc"],
+  "rules": {
+    "react-native/no-raw-text": [
+      "error",
+      {
+        "skip": [
+          "H1",
+          "H2",
+          "H3",
+          "H4",
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L1_Bold",
+          "L3_Bold",
+          "L4_Bold",
+          "L5_Bold"
+        ]
+      }
+    ]
+  }
+}

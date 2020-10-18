@@ -1,0 +1,49 @@
+{
+  "name": "shared-logic",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "module": "lib/module/index.js",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "scripts": {
+    "lint": "eslint --ext '.js,.ts,.tsx' .",
+    "prepare": "bob build",
+    "typescript": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/file-saver": "^2.0.1",
+    "file-saver": "^2.0.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "xlsx": "^0.16.5"
+  },
+  "devDependencies": {
+    "@react-native-community/bob": "^0.16.2",
+    "@types/redux-thunk": "^2.1.0",
+    "react": "^16.13.1"
+  },
+  "peerDependencies": {
+    "axios": "*",
+    "axios-logger": "*",
+    "qs": "*",
+    "dayjs": "*",
+    "components-library": "*",
+    "react": "*"
+  },
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ],
+    "files": [
+      "src/"
+    ]
+  }
+}

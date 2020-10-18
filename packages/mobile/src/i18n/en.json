@@ -1,0 +1,160 @@
+{
+  "translation": {
+    "common": {
+      "ok": "ok",
+      "address": "Address"
+    },
+    "screens": {
+      "bottomNavbar": {
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "articles": "Articles",
+        "agents": "Agents",
+        "more": "More"
+      },
+      "agents": {
+        "agents": "OneHousing specialist",
+        "agentsDescription": "All specialists are certified and trained professionally",
+        "agentCode": "agent code",
+        "ask": "Ask agent"
+      },
+      "agentDetails": {
+        "title": "Agent Detail",
+        "jobTitle": "Expert OneHousing",
+        "introTitle": "Intro",
+        "onSaleProjectTitle": "On-sale project",
+        "ask": "Ask information",
+        "code": "Code"
+      },
+      "whyUs": {
+        "title": "Tại sao chọn chuyên viên OneHousing",
+        "point1Title": "Chuyên gia định giá chính xác",
+        "point1Desc": "Chuyên viên tư vấn mức giá cạnh tranh để nhà của bạn được bán với mức giá tốt nhất",
+        "point2Title": "Tìm thấy người phù hợp nhanh chóng",
+        "point2Desc": "Nhu cầu của bạn sẽ được ghép với người phù hợp thông qua đội ngũ chuyên viên nhiều kinh nghiệm",
+        "point3Title": "Thủ tục đơn giản, minh bạch",
+        "point3Desc": "Thanh toán, nhận tiền dễ dàng, quy trình được hỗ trợ, rút gọn và đảm bảo",
+        "button": "Bắt đầu ngay"
+      },
+      "propertyListing": {
+        "map": "Map",
+        "list": "List",
+        "onSale": "{{units}} units on sale",
+        "properties": "Properties {{location}}"
+      },
+      "projectDetails": {
+        "navigation": {
+          "overview": "Overview",
+          "inside": "Inside Facilities",
+          "progress": "Progress",
+          "location": "Location"
+        },
+        "saleStatus": {
+          "PENDING": "Pending",
+          "ON_SALE": "On sale",
+          "SOLD": "Sold",
+          "UNKNOWN": "Unknown"
+        },
+        "apartmentListTitle": "Apartment List",
+        "facilities": {
+          "mainInfo": {
+            "title": "Main information",
+            "investor": "Investor",
+            "totalArea": "Total area",
+            "density": "Building Density",
+            "constructionDate": "Year Built"
+          },
+          "facilitiesAroundTitle": "Outside Facilities"
+        },
+        "contact": {
+          "selectAgent": "Select agent",
+          "pickADateToVisit": "Select a date",
+          "name": "Name",
+          "phoneNumber": "Phone number",
+          "email": "Email",
+          "note": "Message",
+          "financingInfo": "I want financing information",
+          "send": "Send",
+          "sendMessage": "Send message",
+          "schedule": "Schedule",
+          "infoProtected": "Your information is protected",
+          "prefilledAskQuestion": "I want more details about {{projectName}}",
+          "prefilledAskQuestionReferral": "I want more details about {{projectName}}. I would like to be consulted by {{agentName}}.",
+          "prefilledScheduleTour": "I want to schedule a home tour on {{date}}",
+          "askInfomationProject": "I want more details about {{projectName}}",
+          "askInfomationProperty": "I want more details about {{projectName}}",
+          "askQuestionGeneral": "I need some help",
+          "askQuestionForFinancial": "I need some help"
+        },
+        "error": {
+          "nameEmpty": "Name is required",
+          "nameInvalid": "The name can only consist of letters and must be shorter than 50 characters",
+          "phoneNumberEmpty": "Phone number is required",
+          "phoneNumberInvalid": "The phone number must be between 9 - 12 digits and cannot contain letters",
+          "emailEmpty": "Email is required",
+          "emailInvalid": "Email is in wrong format",
+          "noteInvalid": "This field does not allow special characters"
+        },
+        "placeholder": {
+          "name": "Enter name",
+          "phoneNumber": "Enter phone number",
+          "email": "Enter email"
+        },
+        "gallery": {
+          "overview": "Overview",
+          "location": "Location",
+          "facilities": "Facilities",
+          "progress": "Progress",
+          "title": "Project details"
+        },
+        "schedule": "Schedule",
+        "scheduleHomeTour": "Schedule home tour",
+        "askQuestion": "Ask Question",
+        "leaveInformation": "Leave information",
+        "askForInfo": "Ask for info"
+      },
+      "postForSale": {
+        "sellWithOneHousing": "Sell with OneHousing",
+        "getRidOfTheHassle": "Get rid of the hassle of selling your home, no need to worry about time and procedures",
+        "contactASalesSpecialist": "Contact a sales specialist",
+        "chooseTheProfessional": "Choose the professional you want to connect with during the home sale process",
+        "clientQuote": "”Selling a house with OneHousing helped me buy a new, more comfortable house”",
+        "quoteAuthor": "Quỳnh Trâm - Hanoi",
+        "begin": "Begin",
+        "contactNow": "Contact now",
+        "bulletpoints": {
+          "header": "Quy trình nhanh chóng, minh bạch",
+          "first": {
+            "title": "Chuyên gia tư vấn giá chính xác",
+            "description": "Chuyên viên tư vấn mức giá cạnh tranh để nhà của bạn được bán với mức giá tốt nhất"
+          },
+          "second": {
+            "title": "Tìm thấy người mua nhanh chóng",
+            "description": "Tìm thấy người phù hợp thông qua đội ngũ chuyên viên nhiều kinh nghiệm"
+          },
+          "third": {
+            "title": "Thủ tục đơn giản, minh bạch",
+            "description": "Thanh toán dễ dàng, quy trình minh bạch và đơn giản"
+          },
+          "buttonLabel": "Bắt đầu ngay"
+        }
+      },
+      "articles": {
+        "allArticles": "All Articles",
+        "mostViewedArticles": "Most viewed articles",
+        "hotTags": "Hot Tags",
+        "latestNews": "Latest News",
+        "location": "Location",
+        "relatedPosts": "Related Posts"
+      },
+      "apartmentDetails": {
+        "title": "Apartment Details",
+        "call": "Call",
+        "message": "Message",
+        "schedule": "Schedule",
+        "bathrooms": "Bathrooms",
+        "bedrooms": "Bedrooms"
+      }
+    }
+  }
+}

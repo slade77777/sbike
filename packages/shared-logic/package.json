@@ -21,7 +21,7 @@
   "devDependencies": {
     "@react-native-community/bob": "^0.16.2",
     "@types/redux-thunk": "^2.1.0",
-    "react": "^16.13.1"
+    "react": "^16.14.0"
   },
   "peerDependencies": {
     "axios": "*",

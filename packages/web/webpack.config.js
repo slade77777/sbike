@@ -38,7 +38,7 @@ module.exports = (env) => {
     mode: dev ? 'development' : 'production',
     devtool: 'source-map',
     optimization: {
-      noEmitOnErrors: true,
+      emitOnErrors: true,
     },
     plugins: [
       new HTMLWebpackPlugin({

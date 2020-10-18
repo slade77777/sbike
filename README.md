@@ -22,7 +22,7 @@ This project is set up using the [Yarn workspaces](https://github.com/jamiebuild
 
 ```bash
 ├─ config
-│ └─ mock.tsx       # Contains the mocks for `components-library`. Explained in 1.
+│ └─ mock.tsx       # Contains the mocks for `shared-ui`. Explained in 1.
 │
 ├─ packages         # Explained below
 ├─ .env.example     # Sample Environment variables
@@ -44,5 +44,5 @@ The packages involved in the project are found in the [`packages`](./packages/) 
 
 - [`web`](./packages/web): Contains the web application.
 
-- [`components-library`](./packages/components-library): Contains the UI component library that is shared across both mobile and web.
+- [`shared-ui`](./packages/shared-ui): Contains the UI component library that is shared across both mobile and web.
 

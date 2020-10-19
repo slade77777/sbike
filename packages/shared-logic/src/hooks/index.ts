@@ -4,3 +4,4 @@ export {default as useClickOutsideDetect} from './useClickOutsideDetect';
 export {default as useCounter} from './useCounter';
 export {default as useLoanCalculator} from './useLoanCalculator';
 export {default as use100vh} from './use100vh';
+export {default as useProjects} from './useProjectsData';

@@ -6,7 +6,9 @@ export default function App() {
   return (
     <AuthProvider>
       <Suspense fallback={<div>Loading...</div>}>
-        <Home />
+        <div style={{padding: 20}}>
+          <Home />
+        </div>
       </Suspense>
     </AuthProvider>
   );

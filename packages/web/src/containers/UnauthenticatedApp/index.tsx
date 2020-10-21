@@ -11,7 +11,7 @@ function UnauthenticatedApp() {
         Đăng nhập
       </Title>
       <Row justify="center">
-        <Col span={4}>
+        <Col xs={24} sm={12} md={6} lg={6} xl={4}>
           <Login />
         </Col>
       </Row>

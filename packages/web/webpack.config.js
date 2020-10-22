@@ -34,7 +34,7 @@ module.exports = (env) => {
       path: path.resolve(__dirname, 'dist/'),
       publicPath: dev ? '/' : '/dist/',
       filename: 'app.bundle.js',
-      chunkFilename: '[id].[hash].chunk.js',
+      chunkFilename: '[id].[fullhash].chunk.js',
     },
     mode: dev ? 'development' : 'production',
     devtool: 'source-map',
@@ -59,7 +59,10 @@ module.exports = (env) => {
         : [
             new MiniCssExtractPlugin({
               filename: path.resolve(__dirname, 'styles.css'),
-              chunkFilename: path.resolve(__dirname, '[id].[hash].chunk.css'),
+              chunkFilename: path.resolve(
+                __dirname,
+                '[id].[fullhash].chunk.css',
+              ),
             }),
           ],
     ),

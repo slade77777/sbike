@@ -14,12 +14,10 @@
     "prepare": "bob build",
     "typescript": "tsc --noEmit"
   },
-  "dependencies": {
-    "react-query": "^2.23.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@react-native-community/bob": "^0.16.2",
-    "react": "^16.14.0"
+    "react": "^17.0.1"
   },
   "peerDependencies": {
     "axios": "*",

@@ -1,5 +1,5 @@
 import {setSecureAxiosInstance} from './base';
-import * as project from './project';
+import * as userApi from './user';
 import {ApiLayer} from './apiLayer';
 
 export let api: ApiLayer;
@@ -11,6 +11,6 @@ export function setApi(apiInstance: ApiLayer) {
 export function createApi(baseUrl: string): ApiLayer {
   setSecureAxiosInstance(baseUrl);
   return {
-    ...project,
+    ...userApi,
   };
 }

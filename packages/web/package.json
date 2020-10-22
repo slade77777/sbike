@@ -24,6 +24,7 @@
     "react-native-vector-icons": "^7.0.0",
     "react-native-web": "^0.12.3",
     "react-native-web-linear-gradient": "^1.1.1",
+    "react-query": "^2.25.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "shared-logic": "^0.0.0",

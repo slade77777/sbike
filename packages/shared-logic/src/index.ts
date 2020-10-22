@@ -4,6 +4,7 @@ import * as dateUtils from './utils/dateUtils';
 export {dateUtils};
 
 export * from './types/project';
+export * from './types/user';
 export * from './types/response';
 
 // TODO should rewrite as a action on reducer ???

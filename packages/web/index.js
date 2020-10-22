@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'antd/dist/antd.css';
 import {setupBusinessLayer} from 'shared-logic';
-
 import App from './src/App';
 
 setupBusinessLayer(process.env.API_URL || '');

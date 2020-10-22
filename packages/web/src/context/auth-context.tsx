@@ -1,23 +1,27 @@
 import React, {FC} from 'react';
+import {User, login, UserResponse} from 'shared-logic';
+import {useMutation} from 'react-query';
 
 type AuthType = {
-  status: 'success' | 'pending' | 'error';
+  status: 'success' | 'pending' | 'error' | 'idle';
   error?: any;
   user?: {
     username: string;
   } | null;
+  login: (params: User) => void;
 };
 
 const AuthContext = React.createContext<AuthType>({
   status: 'pending',
   error: null,
   user: null,
+  login: null,
 });
 
-const sleep = (time: number) =>
-  new Promise((resolve) => setTimeout(resolve, time));
+// const sleep = (time: number) =>
+//   new Promise((resolve) => setTimeout(resolve, time));
 
-const getUser = () => sleep(1000).then(() => ({username: ''}));
+// const getUser = () => sleep(1000).then(() => ({username: ''}));
 
 type Props = {
   children: React.ReactNode;
@@ -25,28 +29,36 @@ type Props = {
 
 const AuthProvider: FC<Props> = ({children}) => {
   const [state, setState] = React.useState<AuthType>({
-    status: 'pending',
+    status: 'idle',
     error: null,
     user: null,
   });
-  React.useEffect(() => {
-    getUser()
-      .then(
-        (user) =>
-          setState({
-            status: 'success',
-            error: null,
-            user: user.username ? user : null,
-          }),
-        (error) => setState({status: 'error', error, user: null}),
-      )
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
+
+  const [handleLogin] = useMutation(login, {
+    onSuccess: (data: UserResponse) => {
+      // Query Invalidations
+      console.log(data);
+    },
+  });
+
+  // React.useEffect(() => {
+  //   getUser()
+  //     .then(
+  //       (user) =>
+  //         setState({
+  //           status: 'success',
+  //           error: null,
+  //           user: user.username ? user : null,
+  //         }),
+  //       (error) => setState({status: 'error', error, user: null}),
+  //     )
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }, []);
 
   return (
-    <AuthContext.Provider value={state}>
+    <AuthContext.Provider value={{...state, login: handleLogin}}>
       {state.status === 'pending' ? (
         'Loading...'
       ) : state.status === 'error' ? (

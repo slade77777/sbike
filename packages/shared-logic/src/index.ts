@@ -10,6 +10,7 @@ export * from './types/response';
 // TODO should rewrite as a action on reducer ???
 //export api call for agent
 export * from './api/project';
+export * from './api/user';
 export * from './firebase/auth';
 export * from './firebase/analytics';
 

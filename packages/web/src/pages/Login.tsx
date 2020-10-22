@@ -1,10 +1,12 @@
 import React from 'react';
 import {Form, Input, Button} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
+import {useAuthState} from '../context/auth-context';
 
 const Login = () => {
+  const {login} = useAuthState();
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+    login(values);
   };
   return (
     <Form

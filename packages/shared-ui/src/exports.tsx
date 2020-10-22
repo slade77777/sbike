@@ -1,6 +1,4 @@
 // Mobile only exports
-export * from './api';
-export * from './api/types';
 // FIXME: uncomment firebase (below) and make it an init function or move it to agent-mobile.
 // Right now it is a singletone  that is created even for app without firebase
 // In packages agent-mobile and agent-business-logic are a few more FIXME comments with code to uncomment
@@ -33,19 +31,7 @@ export {default as Header} from './text-field/Header';
 export {default as Tabbar} from './tabbar';
 export {default as Badge} from './Badge';
 export {default as Placeholder} from './Placeholder';
-export * from './@types/inventory';
-export * from './@types/purpose';
-export * from './@types/opportunity';
-export * from './@types/mission';
-export * from './@types/notification';
-export * from './@types/response';
-export * from './@types/agent';
-export * from './@types/order';
-export * from './@types/address';
 export {DeviceSizes} from './rwd/DeviceSizes';
 export {Fonts} from './Fonts';
 export {ContainerSizes} from './rwd/DeviceSizes';
-export * from './firebase/auth';
-export * from './firebase/analytics';
-export type {RegisterDeviceTokenRequest} from './@types/device';
 export {default as RadioButton} from './RadioButton';

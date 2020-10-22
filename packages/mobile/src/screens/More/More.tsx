@@ -6,10 +6,9 @@ const More: React.FC = () => (
   <SafeAreaView>
     <ScrollView>
       <View style={styles.container}>
-        <MoreListItem text="SignIn" />
-        <MoreListItem text="Post For Sale" navigateTo="PostForSale" />
-        <MoreListItem text="Quesions and answers" />
-        <MoreListItem text="Terms and conditions" />
+        <MoreListItem text="Đăng nhập" />
+        <MoreListItem text="Câu hỏi" />
+        <MoreListItem text="Điều khoản và chính sách" />
       </View>
     </ScrollView>
   </SafeAreaView>

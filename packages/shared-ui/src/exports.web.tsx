@@ -37,42 +37,6 @@ export {default as TextInput} from './text-field';
 export {default as Tabbar} from './tabbar';
 export {default as Badge} from './Badge';
 export {default as Placeholder} from './Placeholder';
-export type {Address, AddressItem} from './@types/address';
-export type {PurposeItem} from './@types/purpose';
-export type {
-  OpportunityItem,
-  PotentialLeadItem as PotentiaLeadItem,
-  OpportunityUpdateRequest,
-  AddPotentialLeadRequest,
-  Status,
-  JobType,
-  HomeType,
-  Gender,
-  MarriageStatus,
-  Priority,
-  Purpose,
-  BudgetLimit,
-  Orientation,
-  SellingPolicy,
-  OpportunityInfoType,
-  BankType,
-  SaleDemand,
-  LeadProject,
-} from './@types/opportunity';
-export {Source} from './@types/opportunity';
-export type {
-  MissionItem,
-  MissionStatus,
-  MissionType,
-  MissionPurpose,
-  MissionHistory,
-  Task,
-  MissionReportRequest,
-  MissionUpdateStatusRequest,
-} from './@types/mission';
-export * from './api/types';
-export {HttpCodes, ErrorMessages, ResponseCodes} from './@types/response';
-export {AgentUpdateRequest, AgentInforResponse} from './@types/agent';
 export {DeviceSizes} from './rwd/DeviceSizes';
 export {Fonts} from './Fonts';
 export {ContainerSizes} from './rwd/DeviceSizes';

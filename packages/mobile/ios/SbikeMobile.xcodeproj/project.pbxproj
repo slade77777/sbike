@@ -148,7 +148,6 @@
 				BAC86CAC042602B8BEAF0E53 /* Pods-SbikeMobile-tvOSTests.debug.xcconfig */,
 				B13624143EB710AF86447A53 /* Pods-SbikeMobile-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

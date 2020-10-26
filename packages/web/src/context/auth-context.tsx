@@ -3,91 +3,54 @@ import {User, login, UserResponse} from 'shared-logic';
 import {useMutation} from 'react-query';
 
 type AuthType = {
-  status: 'success' | 'pending' | 'error' | 'idle';
-  error?: any;
-  user?: {
-    username: string;
-  } | null;
+  status?: 'idle' | 'loading' | 'error' | 'success';
+  error: any;
+  isLoading: boolean;
+  isError: boolean;
+  isAuthenticated: boolean;
   login: (params: User) => void;
 };
 
 const AuthContext = React.createContext<AuthType>({
-  status: 'pending',
+  status: 'idle',
   error: null,
   user: null,
   login: null,
+  isAuthenticated: false,
 });
-
-// const sleep = (time: number) =>
-//   new Promise((resolve) => setTimeout(resolve, time));
-
-// const getUser = () => sleep(1000).then(() => ({username: ''}));
 
 type Props = {
   children: React.ReactNode;
 };
 
 const AuthProvider: FC<Props> = ({children}) => {
-  const [state, setState] = React.useState<AuthType>({
-    status: 'idle',
-    error: null,
-    user: null,
-  });
+  const [
+    loginMutate,
+    {isLoading, isError, error, isSuccess, data},
+  ] = useMutation(login);
 
-  const [handleLogin] = useMutation(login, {
-    onSuccess: (data: UserResponse) => {
-      // Query Invalidations
-      console.log(data);
-    },
-  });
-
-  // React.useEffect(() => {
-  //   getUser()
-  //     .then(
-  //       (user) =>
-  //         setState({
-  //           status: 'success',
-  //           error: null,
-  //           user: user.username ? user : null,
-  //         }),
-  //       (error) => setState({status: 'error', error, user: null}),
-  //     )
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // }, []);
+  async function handleLogin(user: User) {
+    try {
+      const dataLogin: UserResponse = await loginMutate(user);
+      localStorage.setItem('session', dataLogin.session);
+    } catch {}
+  }
 
   return (
-    <AuthContext.Provider value={{...state, login: handleLogin}}>
-      {state.status === 'pending' ? (
-        'Loading...'
-      ) : state.status === 'error' ? (
-        <div>
-          Oh no
-          <div>
-            <pre>{state.error.message}</pre>
-          </div>
-        </div>
-      ) : (
-        children
-      )}
+    <AuthContext.Provider
+      value={{
+        isLoading,
+        isError,
+        error,
+        login: handleLogin,
+        isAuthenticated:
+          (isSuccess && data?.user) || localStorage.getItem('session'),
+      }}>
+      {children}
     </AuthContext.Provider>
   );
 };
 
-function useAuthState() {
-  const state = React.useContext(AuthContext);
-  const isPending = state.status === 'pending';
-  const isError = state.status === 'error';
-  const isSuccess = state.status === 'success';
-  const isAuthenticated = state.user && isSuccess;
-  return {
-    ...state,
-    isPending,
-    isError,
-    isSuccess,
-    isAuthenticated,
-  };
-}
+const useAuthState = () => React.useContext(AuthContext);
 
 export {AuthProvider, useAuthState};

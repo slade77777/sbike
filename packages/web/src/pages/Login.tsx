@@ -4,7 +4,7 @@ import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import {useAuthState} from '../context/auth-context';
 
 const Login = () => {
-  const {login} = useAuthState();
+  const {login, isLoading, error, isError} = useAuthState();
   const onFinish = (values: any) => {
     login(values);
   };
@@ -33,10 +33,11 @@ const Login = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" block loading={isLoading}>
           Log in
         </Button>
       </Form.Item>
+      {isError && <div>{error?.message}</div>}
     </Form>
   );
 };

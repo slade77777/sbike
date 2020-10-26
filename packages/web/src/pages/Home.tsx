@@ -11,6 +11,6 @@ const UnauthenticatedApp = React.lazy(
 );
 
 export default function Home() {
-  const {user} = useAuthState();
-  return user ? <AuthenticatedApp /> : <UnauthenticatedApp />;
+  const {isAuthenticated} = useAuthState();
+  return isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 }

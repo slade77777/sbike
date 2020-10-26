@@ -3,15 +3,14 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Header from '../../components/Header';
 // import Content from './Content';
 import Footer from '../../components/Footer';
-import {useAuthState} from '../../context/auth-context';
+// import {useAuthState} from '../../context/auth-context';
 import Content from './Content';
 
 const AuthenticatedApp = () => {
-  const {user} = useAuthState();
   return (
     <BrowserRouter>
       <>
-        <Header username={user?.username || ''} />
+        <Header username="hello" />
         <Switch>
           <Route path="/second" exact>
             <div>Second</div>

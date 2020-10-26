@@ -8,7 +8,9 @@ import Mortgage from './screens/Mortgage';
 import PostForSale from './screens/PostForSale';
 import SignIn from './screens/SignIn';
 import AsyncStorage from '@react-native-community/async-storage';
-import {User, login, UserResponse} from 'shared-logic';
+import {User, login} from 'shared-logic';
+const AES = require("react-native-crypto-js").AES;
+import {View, Text} from 'react-native';
 
 export type MainStackParamList = {
   Home: undefined;
@@ -23,10 +25,21 @@ export type MainStackParamList = {
   };
 };
 
-const Stack = createStackNavigator<MainStackParamList>();
-const AuthContext = React.createContext({});
+type Props = {
+  signIn?: (params: User) => void,
+  data?: {
+    session: string;
+  } | null;
+}
 
-function AppRoot() {
+const Stack = createStackNavigator<MainStackParamList>();
+export const AuthContext = React.createContext({
+  signIn: (username?: string, password?: string) => {
+    console.log(username, password)
+  }
+});
+
+const AppRoot: React.FC<Props> = () => {
 
   const [state, dispatch] = React.useReducer(
     (prevState: any, action: any) => {
@@ -77,9 +90,11 @@ function AppRoot() {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: async () => {
-
-        dispatch({type: 'SIGN_IN', token: 'dummy-auth-token'});
+      signIn: async (username?: string, password?: string) => {
+        login({userName: username || '', password: password ? AES.encrypt(password, '{60F9sG3*vpfCknu').toString() : ''})
+          .then(data  => {
+          dispatch({type: 'SIGN_IN', token: data.session});
+        }).catch(error => console.log(error));
       },
       signOut: () => dispatch({type: 'SIGN_OUT'}),
       signUp: async () => {
@@ -89,6 +104,14 @@ function AppRoot() {
     }),
     []
   );
+
+  if (state.isLoading) {
+    return (
+      <View style={{ width: '100%', height: '100%', backgroundColor: 'white', alignContent: 'center', justifyContent: 'center'}}>
+        <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 25, textAlign: 'center'}}>SBIKE</Text>
+      </View>
+    )
+  }
 
   return (
     <AuthContext.Provider value={authContext}>
@@ -110,7 +133,9 @@ function AppRoot() {
                   <Stack.Screen name="PostForSale" component={PostForSale}/>
                 </>
                 : <>
-                  <Stack.Screen name="SignIn" component={SignIn}/>
+                  <Stack.Screen name="SignIn" options={{
+                    headerShown: false,
+                  }} component={SignIn}/>
                 </>
             }
           </Stack.Navigator>

@@ -9,8 +9,10 @@ import PostForSale from './screens/PostForSale';
 import SignIn from './screens/SignIn';
 import AsyncStorage from '@react-native-community/async-storage';
 import {User, login} from 'shared-logic';
+
 const AES = require("react-native-crypto-js").AES;
 import {View, Text} from 'react-native';
+import CryptoJS from "react-native-crypto-js";
 
 export type MainStackParamList = {
   Home: undefined;
@@ -72,17 +74,14 @@ const AppRoot: React.FC<Props> = () => {
   );
 
   React.useEffect(() => {
-    // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = async () => {
       let userToken;
-
       try {
         userToken = await AsyncStorage.getItem('userToken');
+        dispatch({type: 'RESTORE_TOKEN', token: userToken});
       } catch (e) {
         // Restoring token failed
       }
-
-      dispatch({type: 'RESTORE_TOKEN', token: userToken});
     };
 
     bootstrapAsync();
@@ -91,15 +90,27 @@ const AppRoot: React.FC<Props> = () => {
   const authContext = React.useMemo(
     () => ({
       signIn: async (username?: string, password?: string) => {
-        login({userName: username || '', password: password ? AES.encrypt(password, '{60F9sG3*vpfCknu').toString() : ''})
-          .then(data  => {
-          dispatch({type: 'SIGN_IN', token: data.session});
-        }).catch(error => console.log(error));
+        const key = CryptoJS.enc.Utf8.parse('{60F9sG3*vpfCknu');
+        const iv = CryptoJS.enc.Utf8.parse('0123456789123456');
+        login({userName: username, password: password ? AES.encrypt(password, key, {iv}).toString() : ''})
+          .then(data => {
+            if (data.errorCode) {
+              return alert(data.message);
+            }
+            AsyncStorage.setItem('userToken', data.session).then(() => {
+              dispatch({type: 'SIGN_IN', token: data.session});
+            })
+              .catch(() => console.log('error'));
+          })
+          .catch(error => console.log(error));
       },
-      signOut: () => dispatch({type: 'SIGN_OUT'}),
+      signOut: () => {
+        AsyncStorage.removeItem('userToken').then(() => {
+          dispatch({type: 'SIGN_OUT'})
+        }).catch(() => console.log('sign out error'));
+      },
       signUp: async () => {
-
-        dispatch({type: 'SIGN_IN', token: 'dummy-auth-token'});
+        dispatch({type: 'SIGN_IN', token: ''});
       },
     }),
     []
@@ -107,8 +118,14 @@ const AppRoot: React.FC<Props> = () => {
 
   if (state.isLoading) {
     return (
-      <View style={{ width: '100%', height: '100%', backgroundColor: 'white', alignContent: 'center', justifyContent: 'center'}}>
-        <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 25, textAlign: 'center'}}>SBIKE</Text>
+      <View style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'white',
+        alignContent: 'center',
+        justifyContent: 'center'
+      }}>
+        <Text style={{fontWeight: 'bold', color: 'blue', fontSize: 25, textAlign: 'center'}}>SBIKE</Text>
       </View>
     )
   }

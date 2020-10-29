@@ -1,9 +1,8 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Header from '../../components/Header';
-// import Content from './Content';
 import Footer from '../../components/Footer';
-// import {useAuthState} from '../../context/auth-context';
+import Account from '../Account';
 import Content from './Content';
 
 const AuthenticatedApp = () => {
@@ -13,7 +12,7 @@ const AuthenticatedApp = () => {
         <Header username="hello" />
         <Switch>
           <Route path="/second" exact>
-            <div>Second</div>
+            <Account />
           </Route>
 
           <Route path="/" exact>

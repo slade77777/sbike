@@ -2,20 +2,21 @@ import React from 'react';
 import {Form, Input, Button} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import {useAuthState} from '../context/auth-context';
+import {encrypt} from '../utils/aesUtil';
 
 const Login = () => {
   const {login, isLoading, error, isError} = useAuthState();
-  const onFinish = (values: any) => {
-    login(values);
+  const onFinish = (values: {userName: string; password: string}) => {
+    login({...values, password: encrypt(values.password)});
   };
   return (
     <Form
       name="normal_login"
       className="login-form"
-      initialValues={{username: '', password: ''}}
+      initialValues={{userName: '', password: ''}}
       onFinish={onFinish}>
       <Form.Item
-        name="username"
+        name="userName"
         rules={[{required: true, message: 'Please input your Username!'}]}>
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}

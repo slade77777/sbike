@@ -1,27 +1,17 @@
-.custom-layout {
-  display: flex;
-}
-.custom-layout .site-layout {
-  flex: 1;
-}
-.custom-layout .trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.custom-layout .trigger:hover {
-  color: #1890ff;
-}
-
-.custom-layout .logo {
+.logo {
   height: 32px;
-  background: rgba(255, 255, 255, 0.3);
   margin: 16px;
+  line-height: 32px;
+  font-size: 20px;
+  /*background: rgba(255, 255, 255, 0.1);*/
+  text-align: left;
+  font-weight: bold;
+  color: #fff;
 }
 
-.site-layout .site-layout-background {
+.site-layout .l-header {
   background: #fff;
+}
+.ant-menu-inline-collapsed {
+  width: 50px;
 }

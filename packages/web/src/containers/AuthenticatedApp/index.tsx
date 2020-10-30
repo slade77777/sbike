@@ -1,13 +1,8 @@
 import React, {useState} from 'react';
 import './styles.css';
 import {Layout, Menu} from 'antd';
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from '@ant-design/icons';
+import {DesktopOutlined, UserOutlined} from '@ant-design/icons';
+
 import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
 import Account from '../Account';
 
@@ -17,40 +12,36 @@ const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
   return (
     <BrowserRouter>
-      <Layout className="custom-layout">
-        <Sider trigger={null} collapsible collapsed={collapsed}>
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+      <Layout style={{minHeight: '100vh'}}>
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          collapsedWidth={50}
+          onCollapse={() => setCollapsed(!collapsed)}>
+          <div className="logo">SBIKE</div>
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={['1']}
+            mode="inline"
+            collapsedWidth={50}>
             <Menu.Item key="1" icon={<UserOutlined />}>
-              <Link to="/second">Second page</Link>
+              <Link to="/account">Quản lý tài khoản</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-              <Link to="/">Home</Link>
-            </Menu.Item>
-            <Menu.Item key="3" icon={<UploadOutlined />}>
-              nav 3
+            <Menu.Item key="2" icon={<DesktopOutlined />}>
+              <Link to="/">Quản lý xe</Link>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{padding: 0}}>
-            {React.createElement(
-              collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-              {
-                className: 'trigger',
-                onClick: () => setCollapsed(!collapsed),
-              },
-            )}
-          </Header>
+          <Header className="l-header" style={{padding: '0 20px'}} />
           <Content
             className="site-layout-background"
             style={{
-              margin: '24px 16px',
               padding: 24,
-              minHeight: 280,
+              height: '100%',
             }}>
             <Switch>
-              <Route path="/second" exact>
+              <Route path="/account" exact>
                 <Account />
               </Route>
               <Route path="/" exact>

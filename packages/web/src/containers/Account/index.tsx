@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {insertUser} from 'shared-logic';
 import {useMutation} from 'react-query';
+import {Button, Card, Col, Row} from 'antd';
 import {encrypt} from '../../utils/aesUtil';
 import AccountForm from './AccountForm';
 import AccountsList from './AccountsList';
@@ -27,13 +28,23 @@ const Account = () => {
   };
 
   return (
-    <div>
-      <AccountForm
-        addUser={handleAddingUser}
-        {...{isLoading, isError, error}}
-      />
-      <AccountsList accounts={[newUser]} />
-    </div>
+    <Row gutter={16}>
+      <Col span={18}>
+        <Card
+          title="Tài khoản"
+          extra={<Button type="primary">Thêm mới</Button>}>
+          <AccountsList accounts={[newUser]} />
+        </Card>
+      </Col>
+      <Col span={6}>
+        <Card title="Thêm mới tài khoản">
+          <AccountForm
+            addUser={handleAddingUser}
+            {...{isLoading, isError, error}}
+          />
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

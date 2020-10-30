@@ -100,6 +100,7 @@ module.exports = (env) => {
       ],
     },
     resolve: {
+      fallback: {crypto: false},
       alias: {
         'react-native$': require.resolve('react-native-web'),
         react: path.resolve(node_modules, 'react'),

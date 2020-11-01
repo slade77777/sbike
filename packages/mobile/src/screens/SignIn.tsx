@@ -1,16 +1,17 @@
 import React from 'react';
 import {Text, View, SafeAreaView, TouchableOpacity} from 'react-native';
 import InputText from "../components/InputText";
-import {AuthContext} from "../RootNavigator";
+import color from "../config/color";
+import {useAuthState} from "../context/auth-context";
 
 const SignIn: React.FC = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const { signIn } = React.useContext(AuthContext);
+  const { signIn } = useAuthState();
 
   return (
-    <SafeAreaView style={{backgroundColor: 'blue', flex: 1, justifyContent: 'space-between'}}>
+    <SafeAreaView style={{backgroundColor: color.blue, flex: 1, justifyContent: 'space-between'}}>
       <View>
         <View>
           <Text style={{ textAlign: 'center', color: '#FFF', fontWeight: 'bold', fontSize: 40, letterSpacing: 4, marginTop: 40 }}>Sbike</Text>

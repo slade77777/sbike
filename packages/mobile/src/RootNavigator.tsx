@@ -1,18 +1,13 @@
 import * as React from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Provider as ComponentsProvider} from 'shared-ui';
 import Home from './screens/Home';
-import ArticleDetails from './screens/ArticleDetails';
-import Mortgage from './screens/Mortgage';
-import PostForSale from './screens/PostForSale';
 import SignIn from './screens/SignIn';
 import AsyncStorage from '@react-native-community/async-storage';
-import {User, login} from 'shared-logic';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const AES = require("react-native-crypto-js").AES;
-import {View, Text} from 'react-native';
-import CryptoJS from "react-native-crypto-js";
+import {useAuthState} from "./context/auth-context";
 
 export type MainStackParamList = {
   Home: undefined;
@@ -27,58 +22,18 @@ export type MainStackParamList = {
   };
 };
 
-type Props = {
-  signIn?: (params: User) => void,
-  data?: {
-    session: string;
-  } | null;
-}
-
 const Stack = createStackNavigator<MainStackParamList>();
-export const AuthContext = React.createContext({
-  signIn: (username?: string, password?: string) => {
-    console.log(username, password)
-  }
-});
 
-const AppRoot: React.FC<Props> = () => {
+const AppRoot = () => {
 
-  const [state, dispatch] = React.useReducer(
-    (prevState: any, action: any) => {
-      switch (action.type) {
-        case 'RESTORE_TOKEN':
-          return {
-            ...prevState,
-            userToken: action.token,
-            isLoading: false,
-          };
-        case 'SIGN_IN':
-          return {
-            ...prevState,
-            isSignout: false,
-            userToken: action.token,
-          };
-        case 'SIGN_OUT':
-          return {
-            ...prevState,
-            isSignout: true,
-            userToken: null,
-          };
-      }
-    },
-    {
-      isLoading: true,
-      isSignout: false,
-      userToken: null,
-    }
-  );
+  const {state, dispatch} = useAuthState();
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
-      let userToken;
+      let userData;
       try {
-        userToken = await AsyncStorage.getItem('userToken');
-        dispatch({type: 'RESTORE_TOKEN', token: userToken});
+        userData = await AsyncStorage.getItem('userData');
+        dispatch({type: 'RESTORE_TOKEN', userData: userData ? JSON.parse(userData) : {} });
       } catch (e) {
         // Restoring token failed
       }
@@ -86,35 +41,6 @@ const AppRoot: React.FC<Props> = () => {
 
     bootstrapAsync();
   }, []);
-
-  const authContext = React.useMemo(
-    () => ({
-      signIn: async (username?: string, password?: string) => {
-        const key = CryptoJS.enc.Utf8.parse('{60F9sG3*vpfCknu');
-        const iv = CryptoJS.enc.Utf8.parse('0123456789123456');
-        login({userName: username, password: password ? AES.encrypt(password, key, {iv}).toString() : ''})
-          .then(data => {
-            if (data.errorCode) {
-              return alert(data.message);
-            }
-            AsyncStorage.setItem('userToken', data.session).then(() => {
-              dispatch({type: 'SIGN_IN', token: data.session});
-            })
-              .catch(() => console.log('error'));
-          })
-          .catch(error => console.log(error));
-      },
-      signOut: () => {
-        AsyncStorage.removeItem('userToken').then(() => {
-          dispatch({type: 'SIGN_OUT'})
-        }).catch(() => console.log('sign out error'));
-      },
-      signUp: async () => {
-        dispatch({type: 'SIGN_IN', token: ''});
-      },
-    }),
-    []
-  );
 
   if (state.isLoading) {
     return (
@@ -131,34 +57,38 @@ const AppRoot: React.FC<Props> = () => {
   }
 
   return (
-    <AuthContext.Provider value={authContext}>
-      <ComponentsProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            {
-              state.userToken ?
-                <>
-                  <Stack.Screen
-                    name="Home"
-                    component={Home}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-                  <Stack.Screen name="ArticleDetails" component={ArticleDetails}/>
-                  <Stack.Screen name="Mortgage" component={Mortgage}/>
-                  <Stack.Screen name="PostForSale" component={PostForSale}/>
-                </>
-                : <>
-                  <Stack.Screen name="SignIn" options={{
-                    headerShown: false,
-                  }} component={SignIn}/>
-                </>
-            }
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ComponentsProvider>
-    </AuthContext.Provider>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {
+          state.userData.userToken ?
+            <>
+              <Stack.Screen name="Home" component={Home} options={{
+                headerLeft: () => (
+                  <View style={{marginLeft: 15}}>
+                    <Icon name='map-marker' color={'red'} size={25}/>
+                  </View>
+                ),
+                headerTitle: 'Sbike',
+                headerRight: () => (
+                  <View style={{flexDirection: 'row', paddingRight: 10}}>
+                    <TouchableOpacity style={{marginRight: 15}}>
+                      <Icon name='user' color={'blue'} size={25}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Icon name='bell' color={'red'} size={25}/>
+                    </TouchableOpacity>
+                  </View>
+                )
+              }}/>
+            </>
+            : <>
+              <Stack.Screen name="SignIn" options={{
+                headerShown: false,
+              }} component={SignIn}/>
+            </>
+        }
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

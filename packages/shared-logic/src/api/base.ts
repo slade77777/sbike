@@ -1,7 +1,5 @@
 import {default as axios, AxiosInstance} from 'axios';
 export let secureInstance: AxiosInstance;
-export let mockInstance: AxiosInstance;
-export let transactionMockInstance: AxiosInstance;
 
 export function setSecureAxiosInstance(baseURL: string) {
   if (!baseURL) {

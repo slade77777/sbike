@@ -1,28 +1,56 @@
-import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Header from '../../components/Header';
-// import Content from './Content';
-import Footer from '../../components/Footer';
-import {useAuthState} from '../../context/auth-context';
-import Content from './Content';
+import React, {useState} from 'react';
+import './styles.css';
+import {Layout, Menu} from 'antd';
+import {DesktopOutlined, UserOutlined} from '@ant-design/icons';
+
+import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
+import Account from '../Account';
+
+const {Header, Sider, Content} = Layout;
 
 const AuthenticatedApp = () => {
-  const {user} = useAuthState();
+  const [collapsed, setCollapsed] = useState(false);
   return (
     <BrowserRouter>
-      <>
-        <Header username={user?.username || ''} />
-        <Switch>
-          <Route path="/second" exact>
-            <div>Second</div>
-          </Route>
-
-          <Route path="/" exact>
-            <Content />
-          </Route>
-        </Switch>
-        <Footer />
-      </>
+      <Layout style={{minHeight: '100vh'}}>
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          collapsedWidth={50}
+          onCollapse={() => setCollapsed(!collapsed)}>
+          <div className="logo">SBIKE</div>
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={['1']}
+            mode="inline"
+            collapsedWidth={50}>
+            <Menu.Item key="1" icon={<UserOutlined />}>
+              <Link to="/account">Quản lý tài khoản</Link>
+            </Menu.Item>
+            <Menu.Item key="2" icon={<DesktopOutlined />}>
+              <Link to="/">Quản lý xe</Link>
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Layout className="site-layout">
+          <Header className="l-header" style={{padding: '0 20px'}} />
+          <Content
+            className="site-layout-background"
+            style={{
+              padding: 24,
+              height: '100%',
+            }}>
+            <Switch>
+              <Route path="/account" exact>
+                <Account />
+              </Route>
+              <Route path="/" exact>
+                <Content />
+              </Route>
+            </Switch>
+          </Content>
+        </Layout>
+      </Layout>
     </BrowserRouter>
   );
 };

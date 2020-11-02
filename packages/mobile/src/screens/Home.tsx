@@ -1,47 +1,36 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Colors} from 'shared-ui';
-import React from 'react';
-import TabBarIcon from '../components/TabBarIcon';
-import More from './More/More';
-import Project from './Project';
-
-export type MainParamList = {
-  Primary: undefined;
-  Secondary: undefined;
-  Articles: undefined;
-  Agents: undefined;
-  More: undefined;
-};
-
-const TabNavigator = createBottomTabNavigator<MainParamList>();
+import React, {useState} from 'react';
+import {Dimensions, SafeAreaView} from "react-native";
+import { TabView, SceneMap } from 'react-native-tab-view';
+import Observer from "../components/Home/Observer";
+import Device from "../components/Home/Device";
+import Report from "../components/Home/Report";
+import color from "../config/color";
 
 const Home: React.FC = () => {
+
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: 'first', title: 'Giám sát' },
+    { key: 'second', title: 'Thiết bị' },
+    { key: 'third', title: 'Báo cáo' },
+  ]);
+
+  const renderScene = SceneMap({
+    first: Observer,
+    second: Device,
+    third: Report,
+  });
+
   return (
-    <TabNavigator.Navigator
-      initialRouteName="Primary"
-      tabBarOptions={{
-        activeTintColor: Colors.brand,
-        showLabel: false,
-      }}>
-      <TabNavigator.Screen
-        name="Primary"
-        component={Project}
-        options={{
-          tabBarIcon: ({color}) => (
-            <TabBarIcon title="Chủ đầu tư" icon="home" color={color} />
-          ),
-        }}
+    <SafeAreaView style={{flex: 1, backgroundColor: color.blue}}>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        tabBarPosition='bottom'
+        initialLayout={{width: Dimensions.get('window').width}}
       />
-      <TabNavigator.Screen
-        name="More"
-        component={More}
-        options={{
-          tabBarIcon: ({color}) => (
-            <TabBarIcon title="Thêm" icon="menu" color={color} />
-          ),
-        }}
-      />
-    </TabNavigator.Navigator>
+    </SafeAreaView>
   );
 };
 

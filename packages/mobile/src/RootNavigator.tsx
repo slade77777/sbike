@@ -1,57 +1,94 @@
-import React from 'react';
+import * as React from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Provider as ComponentsProvider} from 'shared-ui';
-import {Apartment} from 'shared-logic';
 import Home from './screens/Home';
-import ArticleDetails from './screens/ArticleDetails';
-import Mortgage from './screens/Mortgage';
-import PostForSale from './screens/PostForSale';
 import SignIn from './screens/SignIn';
-import TermsAndConditions from './screens/TermsAndConditions';
+import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import {useAuthState} from "./context/auth-context";
 
 export type MainStackParamList = {
   Home: undefined;
-  ArticleDetails: {id: string};
-  AgentDetails: {id: string};
+  ArticleDetails: { id: string };
+  AgentDetails: { id: string };
   Mortgage: undefined;
   PostForSale: undefined;
   SignIn: undefined;
   TermsAndConditions: undefined;
-  ContactModal: {type: ContactType};
   ProjectGallery: {
     screen?: string;
   };
-  ApartmentDetails: {apartment: Apartment};
 };
 
 const Stack = createStackNavigator<MainStackParamList>();
 
-function AppRoot() {
+const AppRoot = () => {
+
+  const {state, dispatch} = useAuthState();
+
+  React.useEffect(() => {
+    const bootstrapAsync = async () => {
+      let userData;
+      try {
+        userData = await AsyncStorage.getItem('userData');
+        dispatch({type: 'RESTORE_TOKEN', userData: userData ? JSON.parse(userData) : {} });
+      } catch (e) {
+        // Restoring token failed
+      }
+    };
+
+    bootstrapAsync();
+  }, []);
+
+  if (state.isLoading) {
+    return (
+      <View style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'white',
+        alignContent: 'center',
+        justifyContent: 'center'
+      }}>
+        <Text style={{fontWeight: 'bold', color: 'blue', fontSize: 25, textAlign: 'center'}}>SBIKE</Text>
+      </View>
+    )
+  }
+
   return (
-    <>
-      <ComponentsProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{
+    <NavigationContainer>
+      <Stack.Navigator>
+        {
+          state.userData.userToken ?
+            <>
+              <Stack.Screen name="Home" component={Home} options={{
+                headerLeft: () => (
+                  <View style={{marginLeft: 15}}>
+                    <Icon name='map-marker' color={'red'} size={25}/>
+                  </View>
+                ),
+                headerTitle: 'Sbike',
+                headerRight: () => (
+                  <View style={{flexDirection: 'row', paddingRight: 10}}>
+                    <TouchableOpacity style={{marginRight: 15}}>
+                      <Icon name='user' color={'blue'} size={25}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Icon name='bell' color={'red'} size={25}/>
+                    </TouchableOpacity>
+                  </View>
+                )
+              }}/>
+            </>
+            : <>
+              <Stack.Screen name="SignIn" options={{
                 headerShown: false,
-              }}
-            />
-            <Stack.Screen name="ArticleDetails" component={ArticleDetails} />
-            <Stack.Screen name="Mortgage" component={Mortgage} />
-            <Stack.Screen name="PostForSale" component={PostForSale} />
-            <Stack.Screen name="SignIn" component={SignIn} />
-            <Stack.Screen
-              name="TermsAndConditions"
-              component={TermsAndConditions}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ComponentsProvider>
-    </>
+              }} component={SignIn}/>
+            </>
+        }
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

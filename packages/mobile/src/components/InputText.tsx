@@ -20,7 +20,7 @@ const InputText : React.FC<Props> = ({keyboardType, label, style, onChangeText, 
           {...other}
           onChangeText={(val) => onChangeText && onChangeText(val)}
           keyboardType={keyboardType}
-          style={[style, {justifyContent: 'center', fontSize: 16, color: 'black', paddingHorizontal: 10}]}
+          style={[style, {justifyContent: 'center', fontSize: 16, color: 'black', paddingHorizontal: 10, paddingVertical: 5}]}
         />
       </View>
     </View>

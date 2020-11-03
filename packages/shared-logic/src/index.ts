@@ -11,8 +11,6 @@ export * from './types/response';
 //export api call for agent
 export * from './api/project';
 export * from './api/user';
-export * from './firebase/auth';
-export * from './firebase/analytics';
 
 export function setupBusinessLayer(baseUrl: string) {
   const api = createApi(baseUrl);

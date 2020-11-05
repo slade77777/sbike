@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {insertUser} from 'shared-logic';
 import {useMutation} from 'react-query';
-import {Button, Card, Col, Row} from 'antd';
+import {Card, Col, Row} from 'antd';
 import {encrypt} from '../../utils/aesUtil';
-import AccountForm from './AccountForm';
 import AccountsList from './AccountsList';
+import AccountModal from './AccountModal';
 
 const Account = () => {
   const [insertMutate, {isLoading, isError, error}] = useMutation(insertUser);
@@ -29,19 +29,16 @@ const Account = () => {
 
   return (
     <Row gutter={16}>
-      <Col span={18}>
+      <Col span={24}>
         <Card
           title="Tài khoản"
-          extra={<Button type="primary">Thêm mới</Button>}>
+          extra={
+            <AccountModal
+              addUser={handleAddingUser}
+              {...{isLoading, isError, error}}
+            />
+          }>
           <AccountsList accounts={[newUser]} />
-        </Card>
-      </Col>
-      <Col span={6}>
-        <Card title="Thêm mới tài khoản">
-          <AccountForm
-            addUser={handleAddingUser}
-            {...{isLoading, isError, error}}
-          />
         </Card>
       </Col>
     </Row>

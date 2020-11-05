@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Table, Button} from 'antd';
+import {Table, Button, Space} from 'antd';
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons';
 
 type Props = {
@@ -35,15 +35,14 @@ const columns = [
     dataIndex: 'update',
     key: 'x',
     render: () => (
-      <div>
+      <Space size={8}>
         <Button type="link" icon={<EditOutlined />}>
           Sửa
         </Button>
-        &nbsp; &nbsp;
         <Button type="link" danger icon={<DeleteOutlined />}>
           Xóa
         </Button>
-      </div>
+      </Space>
     ),
   },
 ];

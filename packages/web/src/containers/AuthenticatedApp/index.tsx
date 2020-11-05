@@ -25,10 +25,13 @@ const AuthenticatedApp = () => {
             mode="inline"
             collapsedWidth={50}>
             <Menu.Item key="1" icon={<UserOutlined />}>
-              <Link to="/account">Quản lý tài khoản</Link>
+              <Link to="/">Dashboard</Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<DesktopOutlined />}>
-              <Link to="/">Quản lý xe</Link>
+              <Link to="/account">Quản lý tài khoản</Link>
+            </Menu.Item>
+            <Menu.Item key="3" icon={<UserOutlined />}>
+              <Link to="/devices">Quản lý xe</Link>
             </Menu.Item>
           </Menu>
         </Sider>
@@ -41,11 +44,14 @@ const AuthenticatedApp = () => {
               height: '100%',
             }}>
             <Switch>
+              <Route path="/" exact>
+                <div>Dashboard</div>
+              </Route>
               <Route path="/account" exact>
                 <Account />
               </Route>
-              <Route path="/" exact>
-                <Content />
+              <Route path="/devices" exact>
+                <div>Devices</div>
               </Route>
             </Switch>
           </Content>

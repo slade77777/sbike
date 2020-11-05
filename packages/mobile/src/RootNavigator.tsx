@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from './screens/Home';
@@ -65,7 +65,7 @@ const AppRoot = () => {
               <Stack.Screen name="Home" component={Home} options={{
                 headerLeft: () => (
                   <View style={{marginLeft: 15}}>
-                    <Icon name='map-marker' color={'red'} size={25}/>
+                    <Image source={require('../src/assets/images/LogoApp.png')} style={{ width: 30, height: 30}}/>
                   </View>
                 ),
                 headerTitle: 'Sbike',

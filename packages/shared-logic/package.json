@@ -24,8 +24,7 @@
     "axios-logger": "*",
     "dayjs": "*",
     "qs": "*",
-    "react": "*",
-    "shared-ui": "*"
+    "react": "*"
   },
   "@react-native-community/bob": {
     "source": "src",

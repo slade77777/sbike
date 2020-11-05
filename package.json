@@ -12,9 +12,8 @@
     "test": "jest",
     "postinstall": "yarn prepare && patch-package",
     "prettier": "prettier",
-    "prepare-shared-ui": "cd packages/shared-ui && yarn prepare",
     "prepare-shared-logic": "cd packages/shared-logic && yarn prepare",
-    "prepare": "yarn setup && yarn prepare-shared-ui && yarn prepare-shared-logic",
+    "prepare": "yarn setup && yarn prepare-shared-logic",
     "setup": "node ./config/setup.js"
   },
   "devDependencies": {
@@ -28,7 +27,7 @@
   },
   "resolutions": {
     "react": "~17.0.1",
-    "react-native": "~0.62.2"
+    "react-native": "0.63.3"
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",

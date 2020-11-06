@@ -94,8 +94,16 @@ module.exports = (env) => {
           ],
         },
         {
-          test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,
+          test: /\.(jpg|png|woff|woff2|eot|ttf)$/,
           use: 'file-loader',
+        },
+        {
+          test: /\.svg$/,
+          use: ['@svgr/webpack'],
+        },
+        {
+          test: /\.s[ac]ss$/i,
+          use: ['style-loader', 'css-loader', 'sass-loader'],
         },
       ],
     },

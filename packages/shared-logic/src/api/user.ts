@@ -22,3 +22,8 @@ export async function insertUser({
   });
   return res.data;
 }
+
+export async function logout(): ServerResponse<{result: boolean}> {
+  const res = await secureInstance.get('/user/logout');
+  return res.data;
+}

@@ -1,22 +1,13 @@
-import React, {FC} from 'react';
-import {User, login, UserResponse} from 'shared-logic';
-import {useMutation} from 'react-query';
+import React, {FC, useState} from 'react';
 
 type AuthType = {
-  status?: 'idle' | 'loading' | 'error' | 'success';
-  error: any;
-  isLoading: boolean;
-  isError: boolean;
-  isAuthenticated: boolean;
-  login: (params: User) => void;
+  isAuth: boolean;
+  setIsAuth: (isAuth: boolean) => void;
 };
 
 const AuthContext = React.createContext<AuthType>({
-  status: 'idle',
-  error: null,
-  user: null,
-  login: null,
-  isAuthenticated: false,
+  isAuth: false,
+  setIsAuth: () => null,
 });
 
 type Props = {
@@ -24,27 +15,15 @@ type Props = {
 };
 
 const AuthProvider: FC<Props> = ({children}) => {
-  const [
-    loginMutate,
-    {isLoading, isError, error, isSuccess, data},
-  ] = useMutation(login);
-
-  async function handleLogin(user: User) {
-    try {
-      const dataLogin: UserResponse = await loginMutate(user);
-      localStorage.setItem('session', dataLogin.session);
-    } catch {}
-  }
+  const [isAuth, setIsAuth] = useState<boolean>(
+    () => !!localStorage.getItem('session'),
+  );
 
   return (
     <AuthContext.Provider
       value={{
-        isLoading,
-        isError,
-        error,
-        login: handleLogin,
-        isAuthenticated:
-          (isSuccess && data?.user) || localStorage.getItem('session'),
+        isAuth,
+        setIsAuth,
       }}>
       {children}
     </AuthContext.Provider>

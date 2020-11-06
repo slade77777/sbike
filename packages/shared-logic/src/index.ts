@@ -1,4 +1,5 @@
 import {setApi, createApi} from './api';
+import {setToken} from './api/base';
 
 import * as dateUtils from './utils/dateUtils';
 export {dateUtils};
@@ -11,6 +12,7 @@ export * from './types/response';
 //export api call for agent
 export * from './api/project';
 export * from './api/user';
+export {setToken};
 
 export function setupBusinessLayer(baseUrl: string) {
   const api = createApi(baseUrl);

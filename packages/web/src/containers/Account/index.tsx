@@ -17,14 +17,14 @@ const Account = () => {
     password: string;
   }) => {
     // insertUser(values);
-    const insertedUser: {result: boolean} = await insertMutate({
+    const insertedUser = await insertMutate({
       params: {
         ...values,
         password: encrypt(values.password),
       },
       session: localStorage.getItem('session') || '',
     });
-    if (insertedUser.result) {
+    if (insertedUser?.data?.result) {
       setNewUser(values.userName);
     }
   };
@@ -47,7 +47,7 @@ const Account = () => {
                   addUser={handleAddingUser}
                   isLoading={isLoading}
                   isError={isError}
-                  error={{message: error?.message || ''}}
+                  error={error}
                 />
               }
               modalAction={

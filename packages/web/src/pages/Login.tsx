@@ -1,14 +1,34 @@
 import React from 'react';
+import {useMutation} from 'react-query';
 import {Form, Input, Button} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-import {useAuthState} from '../context/auth-context';
+import {login, setToken, User, UserResponse} from 'shared-logic';
 import {encrypt} from '../utils/aesUtil';
+import {useAuthState} from '../context/auth-context';
 
 const Login = () => {
-  const {login, isLoading, error, isError} = useAuthState();
-  const onFinish = (values: {userName: string; password: string}) => {
-    login({...values, password: encrypt(values.password)});
+  const {setIsAuth} = useAuthState();
+  const [loginMutate, {isLoading, isError, error}] = useMutation<UserResponse>(
+    login,
+  );
+
+  const onFinish = async (values: User) => {
+    try {
+      const dataLogin = await loginMutate({
+        ...values,
+        password: encrypt(values.password),
+      });
+      console.log(dataLogin);
+      if (dataLogin?.session) {
+        setIsAuth(true);
+        setToken(dataLogin.session);
+        localStorage.setItem('session', dataLogin.session);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <Form
       name="normal_login"
@@ -38,7 +58,7 @@ const Login = () => {
           Log in
         </Button>
       </Form.Item>
-      {isError && <div>{error?.message}</div>}
+      {isError && <div>{error?.message || ''}</div>}
     </Form>
   );
 };

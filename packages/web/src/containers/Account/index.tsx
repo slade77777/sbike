@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import {insertUser} from 'shared-logic';
 import {useMutation} from 'react-query';
-import {Card, Col, Row} from 'antd';
+import {Button, Card, Col, Row} from 'antd';
 import {encrypt} from '../../utils/aesUtil';
+import ModalWrapper from '../../components/ModalWrapper';
+import useModal from '../../hooks/useModal';
+import AccountForm from './AccountForm';
 import AccountsList from './AccountsList';
-import AccountModal from './AccountModal';
 
 const Account = () => {
   const [insertMutate, {isLoading, isError, error}] = useMutation(insertUser);
@@ -27,15 +29,32 @@ const Account = () => {
     }
   };
 
+  const {visible, toggle} = useModal();
+
   return (
     <Row gutter={16}>
       <Col span={24}>
         <Card
-          title="Tài khoản"
+          title="Quản lý tài khoản"
           extra={
-            <AccountModal
-              addUser={handleAddingUser}
-              {...{isLoading, isError, error}}
+            <ModalWrapper
+              title="Thêm mới user"
+              visible={visible}
+              onClose={toggle}
+              hasFooter={false}
+              modalContent={
+                <AccountForm
+                  addUser={handleAddingUser}
+                  isLoading={isLoading}
+                  isError={isError}
+                  error={{message: error?.message || ''}}
+                />
+              }
+              modalAction={
+                <Button type="primary" onClick={toggle}>
+                  Thêm mới
+                </Button>
+              }
             />
           }>
           <AccountsList accounts={[newUser]} />

@@ -6,10 +6,10 @@ type Props = {
   title?: string;
 };
 
-const Header: FC<Props> = ({title = 'Header'}) => {
+const Header: FC<Props> = ({title = 'Sbike Admin Dashboard'}) => {
   return (
     <Layout.Header className="l-header" style={{padding: '0 20px'}}>
-      <div>{title}</div>
+      <h3>{title}</h3>
       <LogoutButton />
     </Layout.Header>
   );

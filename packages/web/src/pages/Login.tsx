@@ -1,16 +1,14 @@
 import React from 'react';
 import {useMutation} from 'react-query';
-import {Form, Input, Button} from 'antd';
+import {Form, Input, Button, message} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-import {login, setToken, User, UserResponse} from 'shared-logic';
+import {login, User} from 'shared-logic';
 import {encrypt} from '../utils/aesUtil';
 import {useAuthState} from '../context/auth-context';
 
 const Login = () => {
-  const {setIsAuth} = useAuthState();
-  const [loginMutate, {isLoading, isError, error}] = useMutation<UserResponse>(
-    login,
-  );
+  const {onLoginSuccess} = useAuthState();
+  const [loginMutate, {isLoading, isError}] = useMutation(login);
 
   const onFinish = async (values: User) => {
     try {
@@ -18,14 +16,11 @@ const Login = () => {
         ...values,
         password: encrypt(values.password),
       });
-      console.log(dataLogin);
-      if (dataLogin?.session) {
-        setIsAuth(true);
-        setToken(dataLogin.session);
-        localStorage.setItem('session', dataLogin.session);
+      if (dataLogin?.data?.session) {
+        onLoginSuccess(dataLogin?.data?.session);
       }
     } catch (err) {
-      console.log(err);
+      message.error('Đăng nhập không thành công!');
     }
   };
 
@@ -58,7 +53,7 @@ const Login = () => {
           Log in
         </Button>
       </Form.Item>
-      {isError && <div>{error?.message || ''}</div>}
+      {isError && <div>{'Something went wrong'}</div>}
     </Form>
   );
 };

@@ -1,34 +1,59 @@
 import React, {FC} from 'react';
-import {Table, Button, Space} from 'antd';
+import {getRoleNameByValue, User} from 'shared-logic';
+import {Table, Button, Space, Tag} from 'antd';
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons';
 
 type Props = {
-  accounts: Array<string>;
+  accounts: User[];
 };
-
-const dataSource = [
-  {
-    key: '1',
-    name: 'Mike',
-    address: '10 Downing Street',
-  },
-  {
-    key: '2',
-    name: 'John',
-    address: '10 Downing Street',
-  },
-];
 
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    title: 'Họ tên',
+    dataIndex: 'fullName',
+    key: 'fullName',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Tên đăng nhập',
+    dataIndex: 'userName',
+    key: 'userName',
+  },
+  {
+    title: 'Password',
+    dataIndex: 'password',
+    key: 'password',
+  },
+  {
+    title: 'Quyền',
+    dataIndex: 'permission',
+    key: 'permission',
+    render: (values: Array<string>) => {
+      const mappedValue = values.map((vl) => getRoleNameByValue(vl));
+      return (
+        <div>
+          {mappedValue.map((r, index: number) => (
+            <Tag color="geekblue" key={index}>
+              {r}
+            </Tag>
+          ))}
+        </div>
+      );
+    },
+  },
+  {
+    title: 'Công ty',
+    dataIndex: 'companyID',
+    key: 'companyID',
+  },
+  {
+    title: 'Trạng thái',
+    dataIndex: 'active',
+    key: 'active',
+    render: (value: boolean) => (
+      <Tag color={value ? 'green' : 'lightGrey'}>
+        {value ? 'Đang hoạt động' : 'Chưa kích hoạt'}
+      </Tag>
+    ),
   },
   {
     title: 'Action',
@@ -48,7 +73,7 @@ const columns = [
 ];
 
 const AccountsList: FC<Props> = ({accounts}) => {
-  return <Table dataSource={dataSource} columns={columns} />;
+  return <Table dataSource={accounts} columns={columns} />;
 };
 
 export default AccountsList;

@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import {login} from 'shared-logic';
-import {useMutation} from 'react-query';
 import AsyncStorage from "@react-native-community/async-storage";
 
 const AES = require("react-native-crypto-js").AES;

@@ -8,18 +8,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {useAuthState} from "./context/auth-context";
+import User from "./screens/User";
 
 export type MainStackParamList = {
   Home: undefined;
-  ArticleDetails: { id: string };
-  AgentDetails: { id: string };
-  Mortgage: undefined;
-  PostForSale: undefined;
   SignIn: undefined;
-  TermsAndConditions: undefined;
-  ProjectGallery: {
-    screen?: string;
-  };
+  User: undefined;
 };
 
 const Stack = createStackNavigator<MainStackParamList>();
@@ -62,24 +56,29 @@ const AppRoot = () => {
         {
           state.userData.userToken ?
             <>
-              <Stack.Screen name="Home" component={Home} options={{
-                headerLeft: () => (
-                  <View style={{marginLeft: 15}}>
-                    <Image source={require('../src/assets/images/LogoApp.png')} style={{ width: 30, height: 30}}/>
-                  </View>
-                ),
-                headerTitle: 'Sbike',
-                headerRight: () => (
-                  <View style={{flexDirection: 'row', paddingRight: 10}}>
-                    <TouchableOpacity style={{marginRight: 15}}>
-                      <Icon name='user' color={'blue'} size={25}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                      <Icon name='bell' color={'red'} size={25}/>
-                    </TouchableOpacity>
-                  </View>
-                )
+              <Stack.Screen name="Home" component={Home} options={(props) => {
+                return ({
+                  headerLeft: () => (
+                    <View style={{marginLeft: 15}}>
+                      <Image source={require('../src/assets/images/LogoApp.png')} style={{ width: 30, height: 30}}/>
+                    </View>
+                  ),
+                  headerTitle: 'Sbike',
+                  headerRight: () => (
+                    <View style={{flexDirection: 'row', paddingRight: 10}}>
+                      <TouchableOpacity onPress={() => props.navigation.navigate('User')} style={{marginRight: 15}}>
+                        <Icon name='user' color={'blue'} size={25}/>
+                      </TouchableOpacity>
+                      <TouchableOpacity>
+                        <Icon name='bell' color={'red'} size={25}/>
+                      </TouchableOpacity>
+                    </View>
+                  )
+                })
               }}/>
+              <Stack.Screen name='User' options={{
+                headerTitle: 'User'
+              }} component={User}/>
             </>
             : <>
               <Stack.Screen name="SignIn" options={{

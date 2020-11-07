@@ -12,6 +12,7 @@ export * from './types/response';
 //export api call for agent
 export * from './api/project';
 export * from './api/user';
+export * from './constants/roles';
 export {setToken};
 
 export function setupBusinessLayer(baseUrl: string) {

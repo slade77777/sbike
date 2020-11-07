@@ -16,3 +16,9 @@ export interface UserResponse {
   session: string;
   user: User;
 }
+
+export interface UserLogoutResponse {
+  result: string;
+  isCompleted?: boolean;
+  status?: number;
+}

@@ -1,26 +1,24 @@
 import React, {FC} from 'react';
 import {useMutation} from 'react-query';
-import {Button} from 'antd';
+import {Button, message} from 'antd';
 import {LogoutOutlined} from '@ant-design/icons';
 import {logout} from 'shared-logic';
 import {useAuthState} from '../../context/auth-context';
 
 const LogoutButton: FC = () => {
-  const {setIsAuth} = useAuthState();
-  const [logoutMutate, {isLoading, isSuccess, isError, error}] = useMutation(
-    logout,
-  );
+  const {onLogoutSuccess} = useAuthState();
+  const [logoutMutate, {isLoading}] = useMutation(logout);
 
-  async function handleLogOut() {
+  const handleLogOut = async () => {
     try {
       const res = await logoutMutate();
-      localStorage.removeItem('session');
-      setIsAuth(false);
-      console.log(res);
+      if (res?.data?.isCompleted) {
+        onLogoutSuccess();
+      }
     } catch (e) {
-      console.log(e);
+      message.error('Đăng xuất không thành công!');
     }
-  }
+  };
 
   return (
     <div>

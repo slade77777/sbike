@@ -1,13 +1,16 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
+import {setToken} from 'shared-logic';
 
 type AuthType = {
   isAuth: boolean;
-  setIsAuth: (isAuth: boolean) => void;
+  onLoginSuccess: (session: string) => void;
+  onLogoutSuccess: () => void;
 };
 
 const AuthContext = React.createContext<AuthType>({
   isAuth: false,
-  setIsAuth: () => null,
+  onLoginSuccess: () => null,
+  onLogoutSuccess: () => null,
 });
 
 type Props = {
@@ -19,11 +22,32 @@ const AuthProvider: FC<Props> = ({children}) => {
     () => !!localStorage.getItem('session'),
   );
 
+  function onLoginSuccess(session: string) {
+    if (session) {
+      setIsAuth(true);
+      localStorage.setItem('session', session);
+      setToken(session);
+    }
+  }
+
+  function onLogoutSuccess() {
+    setIsAuth(false);
+    localStorage.removeItem('session');
+  }
+
+  useEffect(() => {
+    const localSession = localStorage.getItem('session');
+    if (localSession) {
+      setToken(localSession);
+    }
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
         isAuth,
-        setIsAuth,
+        onLoginSuccess,
+        onLogoutSuccess,
       }}>
       {children}
     </AuthContext.Provider>

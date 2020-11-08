@@ -52,7 +52,7 @@ const AccountForm: FC<Props> = ({
         <Input
           allowClear
           prefix={<LockOutlined className="site-form-item-icon" />}
-          type="text"
+          type="password"
           placeholder="Nhập mật khẩu"
         />
       </Form.Item>

@@ -37,19 +37,18 @@ const ACCOUNTS: User[] = [
 
 const Account = () => {
   const [insertMutate, {isLoading, isError}] = useMutation(insertUser);
-  const [newUser, setNewUser] = useState<string>('');
+  const [users, setUsers] = useState<User[]>(ACCOUNTS);
 
   const handleAddingUser = async (values: {
     userName: string;
     password: string;
   }) => {
-    // insertUser(values);
-    const insertedUser = await insertMutate({
+    const res = await insertMutate({
       ...values,
       password: encrypt(values.password),
     });
-    if (insertedUser?.data?.result) {
-      setNewUser(values.userName);
+    if (res?.data?.result) {
+      setUsers((prevState) => prevState.concat(values));
     }
   };
 
@@ -66,7 +65,7 @@ const Account = () => {
                 Thêm mới
               </Button>
             }>
-            <AccountsList accounts={ACCOUNTS} />
+            <AccountsList accounts={users} />
           </Card>
         </Col>
       </Row>

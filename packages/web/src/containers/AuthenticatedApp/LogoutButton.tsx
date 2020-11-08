@@ -14,9 +14,11 @@ const LogoutButton: FC = () => {
       const res = await logoutMutate();
       if (res?.data?.isCompleted) {
         onLogoutSuccess();
+      } else if (res?.status === 401) {
+        onLogoutSuccess();
       }
     } catch (e) {
-      message.error('Đăng xuất không thành công!');
+      message.error('Lỗi không thể đăng xuất');
     }
   };
 

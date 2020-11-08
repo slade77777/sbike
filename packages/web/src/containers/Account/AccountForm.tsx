@@ -1,8 +1,7 @@
 import React, {FC} from 'react';
 import {v4 as uuidv4} from 'uuid';
-import {Button, Checkbox, Col, Form, Input, Row, Select} from 'antd';
+import {Button, Checkbox, Col, Form, Input, Row, Select, Switch} from 'antd';
 import {ROLES, User} from 'shared-logic';
-import {LockOutlined, UserOutlined, MobileOutlined} from '@ant-design/icons';
 
 type Props = {
   addUser: (user: User) => void;
@@ -67,6 +66,10 @@ const AccountForm: FC<Props> = ({
           <Select.Option value={uuidv4()}>Google</Select.Option>
           <Select.Option value={uuidv4()}>Microsoft</Select.Option>
         </Select>
+      </Form.Item>
+
+      <Form.Item label="Trạng thái" name="active">
+        <Switch />
       </Form.Item>
 
       <Form.Item

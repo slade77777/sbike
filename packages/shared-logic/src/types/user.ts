@@ -23,3 +23,8 @@ export interface UserLogoutResponse {
   isCompleted?: boolean;
   status?: number;
 }
+
+export enum AccountAction {
+  INSERT = 'insert',
+  UPDATE = 'update',
+}

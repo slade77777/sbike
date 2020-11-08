@@ -17,7 +17,7 @@ const Login = () => {
         password: encrypt(values.password),
       });
       if (dataLogin?.data?.session) {
-        onLoginSuccess(dataLogin?.data?.session);
+        onLoginSuccess(dataLogin?.data?.session, dataLogin?.data?.user);
       }
     } catch (err) {
       message.error('Đăng nhập không thành công!');

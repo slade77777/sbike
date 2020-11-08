@@ -1,6 +1,7 @@
 export type ServerResponse<T extends any> = Promise<{
   code: HttpCodes;
   data?: T;
+  status: number;
   meta?: {
     code: string;
     page?: number;

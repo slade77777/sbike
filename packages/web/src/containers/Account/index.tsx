@@ -1,14 +1,18 @@
-import React, {useState} from 'react';
+import React, {useReducer} from 'react';
 import {
-  insertUser,
+  AccountAction,
+  createOrUpdateUser,
   PERMISSION_UPDATE_COMPANY,
   PERMISSION_UPDATE_USER,
   User,
 } from 'shared-logic';
 import {useMutation} from 'react-query';
-import {Button, Card, Col, Modal, Row} from 'antd';
+import {Button, Card, Col, message, Modal, Row} from 'antd';
+import {ACTION_SUCCESS} from '../../contants/common';
+import {ACCOUNT_MANAGEMENT} from '../../contants/pageNames';
 import {encrypt} from '../../utils/aesUtil';
-import useModal from '../../hooks/useModal';
+import {FormActionType, FormTitleEnum, ModalEnum} from '../../contants/form';
+import labels from '../../contants/labels';
 import AccountForm from './AccountForm';
 import AccountsList from './AccountsList';
 
@@ -35,50 +39,127 @@ const ACCOUNTS: User[] = [
   },
 ];
 
-const Account = () => {
-  const [insertMutate, {isLoading, isError}] = useMutation(insertUser);
-  const [newUser, setNewUser] = useState<string>('');
+type State = {
+  modal: boolean;
+  users: User[];
+  updatingData?: User | null;
+};
 
-  const handleAddingUser = async (values: {
-    userName: string;
-    password: string;
-  }) => {
-    // insertUser(values);
-    const insertedUser = await insertMutate({
-      ...values,
-      password: encrypt(values.password),
-    });
-    if (insertedUser?.data?.result) {
-      setNewUser(values.userName);
+type Action = {
+  type: FormActionType | ModalEnum;
+  data?: User | null;
+};
+
+const initialState: State = {
+  modal: false,
+  users: ACCOUNTS,
+  updatingData: null,
+};
+
+function reducer(state: State, action: Action) {
+  switch (action.type) {
+    case FormActionType.OPEN_INSERT:
+      return {
+        ...state,
+        modal: true,
+        updatingData: null,
+      };
+    case FormActionType.INSERT_SUCCESS:
+      return {
+        ...state,
+        modal: false,
+        users: action.data ? [...state.users, action.data] : state.users,
+      };
+    case FormActionType.OPEN_UPDATE:
+      return {
+        ...state,
+        modal: true,
+        updatingData: action.data,
+      };
+
+    case FormActionType.UPDATE_SUCCESS:
+      return {
+        ...state,
+        modal: false,
+        updatingData: null,
+      };
+
+    default:
+      return {
+        ...state,
+        modal: false,
+      };
+  }
+}
+
+const Account = () => {
+  const [createOrUpdateMutate, {isLoading, isError}] = useMutation(
+    createOrUpdateUser,
+  );
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const handleCreatingOrUpdatingUser = async (
+    values: User,
+    type: AccountAction,
+  ) => {
+    console.log(values);
+    console.log(type);
+    const res = await createOrUpdateMutate(
+      {
+        ...values,
+        password: encrypt(values.password),
+      },
+      type,
+    );
+    if (res?.data?.result) {
+      if (type === AccountAction.INSERT) {
+        dispatch({type: FormActionType.INSERT_SUCCESS, data: values});
+      } else {
+        dispatch({type: FormActionType.UPDATE_SUCCESS});
+      }
+      message.success(ACTION_SUCCESS);
     }
   };
 
-  const {visible, toggle} = useModal();
+  function openToUpdateUser(user: User) {
+    dispatch({type: FormActionType.OPEN_UPDATE, data: user});
+  }
 
   return (
     <>
       <Row gutter={16}>
         <Col span={24}>
           <Card
-            title="Quản lý tài khoản"
+            title={ACCOUNT_MANAGEMENT}
             extra={
-              <Button type="primary" onClick={toggle}>
-                Thêm mới
+              <Button
+                type="primary"
+                onClick={() => dispatch({type: FormActionType.OPEN_INSERT})}>
+                {labels.ADD_NEW}
               </Button>
             }>
-            <AccountsList accounts={ACCOUNTS} />
+            <AccountsList accounts={state.users} editUser={openToUpdateUser} />
           </Card>
         </Col>
       </Row>
       <Modal
-        title="Thêm mới user"
-        visible={visible}
+        title={
+          state.updatingData
+            ? FormTitleEnum.UPDATE_USER
+            : FormTitleEnum.ADD_NEW_USER
+        }
+        visible={state.modal}
         destroyOnClose
         footer={false}
-        width={440}
-        onCancel={toggle}>
+        onCancel={() => dispatch({type: ModalEnum.CLOSE_MODAL})}>
         <AccountForm
-          addUser={handleAddingUser}
+          onSubmit={(user) =>
+            handleCreatingOrUpdatingUser(
+              user,
+              state.updatingData ? AccountAction.UPDATE : AccountAction.INSERT,
+            )
+          }
+          updatingUser={state.updatingData}
           isLoading={isLoading}
           isError={isError}
           error={{message: 'error'}}

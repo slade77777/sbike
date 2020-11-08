@@ -1,11 +1,10 @@
 import React, {FC} from 'react';
 import {v4 as uuidv4} from 'uuid';
-import {Button, Checkbox, Col, Form, Input, Row, Select} from 'antd';
+import {Button, Checkbox, Col, Form, Input, Row, Select, Switch} from 'antd';
 import {ROLES, User} from 'shared-logic';
-import {LockOutlined, UserOutlined, MobileOutlined} from '@ant-design/icons';
 
 type Props = {
-  addUser: (user: User) => void;
+  onSubmit: (user: User) => void;
   isLoading?: boolean;
   isError?: boolean;
   error?: {
@@ -15,7 +14,7 @@ type Props = {
 };
 
 const AccountForm: FC<Props> = ({
-  addUser,
+  onSubmit,
   isLoading = false,
   isError = false,
   error,
@@ -25,49 +24,42 @@ const AccountForm: FC<Props> = ({
     <Form
       name="add-user"
       className="add-new-form"
+      {...{labelCol: {span: 6}}}
       initialValues={updatingUser ? updatingUser : {userName: '', password: ''}}
       layout="horizontal"
-      onFinish={addUser}>
+      onFinish={onSubmit}>
       <Form.Item
+        label="Họ và tên"
         name="fullName"
+        wrapperCol={{span: 16}}
         rules={[{required: false, message: 'Chưa nhập họ và tên'}]}>
-        <Input
-          allowClear
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Họ tên"
-        />
+        <Input allowClear placeholder="Họ tên" />
       </Form.Item>
       <Form.Item
+        label="Tên đăng nhập"
         name="userName"
+        wrapperCol={{span: 16}}
         rules={[{required: true, message: 'Chưa nhập tên đăng nhập'}]}>
-        <Input
-          allowClear
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Tên đăng nhập"
-        />
+        <Input allowClear placeholder="Tên đăng nhập" />
       </Form.Item>
       <Form.Item
         name="password"
+        label="Mật khẩu"
+        wrapperCol={{span: 16}}
         rules={[{required: true, message: 'Chưa nhập mật khẩu'}]}>
-        <Input
-          allowClear
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="text"
-          placeholder="Nhập mật khẩu"
-        />
+        <Input allowClear type="password" placeholder="Nhập mật khẩu" />
       </Form.Item>
       <Form.Item
+        wrapperCol={{span: 8}}
+        label="Số điện thoại"
         name="phoneNumber"
         rules={[{required: false, message: 'Chưa điền số điện thoại'}]}>
-        <Input
-          allowClear
-          inputMode="tel"
-          prefix={<MobileOutlined className="site-form-item-icon" />}
-          placeholder="Số điện thoại"
-        />
+        <Input allowClear inputMode="tel" placeholder="Số điện thoại" />
       </Form.Item>
       <Form.Item
+        wrapperCol={{span: 16}}
         name="companyID"
+        label="Công ty"
         rules={[{required: true, message: 'Chưa chọn công ty!'}]}>
         <Select placeholder="Chọn công ty">
           <Select.Option value={uuidv4()}>Apple</Select.Option>
@@ -76,10 +68,14 @@ const AccountForm: FC<Props> = ({
         </Select>
       </Form.Item>
 
+      <Form.Item label="Trạng thái" name="active">
+        <Switch />
+      </Form.Item>
+
       <Form.Item
         name="permission"
         label="Phân quyền"
-        labelCol={{span: 24}}
+        wrapperCol={{span: 16}}
         rules={[{required: true, message: 'Chưa chọn quyền'}]}>
         <Checkbox.Group>
           <Row>
@@ -94,7 +90,7 @@ const AccountForm: FC<Props> = ({
         </Checkbox.Group>
       </Form.Item>
 
-      <Form.Item>
+      <Form.Item wrapperCol={{span: 8, offset: 8}}>
         <Button type="primary" htmlType="submit" block loading={isLoading}>
           {updatingUser ? 'Cập nhật' : 'Tạo mới'}
         </Button>

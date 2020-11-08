@@ -4,7 +4,7 @@ import {Button, Checkbox, Col, Form, Input, Row, Select, Switch} from 'antd';
 import {ROLES, User} from 'shared-logic';
 
 type Props = {
-  addUser: (user: User) => void;
+  onSubmit: (user: User) => void;
   isLoading?: boolean;
   isError?: boolean;
   error?: {
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const AccountForm: FC<Props> = ({
-  addUser,
+  onSubmit,
   isLoading = false,
   isError = false,
   error,
@@ -27,7 +27,7 @@ const AccountForm: FC<Props> = ({
       {...{labelCol: {span: 6}}}
       initialValues={updatingUser ? updatingUser : {userName: '', password: ''}}
       layout="horizontal"
-      onFinish={addUser}>
+      onFinish={onSubmit}>
       <Form.Item
         label="Họ và tên"
         name="fullName"

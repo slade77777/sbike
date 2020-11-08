@@ -7,8 +7,8 @@ type Props = {
 };
 
 const User: React.FC<Props> = ({}) => {
-  const user = useAuthState();
-  const userInfo = user?.state?.userData;
+  const {state, signOut} = useAuthState();
+  const userInfo = state?.userData;
 
 
   return (
@@ -21,7 +21,7 @@ const User: React.FC<Props> = ({}) => {
         <Icon name='key' color={'red'} size={25}/>
         <Text style={{marginLeft: 15}}>Đổi mật khẩu</Text>
       </View>
-      <TouchableOpacity style={{ ...style.row, height: 50}}>
+      <TouchableOpacity onPress={() => signOut()} style={{ ...style.row, height: 50}}>
         <Icon name='log-out' color={'red'} size={25}/>
         <Text style={{marginLeft: 15}}>Đăng xuất</Text>
       </TouchableOpacity>

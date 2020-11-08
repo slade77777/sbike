@@ -6,6 +6,7 @@ import Home from './screens/Home';
 import SignIn from './screens/SignIn';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {setToken} from 'shared-logic';
 
 import {useAuthState} from "./context/auth-context";
 import User from "./screens/User";
@@ -24,13 +25,13 @@ const AppRoot = () => {
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
-      let userData;
-      try {
-        userData = await AsyncStorage.getItem('userData');
-        dispatch({type: 'RESTORE_TOKEN', userData: userData ? JSON.parse(userData) : {} });
-      } catch (e) {
-        // Restoring token failed
-      }
+      AsyncStorage.getItem('userData').then((userData) => {
+        if (userData) {
+          const user = JSON.parse(userData);
+          setToken(user?.userToken);
+          dispatch({type: 'RESTORE_TOKEN', userData: user });
+        }
+      })
     };
 
     bootstrapAsync();

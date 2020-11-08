@@ -29,6 +29,7 @@ export function setSecureAxiosInstance(baseURL: string) {
 }
 
 export function setToken(session: string): void {
+  console.log(session);
   secureInstance.defaults.headers = {
     API_KEY: session,
   };

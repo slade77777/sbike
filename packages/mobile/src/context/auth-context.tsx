@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {login} from 'shared-logic';
+import {login, setToken, logout} from 'shared-logic';
 import AsyncStorage from "@react-native-community/async-storage";
 
 const AES = require("react-native-crypto-js").AES;
@@ -9,12 +9,14 @@ type AuthType = {
   state: any,
   dispatch: any,
   signIn: (username: string, password: string) => void;
+  signOut: () => void,
 };
 
 const AuthContext = React.createContext<AuthType>({
   state: null,
   dispatch: () => {},
   signIn: () => {},
+  signOut: () => {},
 });
 
 type Props = {
@@ -56,18 +58,28 @@ const AuthProvider: FC<Props> = ({children}) => {
     const key = CryptoJS.enc.Utf8.parse('{60F9sG3*vpfCknu');
     const iv = CryptoJS.enc.Utf8.parse('0123456789123456');
     login({userName: username, password: password ? AES.encrypt(password, key, {iv}).toString() : ''})
+      .then(data => data.data)
       .then(data => {
-        if (data.errorCode) {
+        if (data?.errorCode) {
           return alert(data.message);
         }
         let userData = data.user;
         userData.userToken = data.session;
         AsyncStorage.setItem('userData', JSON.stringify(userData)).then(() => {
           dispatch({type: 'SIGN_IN', userData});
+          setToken(userData.userToken);
         })
           .catch(() => console.log('error'));
       })
       .catch(error => console.log(error));
+  }
+
+  const handleLogout = () => {
+    logout().then(() => {
+      AsyncStorage.removeItem('userData').then(() => {
+        dispatch({type: 'SIGN_OUT'});
+      })
+    })
   }
 
   return (
@@ -76,6 +88,7 @@ const AuthProvider: FC<Props> = ({children}) => {
         state,
         dispatch,
         signIn: (username, password) => handleLogin(username, password),
+        signOut: () => handleLogout(),
       }}>
       {children}
     </AuthContext.Provider>

@@ -1,33 +1,68 @@
 import React, {FC} from 'react';
-import {v4 as uuidv4} from 'uuid';
-import {Button, Checkbox, Col, Form, Input, Row, Select, Switch} from 'antd';
-import {ROLES, User} from 'shared-logic';
+// import {v4 as uuidv4} from 'uuid';
+import {
+  Button,
+  Checkbox,
+  Col,
+  Form,
+  Input,
+  message,
+  Row,
+  Select,
+  Switch,
+} from 'antd';
+import {AccountAction, createOrUpdateUser, ROLES, User} from 'shared-logic';
+import {useMutation} from 'react-query';
+import {decrypt, encrypt} from '../../utils/aesUtil';
+import {ACTION_ERROR, ACTION_SUCCESS} from '../../contants/common';
 
 type Props = {
-  onSubmit: (user: User) => void;
-  isLoading?: boolean;
-  isError?: boolean;
-  error?: {
-    message?: string;
-  };
+  onSuccess?: (type: AccountAction, data?: User) => void;
+  onError?: () => void;
   updatingUser?: User | null;
 };
 
-const AccountForm: FC<Props> = ({
-  onSubmit,
-  isLoading = false,
-  isError = false,
-  error,
-  updatingUser,
-}) => {
+const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
+  const [createOrUpdateMutate, {isLoading}] = useMutation(createOrUpdateUser);
+
+  const handleCreatingOrUpdatingUser = async (values: User) => {
+    const params = {
+      ...values,
+      password: encrypt(values.password),
+    };
+    const res = await createOrUpdateMutate({
+      params,
+      type: updatingUser ? AccountAction.UPDATE : AccountAction.INSERT,
+    });
+
+    if (res?.status === 200) {
+      if (updatingUser) {
+        onSuccess?.(AccountAction.INSERT, values);
+      } else {
+        onSuccess?.(AccountAction.UPDATE);
+      }
+      message.success(ACTION_SUCCESS);
+    } else {
+      onError?.();
+      message.error(ACTION_ERROR);
+    }
+  };
+
   return (
     <Form
       name="add-user"
       className="add-new-form"
       {...{labelCol: {span: 6}}}
-      initialValues={updatingUser ? updatingUser : {userName: '', password: ''}}
+      initialValues={
+        updatingUser
+          ? {
+              ...updatingUser,
+              password: decrypt(updatingUser.password),
+            }
+          : {userName: '', password: ''}
+      }
       layout="horizontal"
-      onFinish={onSubmit}>
+      onFinish={handleCreatingOrUpdatingUser}>
       <Form.Item
         label="Họ và tên"
         name="fullName"
@@ -47,7 +82,7 @@ const AccountForm: FC<Props> = ({
         label="Mật khẩu"
         wrapperCol={{span: 16}}
         rules={[{required: true, message: 'Chưa nhập mật khẩu'}]}>
-        <Input allowClear type="password" placeholder="Nhập mật khẩu" />
+        <Input allowClear type="text" placeholder="Nhập mật khẩu" />
       </Form.Item>
       <Form.Item
         wrapperCol={{span: 8}}
@@ -62,9 +97,9 @@ const AccountForm: FC<Props> = ({
         label="Công ty"
         rules={[{required: true, message: 'Chưa chọn công ty!'}]}>
         <Select placeholder="Chọn công ty">
-          <Select.Option value={uuidv4()}>Apple</Select.Option>
-          <Select.Option value={uuidv4()}>Google</Select.Option>
-          <Select.Option value={uuidv4()}>Microsoft</Select.Option>
+          <Select.Option value="apple">Apple</Select.Option>
+          <Select.Option value="google">Google</Select.Option>
+          <Select.Option value="microsoft">Microsoft</Select.Option>
         </Select>
       </Form.Item>
 
@@ -95,7 +130,6 @@ const AccountForm: FC<Props> = ({
           {updatingUser ? 'Cập nhật' : 'Tạo mới'}
         </Button>
       </Form.Item>
-      {isError && <div>{error?.message}</div>}
     </Form>
   );
 };

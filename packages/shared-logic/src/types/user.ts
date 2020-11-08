@@ -15,6 +15,7 @@ export type User = {
 export interface UserResponse {
   errorCode: number;
   session: string;
+  message?: string;
   user: User;
 }
 

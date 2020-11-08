@@ -5,6 +5,7 @@ import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import {login, User} from 'shared-logic';
 import {encrypt} from '../utils/aesUtil';
 import {useAuthState} from '../context/auth-context';
+import {ACTION_ERROR} from '../contants/common';
 
 const Login = () => {
   const {onLoginSuccess} = useAuthState();
@@ -16,11 +17,13 @@ const Login = () => {
         ...values,
         password: encrypt(values.password),
       });
-      if (dataLogin?.data?.session) {
+      if (dataLogin?.data?.session && dataLogin?.data?.errorCode === 0) {
         onLoginSuccess(dataLogin?.data?.session, dataLogin?.data?.user);
+      } else if (dataLogin?.data?.errorCode === 1) {
+        message.error(dataLogin?.data?.message);
       }
     } catch (err) {
-      message.error('Đăng nhập không thành công!');
+      message.error(ACTION_ERROR);
     }
   };
 

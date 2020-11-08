@@ -12,10 +12,13 @@ export async function login(params: User): ServerResponse<UserResponse> {
   return secureInstance.post('/user/login', params);
 }
 
-export async function createOrUpdateUser(
-  params: User,
-  type: AccountAction,
-): ServerResponse<{result: boolean; message?: string} | UserResponse> {
+export async function createOrUpdateUser({
+  params,
+  type,
+}: {
+  params: User;
+  type: AccountAction;
+}): ServerResponse<{result: boolean; message?: string} | UserResponse> {
   return secureInstance.put(`/user/${type}`, params);
 }
 

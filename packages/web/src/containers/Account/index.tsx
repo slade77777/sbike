@@ -1,16 +1,12 @@
 import React, {useReducer} from 'react';
 import {
   AccountAction,
-  createOrUpdateUser,
   PERMISSION_UPDATE_COMPANY,
   PERMISSION_UPDATE_USER,
   User,
 } from 'shared-logic';
-import {useMutation} from 'react-query';
-import {Button, Card, Col, message, Modal, Row} from 'antd';
-import {ACTION_SUCCESS} from '../../contants/common';
+import {Button, Card, Col, Modal, Row} from 'antd';
 import {ACCOUNT_MANAGEMENT} from '../../contants/pageNames';
-import {encrypt} from '../../utils/aesUtil';
 import {FormActionType, FormTitleEnum, ModalEnum} from '../../contants/form';
 import labels from '../../contants/labels';
 import AccountForm from './AccountForm';
@@ -93,33 +89,15 @@ function reducer(state: State, action: Action) {
 }
 
 const Account = () => {
-  const [createOrUpdateMutate, {isLoading, isError}] = useMutation(
-    createOrUpdateUser,
-  );
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const handleCreatingOrUpdatingUser = async (
-    values: User,
-    type: AccountAction,
-  ) => {
-    console.log(values);
-    console.log(type);
-    const res = await createOrUpdateMutate(
-      {
-        ...values,
-        password: encrypt(values.password),
-      },
-      type,
-    );
-    if (res?.data?.result) {
-      if (type === AccountAction.INSERT) {
-        dispatch({type: FormActionType.INSERT_SUCCESS, data: values});
-      } else {
-        dispatch({type: FormActionType.UPDATE_SUCCESS});
-      }
-      message.success(ACTION_SUCCESS);
+  function handleSuccess(actionType: AccountAction, data?: User) {
+    if (actionType === AccountAction.INSERT) {
+      dispatch({type: FormActionType.INSERT_SUCCESS, data});
+    } else {
+      dispatch({type: FormActionType.UPDATE_SUCCESS});
     }
-  };
+  }
 
   function openToUpdateUser(user: User) {
     dispatch({type: FormActionType.OPEN_UPDATE, data: user});
@@ -153,16 +131,8 @@ const Account = () => {
         footer={false}
         onCancel={() => dispatch({type: ModalEnum.CLOSE_MODAL})}>
         <AccountForm
-          onSubmit={(user) =>
-            handleCreatingOrUpdatingUser(
-              user,
-              state.updatingData ? AccountAction.UPDATE : AccountAction.INSERT,
-            )
-          }
+          onSuccess={handleSuccess}
           updatingUser={state.updatingData}
-          isLoading={isLoading}
-          isError={isError}
-          error={{message: 'error'}}
         />
       </Modal>
     </>

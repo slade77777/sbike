@@ -6,7 +6,7 @@ import {
   User,
 } from 'shared-logic';
 import {useMutation} from 'react-query';
-import {Button, Card, Col, Modal, Row} from 'antd';
+import {Button, Card, Col, message, Modal, Row} from 'antd';
 import {encrypt} from '../../utils/aesUtil';
 import useModal from '../../hooks/useModal';
 import AccountForm from './AccountForm';
@@ -38,6 +38,9 @@ const ACCOUNTS: User[] = [
 const Account = () => {
   const [insertMutate, {isLoading, isError}] = useMutation(insertUser);
   const [users, setUsers] = useState<User[]>(ACCOUNTS);
+  const [updatingUser, setUpdatingUser] = useState<User | null>(null);
+
+  const {visible, toggle} = useModal();
 
   const handleAddingUser = async (values: {
     userName: string;
@@ -49,10 +52,15 @@ const Account = () => {
     });
     if (res?.data?.result) {
       setUsers((prevState) => prevState.concat(values));
+      message.success('Thêm mới thành công!');
+      toggle();
     }
   };
 
-  const {visible, toggle} = useModal();
+  function handleUpdatingUser(user: User) {
+    toggle();
+    setUpdatingUser(user);
+  }
 
   return (
     <>
@@ -65,19 +73,19 @@ const Account = () => {
                 Thêm mới
               </Button>
             }>
-            <AccountsList accounts={users} />
+            <AccountsList accounts={users} editUser={handleUpdatingUser} />
           </Card>
         </Col>
       </Row>
       <Modal
-        title="Thêm mới user"
+        title={updatingUser ? 'Cập nhật thông tin' : 'Thêm mới'}
         visible={visible}
         destroyOnClose
         footer={false}
-        width={440}
         onCancel={toggle}>
         <AccountForm
           addUser={handleAddingUser}
+          updatingUser={updatingUser}
           isLoading={isLoading}
           isError={isError}
           error={{message: 'error'}}

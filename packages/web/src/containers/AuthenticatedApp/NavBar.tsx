@@ -7,6 +7,43 @@ import {
 } from '@ant-design/icons';
 import {Menu} from 'antd';
 import {Link} from 'react-router-dom';
+import {
+  PERMISSION_GET_ALL_COMPANY,
+  PERMISSION_MANAGER_USER,
+  PERMISSION_UPDATE_COMPANY,
+  PERMISSION_UPDATE_USER,
+} from 'shared-logic';
+
+const NAVS = [
+  {
+    key: '1',
+    icon: <DashboardOutlined />,
+    route: '/',
+    name: 'Dashboard',
+    permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+  },
+  {
+    key: '2',
+    icon: <UserAddOutlined />,
+    route: '/account',
+    name: 'Quản lý tài khoản',
+    permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+  },
+  {
+    key: '3',
+    icon: <CarOutlined />,
+    route: '/devices',
+    name: 'Quản lý thiết bị',
+    permissions: [],
+  },
+  {
+    key: '4',
+    icon: <BuildOutlined />,
+    route: '/company',
+    name: 'Quản lý công ty',
+    permissions: [PERMISSION_UPDATE_COMPANY, PERMISSION_GET_ALL_COMPANY],
+  },
+];
 
 const NavBar = () => {
   return (
@@ -15,18 +52,11 @@ const NavBar = () => {
       defaultSelectedKeys={['1']}
       mode="inline"
       collapsedWidth={50}>
-      <Menu.Item key="1" icon={<DashboardOutlined />}>
-        <Link to="/">Dashboard</Link>
-      </Menu.Item>
-      <Menu.Item key="2" icon={<UserAddOutlined />}>
-        <Link to="/account">Quản lý tài khoản</Link>
-      </Menu.Item>
-      <Menu.Item key="3" icon={<CarOutlined />}>
-        <Link to="/devices">Quản lý xe</Link>
-      </Menu.Item>
-      <Menu.Item key="4" icon={<BuildOutlined />}>
-        <Link to="/company">Quản lý công ty</Link>
-      </Menu.Item>
+      {NAVS.map((nav) => (
+        <Menu.Item key={nav.key} icon={nav.icon}>
+          <Link to={nav.route}>{nav.name}</Link>
+        </Menu.Item>
+      ))}
     </Menu>
   );
 };

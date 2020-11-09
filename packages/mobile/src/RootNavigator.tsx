@@ -30,7 +30,11 @@ const AppRoot = () => {
           const user = JSON.parse(userData);
           setToken(user?.userToken);
           dispatch({type: 'RESTORE_TOKEN', userData: user });
+        } else {
+          dispatch({type: 'RESTORE_TOKEN', userData: {} });
         }
+      }).catch(() => {
+        dispatch({type: 'RESTORE_TOKEN', userData: {} });
       })
     };
 

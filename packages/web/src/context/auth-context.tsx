@@ -4,7 +4,7 @@ import {setToken, User} from 'shared-logic';
 type AuthType = {
   isAuth: boolean;
   userInfo?: User | null;
-  onLoginSuccess: (session: string, user: User) => void;
+  onLoginSuccess: (session: string) => void;
   onLogoutSuccess: () => void;
 };
 
@@ -23,12 +23,10 @@ const AuthProvider: FC<Props> = ({children}) => {
   const [isAuth, setIsAuth] = useState<boolean>(
     () => !!localStorage.getItem('session'),
   );
-  const [userInfo, setUserInfo] = useState<User | null>(null);
 
-  function onLoginSuccess(session: string, user: User) {
+  function onLoginSuccess(session: string) {
     if (session) {
       setIsAuth(true);
-      setUserInfo(user);
       localStorage.setItem('session', session);
       setToken(session);
     }
@@ -52,7 +50,6 @@ const AuthProvider: FC<Props> = ({children}) => {
         isAuth,
         onLoginSuccess,
         onLogoutSuccess,
-        userInfo,
       }}>
       {children}
     </AuthContext.Provider>

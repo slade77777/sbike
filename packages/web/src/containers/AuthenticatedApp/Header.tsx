@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {Button, Dropdown, Layout, Menu} from 'antd';
+import {useUserInfo} from 'shared-logic';
 import {Link} from 'react-router-dom';
 import {DownOutlined, UserOutlined} from '@ant-design/icons';
-import {useAuthState} from '../../context/auth-context';
 import LogoutButton from './LogoutButton';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 const Header: FC<Props> = ({title = 'Sbike Admin Dashboard'}) => {
-  const {userInfo} = useAuthState();
+  const {data} = useUserInfo();
   const menu = (
     <Menu>
       <Menu.Item>
@@ -30,7 +30,7 @@ const Header: FC<Props> = ({title = 'Sbike Admin Dashboard'}) => {
       <h3>{title}</h3>
       <Dropdown overlay={menu}>
         <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-          Xin chào: {userInfo?.fullName || userInfo?.userName || ''}{' '}
+          Xin chào: {data?.data?.fullName || data?.data?.userName || ''}{' '}
           <DownOutlined />
         </a>
       </Dropdown>

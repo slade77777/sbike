@@ -15,6 +15,7 @@ export * from './api/project';
 export * from './api/user';
 export * from './api/location';
 export * from './constants/roles';
+export {default as useUserInfo} from './hooks/useUserInfo';
 export {setToken};
 
 export function setupBusinessLayer(baseUrl: string) {

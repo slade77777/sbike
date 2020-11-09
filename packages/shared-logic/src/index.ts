@@ -13,6 +13,7 @@ export * from './types/response';
 export * from './api/project';
 export * from './api/user';
 export * from './constants/roles';
+export {default as useUserInfo} from './hooks/useUserInfo';
 export {setToken};
 
 export function setupBusinessLayer(baseUrl: string) {

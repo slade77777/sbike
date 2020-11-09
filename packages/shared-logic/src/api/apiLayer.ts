@@ -16,4 +16,5 @@ export interface ApiLayer {
     type: AccountAction;
   }): ServerResponse<{result: boolean; message?: string} | UserResponse>;
   logout(): ServerResponse<UserLogoutResponse>;
+  getUserInfo(): ServerResponse<User>;
 }

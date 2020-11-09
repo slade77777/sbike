@@ -14,7 +14,9 @@
     "prepare": "bob build",
     "typescript": "tsc --noEmit"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-query": "^2.26.2"
+  },
   "devDependencies": {
     "@react-native-community/bob": "^0.16.2",
     "react": "^17.0.1"

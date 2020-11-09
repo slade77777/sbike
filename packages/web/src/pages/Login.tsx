@@ -18,7 +18,7 @@ const Login = () => {
         password: encrypt(values.password),
       });
       if (dataLogin?.data?.session && dataLogin?.data?.errorCode === 0) {
-        onLoginSuccess(dataLogin?.data?.session, dataLogin?.data?.user);
+        onLoginSuccess(dataLogin?.data?.session);
       } else if (dataLogin?.data?.errorCode === 1) {
         message.error(dataLogin?.data?.message);
       }

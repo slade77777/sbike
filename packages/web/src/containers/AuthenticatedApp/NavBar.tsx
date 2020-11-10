@@ -1,9 +1,11 @@
 import React from 'react';
 import {
   DashboardOutlined,
+  PieChartOutlined,
   BuildOutlined,
   UserAddOutlined,
   CarOutlined,
+  LineChartOutlined,
 } from '@ant-design/icons';
 import {Menu} from 'antd';
 import {Link} from 'react-router-dom';
@@ -16,31 +18,41 @@ import {
 
 const NAVS = [
   {
-    key: '1',
+    key: 'tracking',
     icon: <DashboardOutlined />,
     route: '/',
-    name: 'Dashboard',
+    name: 'Giám sát',
     permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
   },
   {
-    key: '2',
-    icon: <UserAddOutlined />,
-    route: '/account',
-    name: 'Quản lý tài khoản',
-    permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
-  },
-  {
-    key: '3',
+    key: 'devices',
     icon: <CarOutlined />,
     route: '/devices',
-    name: 'Quản lý thiết bị',
+    name: 'Danh sách thiết bị',
     permissions: [],
   },
   {
-    key: '4',
-    icon: <BuildOutlined />,
-    route: '/company',
-    name: 'Quản lý công ty',
+    key: 'management',
+    subMenus: [
+      {
+        key: 'accounts',
+        route: '/accounts',
+        name: 'Quản lý tài khoản',
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+      {
+        key: 'companies',
+        route: '/companies',
+        name: 'Quản lý công ty',
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+    ],
+  },
+  {
+    key: 'report',
+    icon: <LineChartOutlined />,
+    route: '/report',
+    name: 'Báo cáo',
     permissions: [PERMISSION_UPDATE_COMPANY, PERMISSION_GET_ALL_COMPANY],
   },
 ];
@@ -52,11 +64,21 @@ const NavBar = () => {
       defaultSelectedKeys={['1']}
       mode="inline"
       collapsedWidth={50}>
-      {NAVS.map((nav) => (
-        <Menu.Item key={nav.key} icon={nav.icon}>
-          <Link to={nav.route}>{nav.name}</Link>
-        </Menu.Item>
-      ))}
+      {NAVS.map((nav) =>
+        nav.subMenus ? (
+          <Menu.SubMenu key="sub1" icon={<PieChartOutlined />} title="Quản lý">
+            {nav.subMenus.map((sub) => (
+              <Menu.Item key={sub.key}>
+                <Link to={sub.route}>{sub.name}</Link>
+              </Menu.Item>
+            ))}
+          </Menu.SubMenu>
+        ) : (
+          <Menu.Item key={nav.key} icon={nav.icon}>
+            <Link to={nav.route}>{nav.name}</Link>
+          </Menu.Item>
+        ),
+      )}
     </Menu>
   );
 };

@@ -9,7 +9,7 @@ type Props = {
   title?: string;
 };
 
-const Header: FC<Props> = ({title = 'Sbike Admin Dashboard'}) => {
+const Header: FC<Props> = ({title = 'HỆ THỐNG GIÁM SÁT SBIKE'}) => {
   const {data} = useUserInfo();
   const menu = (
     <Menu>

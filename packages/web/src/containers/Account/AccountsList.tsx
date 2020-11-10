@@ -1,15 +1,15 @@
 import React, {FC} from 'react';
-import {getRoleNameByValue, User} from 'shared-logic';
-import {Table, Button, Space, Tag, Switch} from 'antd';
+import {getRoleNameByValue, User, useUsersByCompany} from 'shared-logic';
+import {Table, Button, Space, Tag, Switch, Spin} from 'antd';
 import {CheckOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
 
 type Props = {
-  accounts: User[];
   editUser?: (user: User) => void;
   deleteUser?: (userId: string) => void;
 };
 
-const AccountsList: FC<Props> = ({accounts, editUser}) => {
+const AccountsList: FC<Props> = ({editUser}) => {
+  const {data, isLoading} = useUsersByCompany();
   const columns = [
     {
       title: 'Họ tên',
@@ -68,7 +68,11 @@ const AccountsList: FC<Props> = ({accounts, editUser}) => {
       ),
     },
   ];
-  return <Table dataSource={accounts} columns={columns} />;
+  return (
+    <Spin spinning={isLoading}>
+      <Table dataSource={data?.data} columns={columns} />
+    </Spin>
+  );
 };
 
 export default AccountsList;

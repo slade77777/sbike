@@ -17,4 +17,5 @@ export interface ApiLayer {
   }): ServerResponse<{result: boolean; message?: string} | UserResponse>;
   logout(): ServerResponse<UserLogoutResponse>;
   getUserInfo(): ServerResponse<User>;
+  getUserByCompany(): ServerResponse<User[]>;
 }

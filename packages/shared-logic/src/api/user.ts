@@ -27,24 +27,9 @@ export async function logout(): ServerResponse<UserLogoutResponse> {
 }
 
 export async function getUserInfo(): ServerResponse<User> {
-  return new Promise((resolve) =>
-    setTimeout(
-      () =>
-        resolve({
-          code: 200,
-          data: {
-            notificationMessage: '',
-            userName: 'dungho',
-            fullName: ' HO DUNG',
-            active: false,
-            companyID: '',
-            permission: [''],
-            phoneNumber: '999',
-            password: '1243',
-          },
-          status: 200,
-        }),
-      1000,
-    ),
-  );
+  return secureInstance.get('/user/getinfo');
+}
+
+export function getUserByCompany(): ServerResponse<User[]> {
+  return secureInstance.get('/user/GetUserByCompany');
 }

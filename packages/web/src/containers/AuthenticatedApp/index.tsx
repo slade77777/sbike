@@ -16,6 +16,7 @@ const AuthenticatedApp = () => {
           collapsible
           collapsed={collapsed}
           collapsedWidth={50}
+          width={250}
           onCollapse={() => setCollapsed(!collapsed)}>
           <Logo status={collapsed ? 'small' : 'large'} />
           <NavBar />

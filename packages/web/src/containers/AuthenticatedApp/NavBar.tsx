@@ -2,8 +2,6 @@ import React from 'react';
 import {
   DashboardOutlined,
   PieChartOutlined,
-  BuildOutlined,
-  UserAddOutlined,
   CarOutlined,
   LineChartOutlined,
 } from '@ant-design/icons';
@@ -15,35 +13,32 @@ import {
   PERMISSION_UPDATE_COMPANY,
   PERMISSION_UPDATE_USER,
 } from 'shared-logic';
+import {ROUTES, Routes as RoutEnum} from '../../enum';
 
 const NAVS = [
   {
-    key: 'tracking',
+    key: RoutEnum.Tracking,
     icon: <DashboardOutlined />,
     route: '/',
     name: 'Giám sát',
     permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
   },
   {
-    key: 'devices',
+    key: RoutEnum.Devices,
     icon: <CarOutlined />,
-    route: '/devices',
-    name: 'Danh sách thiết bị',
     permissions: [],
   },
   {
     key: 'management',
+    icon: <PieChartOutlined />,
+    title: 'Quản lý',
     subMenus: [
       {
-        key: 'accounts',
-        route: '/accounts',
-        name: 'Quản lý tài khoản',
+        key: RoutEnum.UserManagement,
         permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
       },
       {
-        key: 'companies',
-        route: '/companies',
-        name: 'Quản lý công ty',
+        key: RoutEnum.CompaniesManagement,
         permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
       },
     ],
@@ -52,8 +47,26 @@ const NAVS = [
     key: 'report',
     icon: <LineChartOutlined />,
     route: '/report',
-    name: 'Báo cáo',
+    title: 'Báo cáo',
     permissions: [PERMISSION_UPDATE_COMPANY, PERMISSION_GET_ALL_COMPANY],
+    subMenus: [
+      {
+        key: RoutEnum.AlertMovingReport,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+      {
+        key: RoutEnum.TurnOnOfReport,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+      {
+        key: RoutEnum.OverSpeedReport,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+      {
+        key: RoutEnum.InOutSafeZoneReport,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+    ],
   },
 ];
 
@@ -66,16 +79,16 @@ const NavBar = () => {
       collapsedWidth={50}>
       {NAVS.map((nav) =>
         nav.subMenus ? (
-          <Menu.SubMenu key="sub1" icon={<PieChartOutlined />} title="Quản lý">
+          <Menu.SubMenu key={nav.key} icon={nav.icon} title={nav.title}>
             {nav.subMenus.map((sub) => (
               <Menu.Item key={sub.key}>
-                <Link to={sub.route}>{sub.name}</Link>
+                <Link to={ROUTES[sub.key].route}>{ROUTES[sub.key].title}</Link>
               </Menu.Item>
             ))}
           </Menu.SubMenu>
         ) : (
           <Menu.Item key={nav.key} icon={nav.icon}>
-            <Link to={nav.route}>{nav.name}</Link>
+            <Link to={ROUTES[nav.key].route}>{ROUTES[nav.key].title}</Link>
           </Menu.Item>
         ),
       )}

@@ -7,6 +7,7 @@ import SignIn from './screens/SignIn';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {setToken} from 'shared-logic';
+import Config from 'react-native-config';
 
 import {useAuthState} from "./context/auth-context";
 import User from "./screens/User";
@@ -20,16 +21,30 @@ export type MainStackParamList = {
 const Stack = createStackNavigator<MainStackParamList>();
 
 const AppRoot = () => {
-
-  const {state, dispatch} = useAuthState();
+  const {state, dispatch, signIn} = useAuthState();
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
       AsyncStorage.getItem('userData').then((userData) => {
         if (userData) {
           const user = JSON.parse(userData);
-          setToken(user?.userToken);
-          dispatch({type: 'RESTORE_TOKEN', userData: user });
+          if (user.userToken) {
+            fetch(`${Config.API_URL}/User/Getinfo`, {
+              method: 'get',
+              headers: new Headers({
+                'API_KEY': user.userToken
+              })
+            }).then(res => {
+              if (res.status !== 401) {
+                res.json().then(data => {
+                  setToken(user?.userToken);
+                  dispatch({type: 'RESTORE_TOKEN', userData: {...user, ...data} });
+                })
+              } else {
+                signIn(user.userName, user.originalPassword);
+              }
+            });
+          }
         } else {
           dispatch({type: 'RESTORE_TOKEN', userData: {} });
         }

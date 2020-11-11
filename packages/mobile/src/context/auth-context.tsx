@@ -65,6 +65,7 @@ const AuthProvider: FC<Props> = ({children}) => {
         }
         let userData = data.user;
         userData.userToken = data.session;
+        userData.originalPassword = password;
         AsyncStorage.setItem('userData', JSON.stringify(userData)).then(() => {
           dispatch({type: 'SIGN_IN', userData});
           setToken(userData.userToken);

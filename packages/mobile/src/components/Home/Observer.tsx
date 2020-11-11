@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View, Text, Modal} from "react-native";
 import MapView from 'react-native-maps';
-import {getCurrentDeviceLocation} from 'shared-logic';
 import color from "../../config/color";
 import Icon from "react-native-vector-icons/FontAwesome";
+import fetchCurrentDeviceLocation from "shared-logic/src/hooks/deviceLocation";
+import {useAuthState} from "../../context/auth-context";
 
 type Props = {
 };
@@ -11,14 +12,10 @@ type Props = {
 const Observer: React.FC<Props> = ({}) => {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const {state} = useAuthState();
+  const userInfo = state?.userData;
 
-  useEffect(() => {
-    getCurrentDeviceLocation().then(data => {
-      console.log(data);
-    }).catch(error => {
-      console.log(error);
-    })
-  }, []);
+  const { isLoading, isError, data, error } = fetchCurrentDeviceLocation([userInfo?.companyID]);
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}} >

@@ -3,7 +3,7 @@ import {StyleSheet, TouchableOpacity, View, Text, Modal} from "react-native";
 import MapView from 'react-native-maps';
 import color from "../../config/color";
 import Icon from "react-native-vector-icons/FontAwesome";
-import fetchCurrentDeviceLocation from "shared-logic/src/hooks/deviceLocation";
+import fetchCurrentDeviceLocation from "shared-logic/src/hooks/useDeviceLocation";
 import {useAuthState} from "../../context/auth-context";
 
 type Props = {

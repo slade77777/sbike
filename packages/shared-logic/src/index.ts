@@ -14,9 +14,12 @@ export * from './types/deviceLocation';
 export * from './api/project';
 export * from './api/user';
 export * from './api/location';
+export * from './api/device';
 export * from './constants/roles';
 export {default as useUserInfo} from './hooks/useUserInfo';
 export {default as useUsersByCompany} from './hooks/useUsersByCompany';
+export {default as useDeviceByCompany} from './hooks/useDeviceCompany';
+export {default as useDeviceLocation} from './hooks/useDeviceLocation';
 export {setToken};
 
 export function setupBusinessLayer(baseUrl: string) {

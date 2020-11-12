@@ -14,7 +14,7 @@ const Header: FC<Props> = ({title = 'HỆ THỐNG GIÁM SÁT SBIKE'}) => {
   const menu = (
     <Menu>
       <Menu.Item>
-        <Link to="/profile">
+        <Link to="/thong-tin-ca-nhan">
           <Button type="link" icon={<UserOutlined />}>
             Thông tin cá nhân
           </Button>

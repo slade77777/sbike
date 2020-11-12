@@ -44,6 +44,11 @@ const AuthProvider: FC<Props> = ({children}) => {
     }
   }, []);
 
+  // useEffect(() => {
+  //   const localSession = localStorage.getItem('session');
+  //   if(localSession){}
+  // }, []);
+
   return (
     <AuthContext.Provider
       value={{

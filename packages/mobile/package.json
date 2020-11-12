@@ -12,12 +12,15 @@
     "typescript": "tsc --noEmit"
   },
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.5.2",
     "@react-navigation/material-top-tabs": "^5.2.17",
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.5.1",
+    "@types/react-native": "^0.63.33",
+    "@types/react-native-vector-icons": "^6.4.6",
     "formik": "^2.1.5",
     "i18next": "^19.7.0",
     "lottie-react-native": "^3.5.0",

@@ -9,6 +9,7 @@ import color from "../config/color";
 const Home: React.FC = () => {
 
   const [index, setIndex] = useState(0);
+
   const [routes] = useState([
     { key: 'first', title: 'Giám sát' },
     { key: 'second', title: 'Thiết bị' },
@@ -34,4 +35,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);

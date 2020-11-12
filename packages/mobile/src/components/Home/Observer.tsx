@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View, Text, Modal} from "react-native";
+import {StyleSheet, TouchableOpacity, View, Text, Modal, Dimensions} from "react-native";
 import MapView from 'react-native-maps';
 import color from "../../config/color";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {useAuthState} from "../../context/auth-context";
 import useDeviceCompany from "shared-logic/src/hooks/useDeviceCompany";
+import dayjs from 'dayjs';
+
+const  {width} = Dimensions.get('window');
 
 type Props = {
 };
@@ -16,7 +19,8 @@ const Observer: React.FC<Props> = ({}) => {
   const userInfo = state?.userData;
 
   const { data } = useDeviceCompany(userInfo?.companyID);
-  console.log(data);
+  const deviceData = data?.data;
+  console.log(deviceData);
   return (
     <View style={{flex: 1, backgroundColor: 'white'}} >
       <MapView
@@ -43,7 +47,43 @@ const Observer: React.FC<Props> = ({}) => {
             <TouchableOpacity onPress={() => setModalVisible(false)}>
               <Icon name='close' color={'black'} size={25}/>
             </TouchableOpacity>
-            <Text style={styles.modalText}>Hello World!</Text>
+            <Text style={{ fontSize: 20, lineHeight: 30, fontWeight: 'bold', textAlign: 'center', marginBottom: 20}}>
+              Danh sách xe
+            </Text>
+            <View style={styles.tableRow}>
+              <View style={styles.tableCol}>
+                <Text>Biển số</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>Vận tốc</Text>
+                <Text>(Km/h)</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>Thời gian</Text>
+                <Text>(HH:mm)</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Icon name='align-justify' color={'black'} size={25}/>
+              </View>
+            </View>
+            {
+              deviceData && deviceData.map(item => (
+                <View key={item.deviceID} style={styles.tableRow}>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.textTable}>{item.carNumber || ''}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.textTable}>{item?.position?.speed || 0}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.textTable}>{item?.position?.deviceTime ? dayjs(item.position.deviceTime).format('HH:mm') : ''}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Icon name='align-justify' color={'black'} size={25}/>
+                  </View>
+                </View>
+              ))
+            }
           </View>
         </View>
       </Modal>
@@ -59,10 +99,10 @@ const styles = StyleSheet.create({
     marginTop: 22
   },
   modalView: {
-    margin: 20,
+    width: width * 0.8,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 15,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -86,6 +126,25 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
+  },
+  tableRow: {
+    borderWidth: 1,
+    borderColor: 'black',
+    height: 50,
+    flexDirection: 'row'
+  },
+  tableCol: {
+    width: (width * 0.8 - 31)/4,
+    borderLeftWidth: 1,
+    borderLeftColor: 'black',
+    borderRightWidth: 1,
+    borderRightColor: 'black',
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  textTable: {
+    textAlign: 'center',
   }
 });
 

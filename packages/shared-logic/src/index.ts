@@ -7,7 +7,7 @@ export {dateUtils};
 export * from './types/project';
 export * from './types/user';
 export * from './types/response';
-export * from './types/deviceLocation';
+export * from './types/device';
 
 // TODO should rewrite as a action on reducer ???
 //export api call for agent

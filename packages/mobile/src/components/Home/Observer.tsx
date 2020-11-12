@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, TouchableOpacity, View, Text, Modal} from "react-native";
 import MapView from 'react-native-maps';
 import color from "../../config/color";
 import Icon from "react-native-vector-icons/FontAwesome";
-import fetchCurrentDeviceLocation from "shared-logic/src/hooks/useDeviceLocation";
 import {useAuthState} from "../../context/auth-context";
+import useDeviceCompany from "shared-logic/src/hooks/useDeviceCompany";
 
 type Props = {
 };
@@ -15,8 +15,8 @@ const Observer: React.FC<Props> = ({}) => {
   const {state} = useAuthState();
   const userInfo = state?.userData;
 
-  const { isLoading, isError, data, error } = fetchCurrentDeviceLocation([userInfo?.companyID]);
-
+  const { data } = useDeviceCompany(userInfo?.companyID);
+  console.log(data);
   return (
     <View style={{flex: 1, backgroundColor: 'white'}} >
       <MapView

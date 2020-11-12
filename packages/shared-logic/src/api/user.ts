@@ -27,7 +27,7 @@ export async function logout(): ServerResponse<UserLogoutResponse> {
 }
 
 export async function getUserInfo(): ServerResponse<User> {
-  return secureInstance.get('/user/getinfo');
+  return secureInstance.get('/User/Getinfo');
 }
 
 export function getUserByCompany(): ServerResponse<User[]> {

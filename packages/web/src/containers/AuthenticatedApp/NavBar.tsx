@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   DashboardOutlined,
-  BuildOutlined,
-  UserAddOutlined,
+  PieChartOutlined,
   CarOutlined,
+  LineChartOutlined,
 } from '@ant-design/icons';
 import {Menu} from 'antd';
 import {Link} from 'react-router-dom';
@@ -13,35 +13,60 @@ import {
   PERMISSION_UPDATE_COMPANY,
   PERMISSION_UPDATE_USER,
 } from 'shared-logic';
+import {ROUTES, Routes as RoutEnum} from '../../enum';
 
 const NAVS = [
   {
-    key: '1',
+    key: RoutEnum.Tracking,
     icon: <DashboardOutlined />,
     route: '/',
-    name: 'Dashboard',
+    name: 'Giám sát',
     permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
   },
   {
-    key: '2',
-    icon: <UserAddOutlined />,
-    route: '/account',
-    name: 'Quản lý tài khoản',
-    permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
-  },
-  {
-    key: '3',
+    key: RoutEnum.Devices,
     icon: <CarOutlined />,
-    route: '/devices',
-    name: 'Quản lý thiết bị',
     permissions: [],
   },
   {
-    key: '4',
-    icon: <BuildOutlined />,
-    route: '/company',
-    name: 'Quản lý công ty',
+    key: 'management',
+    icon: <PieChartOutlined />,
+    title: 'Quản lý',
+    subMenus: [
+      {
+        key: RoutEnum.UserManagement,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+      {
+        key: RoutEnum.CompaniesManagement,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+    ],
+  },
+  {
+    key: 'report',
+    icon: <LineChartOutlined />,
+    route: '/report',
+    title: 'Báo cáo',
     permissions: [PERMISSION_UPDATE_COMPANY, PERMISSION_GET_ALL_COMPANY],
+    subMenus: [
+      {
+        key: RoutEnum.AlertMovingReport,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+      {
+        key: RoutEnum.TurnOnOfReport,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+      {
+        key: RoutEnum.OverSpeedReport,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+      {
+        key: RoutEnum.InOutSafeZoneReport,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+    ],
   },
 ];
 
@@ -52,11 +77,21 @@ const NavBar = () => {
       defaultSelectedKeys={['1']}
       mode="inline"
       collapsedWidth={50}>
-      {NAVS.map((nav) => (
-        <Menu.Item key={nav.key} icon={nav.icon}>
-          <Link to={nav.route}>{nav.name}</Link>
-        </Menu.Item>
-      ))}
+      {NAVS.map((nav) =>
+        nav.subMenus ? (
+          <Menu.SubMenu key={nav.key} icon={nav.icon} title={nav.title}>
+            {nav.subMenus.map((sub) => (
+              <Menu.Item key={sub.key}>
+                <Link to={ROUTES[sub.key].route}>{ROUTES[sub.key].title}</Link>
+              </Menu.Item>
+            ))}
+          </Menu.SubMenu>
+        ) : (
+          <Menu.Item key={nav.key} icon={nav.icon}>
+            <Link to={ROUTES[nav.key].route}>{ROUTES[nav.key].title}</Link>
+          </Menu.Item>
+        ),
+      )}
     </Menu>
   );
 };

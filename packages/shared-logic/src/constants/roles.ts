@@ -38,8 +38,3 @@ export function getRoleNameByValue(role: string) {
   }
   return ROLES.find((r) => r.name === role)?.label;
 }
-
-export function checkAccess(roles: Array<string>, routePermissions): boolean {
-  console.log(routePermissions);
-  return true;
-}

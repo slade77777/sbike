@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 const useAppState = () => {
   const [state, dispatch] = React.useReducer(
@@ -28,7 +28,7 @@ const useAppState = () => {
       isLoading: true,
       isSignout: false,
       userToken: null,
-    }
+    },
   );
 
   return {state, dispatch};

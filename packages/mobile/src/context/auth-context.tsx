@@ -1,15 +1,15 @@
 import React, {FC} from 'react';
 import {login, setToken, logout} from 'shared-logic';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-community/async-storage';
 
-const AES = require("react-native-crypto-js").AES;
-import CryptoJS from "react-native-crypto-js";
+const AES = require('react-native-crypto-js').AES;
+import CryptoJS from 'react-native-crypto-js';
 
 type AuthType = {
-  state: any,
-  dispatch: any,
+  state: any;
+  dispatch: any;
   signIn: (username: string, password: string) => void;
-  signOut: () => void,
+  signOut: () => void;
 };
 
 const AuthContext = React.createContext<AuthType>({
@@ -51,37 +51,41 @@ const AuthProvider: FC<Props> = ({children}) => {
       isLoading: true,
       isSignout: false,
       userData: {},
-    }
+    },
   );
 
   const handleLogin = (username: string, password: string) => {
     const key = CryptoJS.enc.Utf8.parse('{60F9sG3*vpfCknu');
     const iv = CryptoJS.enc.Utf8.parse('0123456789123456');
-    login({userName: username, password: password ? AES.encrypt(password, key, {iv}).toString() : ''})
-      .then(data => data.data)
-      .then(data => {
+    login({
+      userName: username,
+      password: password ? AES.encrypt(password, key, {iv}).toString() : '',
+    })
+      .then((data) => data.data)
+      .then((data) => {
         if (data?.errorCode) {
           return alert(data.message);
         }
         let userData = data.user;
         userData.userToken = data.session;
         userData.originalPassword = password;
-        AsyncStorage.setItem('userData', JSON.stringify(userData)).then(() => {
-          dispatch({type: 'SIGN_IN', userData});
-          setToken(userData.userToken);
-        })
+        AsyncStorage.setItem('userData', JSON.stringify(userData))
+          .then(() => {
+            dispatch({type: 'SIGN_IN', userData});
+            setToken(userData.userToken);
+          })
           .catch(() => console.log('error'));
       })
-      .catch(error => console.log(error));
-  }
+      .catch((error) => console.log(error));
+  };
 
   const handleLogout = () => {
     logout().then(() => {
       AsyncStorage.removeItem('userData').then(() => {
         dispatch({type: 'SIGN_OUT'});
-      })
-    })
-  }
+      });
+    });
+  };
 
   return (
     <AuthContext.Provider

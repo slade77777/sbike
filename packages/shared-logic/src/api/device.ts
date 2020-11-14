@@ -7,6 +7,7 @@ export async function getDeviceByCompany(key: string, {
 } : {
   companyId: string
 }) : ServerResponse<Device[]> {
+  console.log(key)
   return secureInstance.get(`/device/GetDeviceByCompany/${companyId}`);
 }
 
@@ -15,5 +16,6 @@ export async function getDeviceById(key: string, {
 } : {
   deviceId: string
 }) {
+  console.log(key)
   return secureInstance.get(`/device/GetDeviceInfo/${deviceId}`);
 }

@@ -5,5 +5,6 @@ export async function getCurrentDeviceLocation(key: string, {
 } : {
   deviceIds: Array<string>
 }) {
+  console.log(key);
   return secureInstance.post('/location', deviceIds);
 }

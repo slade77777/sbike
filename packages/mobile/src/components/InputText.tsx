@@ -2,30 +2,51 @@ import React from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
 type Props = {
-  keyboardType?: string,
-  label?: string,
-  style?: any,
-  onChangeText?: (text: string) => void,
-  other?: any
-}
+  keyboardType?: string;
+  label?: string;
+  style?: any;
+  onChangeText?: (text: string) => void;
+  other?: any;
+};
 
-const InputText : React.FC<Props> = ({keyboardType, label, style, onChangeText, other}) => {
+const InputText: React.FC<Props> = ({
+  keyboardType,
+  label,
+  style,
+  onChangeText,
+  other,
+}) => {
   return (
     <View>
-      <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white', marginHorizontal: 15}}>
+      <Text
+        style={{
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: 'white',
+          marginHorizontal: 15,
+        }}>
         {label}
       </Text>
       <View style={styles.item}>
         <TextInput
           {...other}
-          onChangeText={(val) => onChangeText && onChangeText(val)}
+          onChangeText={(val) => onChangeText?.(val)}
           keyboardType={keyboardType}
-          style={[style, {justifyContent: 'center', fontSize: 16, color: 'black', paddingHorizontal: 10, paddingVertical: 5}]}
+          style={[
+            style,
+            {
+              justifyContent: 'center',
+              fontSize: 16,
+              color: 'black',
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+            },
+          ]}
         />
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   item: {
@@ -34,12 +55,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: 40,
     borderRadius: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   label: {
     fontSize: 11,
-    color: '#6CAFA1'
-  }
+    color: '#6CAFA1',
+  },
 });
 
 export default InputText;

@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View, Text, Modal, Dimensions} from "react-native";
+import {StyleSheet, TouchableOpacity, View, Text, Modal, Dimensions, FlatList} from "react-native";
 import MapView from 'react-native-maps';
 import color from "../../config/color";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {useAuthState} from "../../context/auth-context";
 import useDeviceCompany from "shared-logic/src/hooks/useDeviceCompany";
 import dayjs from 'dayjs';
+import {Device} from 'shared-logic';
 
-const  {width} = Dimensions.get('window');
+const  {width, height} = Dimensions.get('window');
 
 type Props = {
 };
@@ -20,7 +21,24 @@ const Observer: React.FC<Props> = ({}) => {
 
   const { data } = useDeviceCompany(userInfo?.companyID);
   const deviceData = data?.data;
-  console.log(deviceData);
+
+  const renderItem = (item: Device) => (
+    <View key={item.deviceID} style={styles.tableRow}>
+      <View style={styles.tableCol}>
+        <Text style={styles.textTable}>{item.carNumber || ''}</Text>
+      </View>
+      <View style={styles.tableCol}>
+        <Text style={styles.textTable}>{item?.position?.speed || 0}</Text>
+      </View>
+      <View style={styles.tableCol}>
+        <Text style={styles.textTable}>{item?.position?.deviceTime ? dayjs(item.position.deviceTime).format('HH:mm') : ''}</Text>
+      </View>
+      <View style={styles.tableCol}>
+        <Icon name='align-justify' color={'black'} size={25}/>
+      </View>
+    </View>
+  );
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}} >
       <MapView
@@ -66,24 +84,10 @@ const Observer: React.FC<Props> = ({}) => {
                 <Icon name='align-justify' color={'black'} size={25}/>
               </View>
             </View>
-            {
-              deviceData && deviceData.map(item => (
-                <View key={item.deviceID} style={styles.tableRow}>
-                  <View style={styles.tableCol}>
-                    <Text style={styles.textTable}>{item.carNumber || ''}</Text>
-                  </View>
-                  <View style={styles.tableCol}>
-                    <Text style={styles.textTable}>{item?.position?.speed || 0}</Text>
-                  </View>
-                  <View style={styles.tableCol}>
-                    <Text style={styles.textTable}>{item?.position?.deviceTime ? dayjs(item.position.deviceTime).format('HH:mm') : ''}</Text>
-                  </View>
-                  <View style={styles.tableCol}>
-                    <Icon name='align-justify' color={'black'} size={25}/>
-                  </View>
-                </View>
-              ))
-            }
+            <FlatList
+              data={deviceData}
+              renderItem={(item) => renderItem(item.item)}
+            />
           </View>
         </View>
       </Modal>
@@ -96,10 +100,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     width: width * 0.8,
+    maxHeight: height * 0.7,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 15,

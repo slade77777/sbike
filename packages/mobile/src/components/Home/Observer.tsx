@@ -8,13 +8,14 @@ import {
   Dimensions,
   FlatList,
 } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import useDeviceCompany from 'shared-logic/src/hooks/useDeviceCompany';
 import dayjs from 'dayjs';
 import {Device} from 'shared-logic';
 import {useAuthState} from '../../context/auth-context';
 import color from '../../config/color';
+import {getDeviceById} from 'shared-logic/src';
 
 const {width, height} = Dimensions.get('window');
 
@@ -22,17 +23,50 @@ type Props = {};
 
 const Observer: React.FC<Props> = ({}) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [location, setLocation] = useState({
+    deviceLocation: {
+      latitude: 21.0278,
+      longitude: 105.8342,
+    },
+    mapLocation: {
+      latitude: 21.0278,
+      longitude: 105.8342,
+    }
+  });
   const {state} = useAuthState();
   const userInfo = state?.userData;
-
   const {data} = useDeviceCompany(userInfo?.companyID);
   const deviceData = data?.data;
 
+  const redirectCarLocation = (deviceId: string) => {
+    setModalVisible(false);
+    getDeviceById(deviceId)
+      .then((data) => {
+        const deviceInfo = data.data;
+        const position = deviceInfo?.position;
+        setLocation({
+          deviceLocation: {
+            latitude: position?.latitude || 21.0278,
+            longitude: position?.longitude || 105.8342,
+          },
+          mapLocation: {
+            latitude: position?.latitude || 21.0278,
+            longitude: position?.longitude || 105.8342,
+          }
+        });
+      })
+      .catch(() => {
+        alert('không tìm thấy vị trí');
+      });
+  };
+
   const renderItem = (item: Device) => (
     <View key={item.deviceID} style={styles.tableRow}>
-      <View style={styles.tableCol}>
+      <TouchableOpacity
+        onPress={() => item.deviceID && redirectCarLocation(item.deviceID)}
+        style={styles.tableCol}>
         <Text style={styles.textTable}>{item.carNumber || ''}</Text>
-      </View>
+      </TouchableOpacity>
       <View style={styles.tableCol}>
         <Text style={styles.textTable}>{item?.position?.speed || 0}</Text>
       </View>
@@ -53,15 +87,27 @@ const Observer: React.FC<Props> = ({}) => {
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <MapView
         style={StyleSheet.absoluteFillObject}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+        region={{
+          ...location.mapLocation,
+          longitudeDelta: 0.01,
+          latitudeDelta: 0.01,
         }}
-      />
+        onRegionChange={(coordinate) => {
+          location.mapLocation.latitude = coordinate.latitude;
+          location.mapLocation.longitude = coordinate.longitude;
+        }}>
+        <Marker coordinate={location.deviceLocation}>
+          <Icon name="car" color={color.yellow} size={25} />
+        </Marker>
+      </MapView>
       <TouchableOpacity
-        onPress={() => setModalVisible(true)}
+        onPress={() => {
+          setLocation({
+            deviceLocation: location.deviceLocation,
+            mapLocation: location.mapLocation
+          });
+          setModalVisible(true)
+        }}
         style={{position: 'absolute', left: 10, top: 10}}>
         <View
           style={{
@@ -78,7 +124,10 @@ const Observer: React.FC<Props> = ({}) => {
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <TouchableOpacity onPress={() => setModalVisible(false)}>
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(false);
+              }}>
               <Icon name="close" color={'black'} size={25} />
             </TouchableOpacity>
             <Text

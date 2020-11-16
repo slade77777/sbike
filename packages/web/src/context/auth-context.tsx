@@ -1,17 +1,19 @@
 import React, {FC, useEffect, useState} from 'react';
-import {setToken, User} from 'shared-logic';
+import {login, setToken, User, logout} from 'shared-logic';
+import {useMutation} from 'react-query';
 
 type AuthType = {
   isAuth: boolean;
   userInfo?: User | null;
-  onLoginSuccess: (session: string) => void;
-  onLogoutSuccess: () => void;
+  onLogin: (user: User) => void;
+  onLogout: () => void;
+  loginLoading?: boolean;
 };
 
 const AuthContext = React.createContext<AuthType>({
   isAuth: false,
-  onLoginSuccess: () => null,
-  onLogoutSuccess: () => null,
+  onLogin: () => null,
+  onLogout: () => null,
   userInfo: null,
 });
 
@@ -24,19 +26,6 @@ const AuthProvider: FC<Props> = ({children}) => {
     () => !!localStorage.getItem('session'),
   );
 
-  function onLoginSuccess(session: string) {
-    if (session) {
-      setIsAuth(true);
-      localStorage.setItem('session', session);
-      setToken(session);
-    }
-  }
-
-  function onLogoutSuccess() {
-    setIsAuth(false);
-    localStorage.removeItem('session');
-  }
-
   useEffect(() => {
     const localSession = localStorage.getItem('session');
     if (localSession) {
@@ -44,17 +33,30 @@ const AuthProvider: FC<Props> = ({children}) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const localSession = localStorage.getItem('session');
-  //   if(localSession){}
-  // }, []);
+  const [logoutMutation, loginState] = useMutation(logout, {
+    onSuccess: () => {
+      localStorage.removeItem('session');
+      setIsAuth(false);
+    },
+  });
+
+  const [loginMutation] = useMutation(login, {
+    onSuccess: (res) => {
+      if (res?.data?.session) {
+        setIsAuth(true);
+        localStorage.setItem('session', res.data.session);
+        setToken(res.data.session);
+      }
+    },
+  });
 
   return (
     <AuthContext.Provider
       value={{
         isAuth,
-        onLoginSuccess,
-        onLogoutSuccess,
+        onLogout: logoutMutation,
+        onLogin: loginMutation,
+        loginLoading: loginState.isLoading,
       }}>
       {children}
     </AuthContext.Provider>

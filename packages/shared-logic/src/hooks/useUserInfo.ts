@@ -1,6 +1,6 @@
-import {useQuery} from 'react-query';
+import {useQuery, QueryConfig} from 'react-query';
 import {getUserInfo} from '../api/user';
 
-export default function () {
-  return useQuery('userInfo', getUserInfo);
+export default function (options?: QueryConfig<any>) {
+  return useQuery('userInfo', getUserInfo, options);
 }

@@ -8,7 +8,7 @@ import {
 
 import {secureInstance} from './base';
 
-export async function login(params: User): ServerResponse<UserResponse> {
+export function login(params: User): ServerResponse<UserResponse> {
   return secureInstance.post('/user/login', params);
 }
 

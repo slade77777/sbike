@@ -13,10 +13,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import useDeviceCompany from 'shared-logic/src/hooks/useDeviceCompany';
 import dayjs from 'dayjs';
 import {Device} from 'shared-logic';
+import {getDeviceById} from 'shared-logic/src';
+import {useNavigation} from '@react-navigation/native';
 import {useAuthState} from '../../context/auth-context';
 import color from '../../config/color';
-import {getDeviceById} from 'shared-logic/src';
-import {useNavigation} from "@react-navigation/native";
 
 const {width, height} = Dimensions.get('window');
 
@@ -80,10 +80,12 @@ const Observer: React.FC<Props> = ({}) => {
             : ''}
         </Text>
       </View>
-      <TouchableOpacity onPress={() => {
-        setModalVisible(false);
-        navigation.navigate('DeviceInformation', {deviceId: item.deviceID})
-      }} style={styles.tableCol}>
+      <TouchableOpacity
+        onPress={() => {
+          setModalVisible(false);
+          navigation.navigate('DeviceInformation', {deviceId: item.deviceID});
+        }}
+        style={styles.tableCol}>
         <Icon name="align-justify" color={'black'} size={25} />
       </TouchableOpacity>
     </View>

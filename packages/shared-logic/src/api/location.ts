@@ -1,5 +1,8 @@
-import {secureInstance} from "./base";
+import {secureInstance} from './base';
 
-export async function getCurrentDeviceLocation(_: string, deviceIds: Array<string>) {
+export async function getCurrentDeviceLocation(
+  _: string,
+  deviceIds: Array<string>,
+) {
   return secureInstance.post('/location', deviceIds);
 }

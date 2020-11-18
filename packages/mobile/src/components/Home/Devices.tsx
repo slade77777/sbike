@@ -1,12 +1,12 @@
 import React from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import useDeviceCompany from 'shared-logic/src/hooks/useDeviceCompany';
-import {useAuthState} from '../../context/auth-context';
 import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Device} from 'shared-logic';
-import color from "../../config/color";
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import color from '../../config/color';
+import {useAuthState} from '../../context/auth-context';
 
 type Props = {};
 
@@ -20,7 +20,9 @@ const Devices: React.FC<Props> = ({}) => {
   const renderItem = (item: Device) => {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate('DeviceInformation', {deviceId: item.deviceID})}
+        onPress={() =>
+          navigation.navigate('DeviceInformation', {deviceId: item.deviceID})
+        }
         key={item.deviceID}
         style={{
           borderColor: 'grey',
@@ -34,7 +36,9 @@ const Devices: React.FC<Props> = ({}) => {
           alignItems: 'center',
         }}>
         <View>
-          <Text style={{fontSize: 14, fontWeight: 'bold', paddingBottom: 3}}>{item.carNumber}</Text>
+          <Text style={{fontSize: 14, fontWeight: 'bold', paddingBottom: 3}}>
+            {item.carNumber}
+          </Text>
           <Text style={{fontSize: 13}}>
             {item?.position?.deviceTime
               ? dayjs(item.position.deviceTime).format('HH:mm DD/M/YYYY')
@@ -42,7 +46,9 @@ const Devices: React.FC<Props> = ({}) => {
           </Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{marginRight: 5, fontSize: 16, lineHeight: 24}}>{item.deviceID}</Text>
+          <Text style={{marginRight: 5, fontSize: 16, lineHeight: 24}}>
+            {item.deviceID}
+          </Text>
           <Icon name="chevron-right" color={color.yellow} size={25} />
         </View>
       </TouchableOpacity>
@@ -62,7 +68,7 @@ const Devices: React.FC<Props> = ({}) => {
               fontSize: 20,
               lineHeight: 30,
               paddingVertical: 10,
-              color: color.blue
+              color: color.blue,
             }}>
             Danh sách thiết bị
           </Text>

@@ -1,6 +1,6 @@
-import {secureInstance} from './base';
 import {ServerResponse} from '../types/response';
 import {Device} from '..';
+import {secureInstance} from './base';
 
 export async function getDeviceByCompany(
   _: string,
@@ -9,6 +9,9 @@ export async function getDeviceByCompany(
   return secureInstance.get(`/device/GetDeviceByCompany/${companyId}`);
 }
 
-export async function getDeviceById(_: string, deviceId: string): ServerResponse<Device> {
+export async function getDeviceById(
+  _: string,
+  deviceId: string,
+): ServerResponse<Device> {
   return secureInstance.get(`/device/GetDeviceInfo/${deviceId}`);
 }

@@ -9,8 +9,8 @@ import {
 import Icon from 'react-native-vector-icons/Entypo';
 import {useRoute} from '@react-navigation/native';
 import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
-import color from '../config/color';
 import dayjs from 'dayjs';
+import color from '../config/color';
 
 type Props = {};
 
@@ -21,7 +21,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
   const deviceInfo = data?.data || {};
 
   if (!data) {
-    return <View style={{flex: 1, backgroundColor: 'c7c7cc'}}/>
+    return <View style={{flex: 1, backgroundColor: 'c7c7cc'}} />;
   }
 
   return (
@@ -41,7 +41,11 @@ const DeviceInformation: React.FC<Props> = ({}) => {
         </View>
         <View style={style.row}>
           <Text style={style.label}>Thời gian hết hạn</Text>
-          <Text style={style.value}>{deviceInfo.expriedDate ? dayjs(deviceInfo.expriedDate).format('DD/M/YYYY') : ''}</Text>
+          <Text style={style.value}>
+            {deviceInfo.expriedDate
+              ? dayjs(deviceInfo.expriedDate).format('DD/M/YYYY')
+              : ''}
+          </Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Mã công ty</Text>
@@ -55,7 +59,13 @@ const DeviceInformation: React.FC<Props> = ({}) => {
         </View>
         <View style={style.row}>
           <Text style={style.label}>Cập nhật lúc</Text>
-          <Text style={style.value}>{deviceInfo?.position?.deviceTime ? dayjs(deviceInfo?.position?.deviceTime).format('HH:ss DD/M/YYYY') : ''}</Text>
+          <Text style={style.value}>
+            {deviceInfo?.position?.deviceTime
+              ? dayjs(deviceInfo?.position?.deviceTime).format(
+                  'HH:ss DD/M/YYYY',
+                )
+              : ''}
+          </Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Động cơ</Text>
@@ -63,7 +73,10 @@ const DeviceInformation: React.FC<Props> = ({}) => {
         </View>
         <View style={style.row}>
           <Text style={style.label}>Toạ độ</Text>
-          <Text style={style.value}>{deviceInfo?.position?.latitude || ''}, {deviceInfo?.position?.longitude || ''}</Text>
+          <Text style={style.value}>
+            {deviceInfo?.position?.latitude || ''},{' '}
+            {deviceInfo?.position?.longitude || ''}
+          </Text>
         </View>
       </View>
     </ScrollView>

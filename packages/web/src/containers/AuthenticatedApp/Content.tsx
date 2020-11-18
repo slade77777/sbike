@@ -3,8 +3,8 @@ import {Layout} from 'antd';
 import {Route, Switch} from 'react-router-dom';
 import Account from '../Account';
 import {Routes} from '../../enum';
-import Profile from './Profile';
 import DevicesList from '../DevicesList';
+import Profile from './Profile';
 
 const Content = () => {
   return (

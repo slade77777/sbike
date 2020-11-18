@@ -11,11 +11,13 @@ import Home from './screens/Home';
 
 import {useAuthState} from './context/auth-context';
 import User from './screens/User';
+import DeviceInformation from './screens/DeviceInformation';
 
 export type MainStackParamList = {
   Home: undefined;
   SignIn: undefined;
   User: undefined;
+  DeviceInformation: {deviceId: string};
 };
 
 const Stack = createStackNavigator<MainStackParamList>();
@@ -122,8 +124,17 @@ const AppRoot = () => {
               name="User"
               options={{
                 headerTitle: 'User',
+                headerBackTitle: ' ',
               }}
               component={User}
+            />
+            <Stack.Screen
+              name="DeviceInformation"
+              options={{
+                headerTitle: 'Thông tin thiết bị',
+                headerBackTitle: ' ',
+              }}
+              component={DeviceInformation}
             />
           </>
         ) : (

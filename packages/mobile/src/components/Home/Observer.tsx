@@ -16,6 +16,7 @@ import {Device} from 'shared-logic';
 import {useAuthState} from '../../context/auth-context';
 import color from '../../config/color';
 import {getDeviceById} from 'shared-logic/src';
+import {useNavigation} from "@react-navigation/native";
 
 const {width, height} = Dimensions.get('window');
 
@@ -31,8 +32,10 @@ const Observer: React.FC<Props> = ({}) => {
     mapLocation: {
       latitude: 21.0278,
       longitude: 105.8342,
-    }
+    },
   });
+  const navigation = useNavigation();
+
   const {state} = useAuthState();
   const userInfo = state?.userData;
   const {data} = useDeviceCompany(userInfo?.companyID);
@@ -40,7 +43,7 @@ const Observer: React.FC<Props> = ({}) => {
 
   const redirectCarLocation = (deviceId: string) => {
     setModalVisible(false);
-    getDeviceById(deviceId)
+    getDeviceById('', deviceId)
       .then((data) => {
         const deviceInfo = data.data;
         const position = deviceInfo?.position;
@@ -52,7 +55,7 @@ const Observer: React.FC<Props> = ({}) => {
           mapLocation: {
             latitude: position?.latitude || 21.0278,
             longitude: position?.longitude || 105.8342,
-          }
+          },
         });
       })
       .catch(() => {
@@ -77,9 +80,12 @@ const Observer: React.FC<Props> = ({}) => {
             : ''}
         </Text>
       </View>
-      <View style={styles.tableCol}>
+      <TouchableOpacity onPress={() => {
+        setModalVisible(false);
+        navigation.navigate('DeviceInformation', {deviceId: item.deviceID})
+      }} style={styles.tableCol}>
         <Icon name="align-justify" color={'black'} size={25} />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 
@@ -104,9 +110,9 @@ const Observer: React.FC<Props> = ({}) => {
         onPress={() => {
           setLocation({
             deviceLocation: location.deviceLocation,
-            mapLocation: location.mapLocation
+            mapLocation: location.mapLocation,
           });
-          setModalVisible(true)
+          setModalVisible(true);
         }}
         style={{position: 'absolute', left: 10, top: 10}}>
         <View

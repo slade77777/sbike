@@ -9,6 +9,6 @@ export async function getDeviceByCompany(
   return secureInstance.get(`/device/GetDeviceByCompany/${companyId}`);
 }
 
-export async function getDeviceById(deviceId: string): ServerResponse<Device> {
+export async function getDeviceById(_: string, deviceId: string): ServerResponse<Device> {
   return secureInstance.get(`/device/GetDeviceInfo/${deviceId}`);
 }

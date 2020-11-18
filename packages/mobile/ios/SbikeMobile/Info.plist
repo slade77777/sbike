@@ -38,7 +38,9 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Sbike muốn lấy thông tin vị trí hiện tại</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Sbike muốn lấy thông tin vị trí hiện tại</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

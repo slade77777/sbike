@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Dimensions, SafeAreaView} from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import Observer from '../components/Home/Observer';
-import Device from '../components/Home/Device';
+import Devices from '../components/Home/Devices';
 import Report from '../components/Home/Report';
 import color from '../config/color';
 
@@ -17,7 +17,7 @@ const Home: React.FC = () => {
 
   const renderScene = SceneMap({
     first: Observer,
-    second: Device,
+    second: Devices,
     third: Report,
   });
 

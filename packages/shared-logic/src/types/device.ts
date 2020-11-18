@@ -29,11 +29,11 @@ export type DeviceLocation = {
   serverTime?: string;
   speed?: number;
   status?: number;
-}
+};
 
 export type AlertConfig = {
   alertEngine?: boolean;
   alertMoving?: boolean;
   alertPolygon?: Array<any>;
   alertSpeed?: number;
-}
+};

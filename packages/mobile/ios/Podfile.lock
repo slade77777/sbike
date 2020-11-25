@@ -83,6 +83,10 @@ PODS:
   - OpenSSL-Universal (1.0.2.20):
     - OpenSSL-Universal/Static (= 1.0.2.20)
   - OpenSSL-Universal/Static (1.0.2.20)
+  - Permission-LocationAlways (3.0.0-beta.2):
+    - RNPermissions
+  - Permission-LocationWhenInUse (3.0.0-beta.2):
+    - RNPermissions
   - RCTRequired (0.63.3)
   - RCTTypeSafety (0.63.3):
     - FBLazyVector (= 0.63.3)
@@ -253,6 +257,8 @@ PODS:
     - react-native-config/App (= 1.4.1)
   - react-native-config/App (1.4.1):
     - React-Core
+  - react-native-geolocation (2.0.2):
+    - React
   - react-native-maps (0.27.1):
     - React
   - react-native-safe-area-context (3.1.9):
@@ -331,6 +337,8 @@ PODS:
     - React
   - RNLocalize (1.4.3):
     - React-Core
+  - RNPermissions (3.0.0-beta.2):
+    - React-Core
   - RNReanimated (1.13.1):
     - React
   - RNScreens (2.14.0):
@@ -375,6 +383,8 @@ DEPENDENCIES:
   - Folly (from `../../../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../../../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - lottie-react-native (from `../../../node_modules/lottie-react-native`)
+  - Permission-LocationAlways (from `../../../node_modules/react-native-permissions/ios/LocationAlways/Permission-LocationAlways.podspec`)
+  - Permission-LocationWhenInUse (from `../../../node_modules/react-native-permissions/ios/LocationWhenInUse/Permission-LocationWhenInUse.podspec`)
   - RCTRequired (from `../../../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../../../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../../../node_modules/react-native/`)
@@ -388,6 +398,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../../../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../../../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-config (from `../../../node_modules/react-native-config`)
+  - "react-native-geolocation (from `../../../node_modules/@react-native-community/geolocation`)"
   - react-native-maps (from `../../../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../../../node_modules/react-native-splash-screen`)
@@ -406,6 +417,7 @@ DEPENDENCIES:
   - RNFastImage (from `../../../node_modules/react-native-fast-image`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../../../node_modules/react-native-localize`)
+  - RNPermissions (from `../../../node_modules/react-native-permissions`)
   - RNReanimated (from `../../../node_modules/react-native-reanimated`)
   - RNScreens (from `../../../node_modules/react-native-screens`)
   - RNSVG (from `../../../node_modules/react-native-svg`)
@@ -444,6 +456,10 @@ EXTERNAL SOURCES:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/glog.podspec"
   lottie-react-native:
     :path: "../../../node_modules/lottie-react-native"
+  Permission-LocationAlways:
+    :path: "../../../node_modules/react-native-permissions/ios/LocationAlways/Permission-LocationAlways.podspec"
+  Permission-LocationWhenInUse:
+    :path: "../../../node_modules/react-native-permissions/ios/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
   RCTRequired:
     :path: "../../../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
@@ -466,6 +482,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon/jsinspector"
   react-native-config:
     :path: "../../../node_modules/react-native-config"
+  react-native-geolocation:
+    :path: "../../../node_modules/@react-native-community/geolocation"
   react-native-maps:
     :path: "../../../node_modules/react-native-maps"
   react-native-safe-area-context:
@@ -502,6 +520,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-gesture-handler"
   RNLocalize:
     :path: "../../../node_modules/react-native-localize"
+  RNPermissions:
+    :path: "../../../node_modules/react-native-permissions"
   RNReanimated:
     :path: "../../../node_modules/react-native-reanimated"
   RNScreens:
@@ -533,6 +553,8 @@ SPEC CHECKSUMS:
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   lottie-react-native: 1fb4ce21d6ad37dab8343eaff8719df76035bd93
   OpenSSL-Universal: ff34003318d5e1163e9529b08470708e389ffcdd
+  Permission-LocationAlways: ecf7830da39cc0a0cb0cc57edc4025aa384d9f18
+  Permission-LocationWhenInUse: 36bfc23305894aa8d1e01d278aed9ea6736a2e89
   RCTRequired: 48884c74035a0b5b76dbb7a998bd93bcfc5f2047
   RCTTypeSafety: edf4b618033c2f1c5b7bc3d90d8e085ed95ba2ab
   React: f36e90f3ceb976546e97df3403e37d226f79d0e3
@@ -544,6 +566,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b56c03e61c0dd5f5801255f2160a815f4a53d451
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
   react-native-config: d8b45133fd13d4f23bd2064b72f6e2c08b2763ed
+  react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-safe-area-context: b6e0e284002381d2ff29fa4fff42b4d8282e3c94
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
@@ -562,6 +585,7 @@ SPEC CHECKSUMS:
   RNFastImage: ff7e055d085abe465b358ce5aa51e3c6d64b1efd
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
+  RNPermissions: 9e7561bcbab267e3f64a4f6509edc00ae0de1519
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNScreens: 2e278a90eb15092ed261d4f2271e3fc9b60d08d4
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
@@ -571,6 +595,6 @@ SPEC CHECKSUMS:
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 5252be2272a872071232badac81831f88f3a1c1d
+PODFILE CHECKSUM: af8a9d11fcc64fb80715cb4e101c5dce86bc4712
 
 COCOAPODS: 1.10.0

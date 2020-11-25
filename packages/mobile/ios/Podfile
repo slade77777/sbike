@@ -7,7 +7,10 @@ target 'SbikeMobile' do
   config = use_native_modules!
 
   use_react_native!(:path => '../../../node_modules/react-native')
+  permissions_path = '../../../node_modules/react-native-permissions/ios'
 
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways/Permission-LocationAlways.podspec"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
   target 'SbikeMobileTests' do
     inherit! :complete
     # Pods for testing

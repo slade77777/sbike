@@ -9,7 +9,7 @@ import {
   FlatList,
   Platform,
 } from 'react-native';
-import MapView, {Marker, Polyline} from 'react-native-maps';
+import MapView, {Marker, Polyline, PROVIDER_GOOGLE} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import useDeviceCompany from 'shared-logic/src/hooks/useDeviceCompany';
 import dayjs from 'dayjs';
@@ -96,6 +96,7 @@ const Observer: React.FC<Props> = ({}) => {
       }),
     )
       .then((response) => {
+        console.log(response);
         // @ts-ignore
         if (response === 'granted') {
           setAllowPermission(true);
@@ -235,6 +236,7 @@ const Observer: React.FC<Props> = ({}) => {
       <MapView
         style={StyleSheet.absoluteFillObject}
         zoomEnabled={true}
+        provider={PROVIDER_GOOGLE}
         region={mapLocation}
         onRegionChange={(coordinate) => debouncedSetLocation(coordinate)}>
         {deviceLocation.latitude ? (
@@ -296,7 +298,7 @@ const Observer: React.FC<Props> = ({}) => {
       ) : (
         <View />
       )}
-      {allowPermission && (
+      {(allowPermission && currentLocation.latitude) ?  (
         <TouchableOpacity
           style={{
             position: 'absolute',
@@ -310,7 +312,7 @@ const Observer: React.FC<Props> = ({}) => {
           onPress={displayCurrentLocation}>
           <Icon name={'user'} size={24} color={'black'} />
         </TouchableOpacity>
-      )}
+      ) : <View/>}
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

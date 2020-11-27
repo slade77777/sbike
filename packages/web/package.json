@@ -16,6 +16,7 @@
     "antd": "^4.8.0",
     "copy-webpack-plugin": "^5.1.1",
     "crypto-js": "^4.0.0",
+    "dayjs": "^1.9.6",
     "history": "^5.0.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",

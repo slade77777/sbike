@@ -1,75 +1,58 @@
 import React from 'react';
-import {Table, Tag, Space} from 'antd';
+import {Table, Space, Button} from 'antd';
+import {EditOutlined, EyeOutlined} from '@ant-design/icons';
+import {Link, useRouteMatch} from 'react-router-dom';
 
 const data = [
   {
     key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
+    deviceID: '022202700999',
+    cardNumber: '30F88888',
+    deviceType: 'Xe may',
+    expiredDate: '30/11/2020',
+    updatedDate: '30/11/2020',
   },
 ];
 
 const DevicesTable = () => {
+  const routeMatch = useRouteMatch();
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text: string) => <a>{text}</a>,
+      title: 'Mã thiết bị',
+      dataIndex: 'deviceID',
+      key: 'deviceID',
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'Biển số xe',
+      dataIndex: 'cardNumber',
+      key: 'cardNumber',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Loại thiết bị',
+      dataIndex: 'deviceType',
+      key: 'deviceType',
     },
     {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (tags: any) => (
-        <>
-          {tags.map((tag: any) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
+      title: 'Ngày hết hạn',
+      dataIndex: 'expiredDate',
+      key: 'expiredDate',
     },
     {
-      title: 'Action',
+      title: 'Cập nhật',
+      dataIndex: 'updatedDate',
+      key: 'updatedDate',
+    },
+    {
+      title: '',
       key: 'action',
-      render: (text: string, record: any) => (
+      render: (_: string, record: any) => (
         <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
+          <Button type="link" icon={<EditOutlined />}>
+            Sửa
+          </Button>
+          <Button type="link" icon={<EyeOutlined />}>
+            <Link to={`${routeMatch.path}/${record.deviceID}`}>Chi tiết</Link>
+          </Button>
         </Space>
       ),
     },

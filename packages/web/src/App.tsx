@@ -4,7 +4,13 @@ import {Spin} from 'antd';
 import {AuthProvider} from './context/auth-context';
 import Home from './pages/Home';
 
-const queryCache = new QueryCache();
+const queryCache = new QueryCache({
+  defaultConfig: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 export default function App() {
   return (

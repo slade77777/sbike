@@ -5,6 +5,7 @@ import Account from '../Account';
 import {Routes} from '../../enum';
 import DevicesList from '../DevicesList';
 import Profile from './Profile';
+import DeviceDetail from '../DevicesList/DeviceDetail';
 
 const Content = () => {
   return (
@@ -19,10 +20,13 @@ const Content = () => {
           <div>Dashboard</div>
         </Route>
         <Route path={Routes.Tracking} exact>
-          <DevicesList />
+          <div>Giam sat</div>
         </Route>
         <Route path={Routes.Devices} exact>
-          <div>Devices</div>
+          <DevicesList />
+        </Route>
+        <Route path={`${Routes.Devices}/:deviceID`} exact>
+          <DeviceDetail />
         </Route>
         <Route path={Routes.UserManagement} exact>
           <Account />

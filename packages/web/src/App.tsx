@@ -1,4 +1,5 @@
 import React, {Suspense} from 'react';
+import {LoadScript} from '@react-google-maps/api';
 import {QueryCache, ReactQueryCacheProvider} from 'react-query';
 import {Spin} from 'antd';
 import {AuthProvider} from './context/auth-context';
@@ -15,11 +16,13 @@ const queryCache = new QueryCache({
 export default function App() {
   return (
     <ReactQueryCacheProvider queryCache={queryCache}>
-      <AuthProvider>
-        <Suspense fallback={<Spin />}>
-          <Home />
-        </Suspense>
-      </AuthProvider>
+      <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_KEY || ''}>
+        <AuthProvider>
+          <Suspense fallback={<Spin />}>
+            <Home />
+          </Suspense>
+        </AuthProvider>
+      </LoadScript>
     </ReactQueryCacheProvider>
   );
 }

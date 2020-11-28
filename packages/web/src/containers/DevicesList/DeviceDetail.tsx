@@ -10,7 +10,7 @@ const DeviceDetail: FC = () => {
   let {deviceID} = useParams();
   const {data, isLoading, isError, error} = useDeviceId(deviceID);
 
-  const [mutate] = useMutation(getHistory);
+  const [mutate, historyMovingData] = useMutation(getHistory);
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -36,7 +36,12 @@ const DeviceDetail: FC = () => {
         title={<span>{`Biển số: ${data?.data?.carNumber}`}</span>}
         extra={<a>More</a>}>
         <DeviceSearchForm onSubmit={handleSubmit} />
-        <Map />
+        <Map
+          paths={historyMovingData?.data?.data.map((dt: any) => ({
+            lat: dt.latitude,
+            lng: dt.longitude,
+          }))}
+        />
       </Card>
     </div>
   );

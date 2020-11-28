@@ -16,3 +16,9 @@ export async function getHistory(params: {
     `/location/${params.deviceID}/${params.from}/${params.to}`,
   );
 }
+
+export async function getCurrentLocation(deviceIDs: Array<string>) {
+  return secureInstance.post('/location', {
+    deviceIDs,
+  });
+}

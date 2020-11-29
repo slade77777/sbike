@@ -77,3 +77,4 @@ main.jsbundle
 # Pods
 **/ios/Pods
 
+/packages/web/dist/

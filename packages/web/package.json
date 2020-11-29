@@ -5,7 +5,8 @@
   "source": "src/index.tsx",
   "scripts": {
     "lint": "eslint --ext '.js,.ts,.tsx' .",
-    "start": "webpack-dev-server --config webpack.config.js --env.environment=dev --open",
+    "start": "webpack-dev-server --config webpack.config.js --env.environment=dev",
+    "build": "webpack --config webpack.config.js --env.environment=production",
     "test": "jest"
   },
   "dependencies": {

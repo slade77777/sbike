@@ -6,6 +6,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 // const CopyPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const node_modules = path.resolve(__dirname, '../..', 'node_modules');
 const packages = path.resolve(__dirname, '..');
 
@@ -42,6 +43,7 @@ module.exports = (env) => {
       emitOnErrors: true,
     },
     plugins: [
+      new AntdDayjsWebpackPlugin(),
       new HTMLWebpackPlugin({
         template: path.resolve(__dirname, './public/index.html'),
         inject: true,

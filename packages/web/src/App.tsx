@@ -16,7 +16,11 @@ const queryCache = new QueryCache({
 export default function App() {
   return (
     <ReactQueryCacheProvider queryCache={queryCache}>
-      <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_KEY || ''}>
+      <LoadScript
+        googleMapsApiKey={
+          process.env.GOOGLE_MAPS_KEY ||
+          'AIzaSyDjgghF4mwFy-wsFzQnlTYpnbMJXEqIlNg'
+        }>
         <AuthProvider>
           <Suspense fallback={<Spin />}>
             <Home />

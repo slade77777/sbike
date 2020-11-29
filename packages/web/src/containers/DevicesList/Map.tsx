@@ -28,6 +28,7 @@ const Map: FC<Props> = ({paths}) => {
     radius: 3000,
     paths: paths,
     zIndex: 1,
+    geodesic: true,
   };
   return (
     <div>

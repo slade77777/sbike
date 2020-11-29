@@ -1,8 +1,7 @@
 import {setApi, createApi} from './api';
 import {setToken} from './api/base';
 
-import * as dateUtils from './utils/dateUtils';
-export {dateUtils};
+export * from './utils/dateUtils';
 
 export * from './types/project';
 export * from './types/user';

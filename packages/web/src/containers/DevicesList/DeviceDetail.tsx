@@ -1,10 +1,28 @@
 import React, {FC} from 'react';
-import {Card} from 'antd';
+import {Button, Card, Space, Menu, Dropdown} from 'antd';
+import {EditOutlined, DownOutlined, AlertOutlined} from '@ant-design/icons';
 import {useMutation} from 'react-query';
 import {useParams} from 'react-router-dom';
 import {getHistory, useDeviceId} from 'shared-logic';
 import DeviceSearchForm from './DeviceSearchForm';
 import Map from './Map';
+
+const menu = (
+  <Menu>
+    <Menu.Item key="1" icon={<AlertOutlined />}>
+      Cảnh báo di chuyển
+    </Menu.Item>
+    <Menu.Item key="2" icon={<AlertOutlined />}>
+      Cảnh báo tắt bật máy
+    </Menu.Item>
+    <Menu.Item key="3" icon={<AlertOutlined />}>
+      Cảnh báo quá tốc độ
+    </Menu.Item>
+    <Menu.Item key="4" icon={<AlertOutlined />}>
+      Cảnh báo vùng an toàn
+    </Menu.Item>
+  </Menu>
+);
 
 const DeviceDetail: FC = () => {
   let {deviceID} = useParams();
@@ -23,27 +41,36 @@ const DeviceDetail: FC = () => {
 
   const handleSubmit = async ({fromTo}: any) => {
     try {
-      const dataRes = await mutate({deviceID, from: fromTo[0], to: fromTo[1]});
-      console.log(dataRes);
-    } catch {
-      // Uh oh, something went wrong
+      await mutate({deviceID, from: fromTo[0], to: fromTo[1]});
+    } catch (e) {
+      console.log(e);
     }
   };
 
   return (
-    <div>
-      <Card
-        title={<span>{`Biển số: ${data?.data?.carNumber}`}</span>}
-        extra={<a>More</a>}>
-        <DeviceSearchForm onSubmit={handleSubmit} />
-        <Map
-          paths={historyMovingData?.data?.data.map((dt: any) => ({
-            lat: dt.latitude,
-            lng: dt.longitude,
-          }))}
-        />
-      </Card>
-    </div>
+    <Card
+      title={<span>{`Biển số: ${data?.data?.carNumber}`}</span>}
+      extra={
+        <Space>
+          <Button type="link" icon={<EditOutlined />}>
+            Cập nhật thông tin
+          </Button>
+          <Button type="link">Điều khiển Tắt / Bật máy</Button>
+          <Dropdown overlay={menu}>
+            <a>
+              Cảnh báo <DownOutlined />
+            </a>
+          </Dropdown>
+        </Space>
+      }>
+      <DeviceSearchForm onSubmit={handleSubmit} />
+      <Map
+        paths={historyMovingData?.data?.data.map((dt: any) => ({
+          lat: dt.latitude,
+          lng: dt.longitude,
+        }))}
+      />
+    </Card>
   );
 };
 

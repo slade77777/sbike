@@ -21,6 +21,7 @@
 		3B061B4810C6C65BCF810CDE /* libPods-SbikeMobile-SbikeMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 204BB59C9FE7D25D2B9AD489 /* libPods-SbikeMobile-SbikeMobileTests.a */; };
 		9BFA3C179BBFD1C61A767BFF /* libPods-SbikeMobile-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9B9295B83ABDBD930E8ED3 /* libPods-SbikeMobile-tvOS.a */; };
 		B040879D64AA7B6C77429266 /* libPods-SbikeMobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFFCD3DBDC218372BCFBF06C /* libPods-SbikeMobile-tvOSTests.a */; };
+		B1B8B0972571FA7600A71E14 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,7 +295,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 46L6H4NZ42;
+						DevelopmentTeam = 2SS5C7GH48;
 						LastSwiftMigration = 1120;
 						ProvisioningStyle = Automatic;
 					};
@@ -342,6 +343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1B8B0972571FA7600A71E14 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				042039012550710A00C6FD8C /* LaunchScreen.storyboard in Resources */,
 			);
@@ -729,20 +731,21 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 46L6H4NZ42;
+				DEVELOPMENT_TEAM = 2SS5C7GH48;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = SbikeMobile/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.SbikeMobile.com;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.SbikeMobile.com;
 				PRODUCT_NAME = SbikeMobile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -760,15 +763,16 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8L4PF6BYXG;
+				DEVELOPMENT_TEAM = 2SS5C7GH48;
 				INFOPLIST_FILE = SbikeMobile/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.SbikeMobile.com;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.SbikeMobile.com;
 				PRODUCT_NAME = SbikeMobile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

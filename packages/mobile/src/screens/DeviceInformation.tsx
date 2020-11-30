@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {useRoute} from '@react-navigation/native';
 import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
 import dayjs from 'dayjs';
@@ -26,6 +27,29 @@ const DeviceInformation: React.FC<Props> = ({}) => {
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#c7c7cc'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingHorizontal: 20,
+          marginVertical: 10,
+          height: 100,
+          alignItems: 'center',
+          backgroundColor: 'white',
+        }}>
+        <View style={style.tool}>
+          <Icon name={'road'} size={50} color={color.blue} />
+          <Text>Lộ trình</Text>
+        </View>
+        <View style={style.tool}>
+          <Icon name={'toggle-switch'} size={50} color={color.yellow} />
+          <Text>Tắt, bật máy</Text>
+        </View>
+        <View style={style.tool}>
+          <EntypoIcon name={'warning'} size={50} color={'black'} />
+          <Text>Cảnh báo</Text>
+        </View>
+      </View>
       <View style={style.wrapper}>
         <View style={style.row}>
           <Text style={style.label}>Biển số xe</Text>
@@ -107,6 +131,10 @@ const style = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     color: color.blue,
+  },
+  tool: {
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 

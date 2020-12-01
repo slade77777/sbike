@@ -8,38 +8,15 @@ const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = (env) => {
-  console.log('env', env);
   const devMode = env && env.dev;
-
-  const commonPlugins = [
-    new AntdDayjsWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
-    new HTMLWebpackPlugin({
-      template: path.resolve(__dirname, './public/index.html'),
-      inject: true,
-    }),
-    new Dotenv({
-      path: path.resolve(__dirname, './.env'),
-      systemvars: true,
-    }),
-  ];
-
-  const devModePlugins = [
-    new CleanWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new ReactRefreshWebpackPlugin(),
-  ];
 
   return {
     entry: ['@babel/polyfill', path.resolve(__dirname, './index.js')],
     context: path.resolve(__dirname, '../..'),
     output: {
       path: path.resolve(__dirname, 'dist/'),
-      publicPath: devMode ? '/' : '/dist/',
-      filename: 'app.bundle.js',
+      publicPath: '/',
+      filename: '[name].bundle.js',
       chunkFilename: '[id].[fullhash].chunk.js',
     },
     mode: devMode ? 'development' : 'production',
@@ -47,12 +24,34 @@ module.exports = (env) => {
     optimization: {
       emitOnErrors: true,
     },
-    plugins: commonPlugins.concat(devMode ? devModePlugins : []),
+    plugins: [
+      new AntdDayjsWebpackPlugin(),
+      new HTMLWebpackPlugin({
+        template: path.resolve(__dirname, './public/index.html'),
+        inject: true,
+      }),
+      new Dotenv({
+        path: path.resolve(__dirname, './.env'),
+        systemvars: true,
+      }),
+    ].concat(
+      devMode
+        ? [
+            new CleanWebpackPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
+            new ReactRefreshWebpackPlugin(),
+          ]
+        : [
+            new MiniCssExtractPlugin({
+              filename: '[name].css',
+              chunkFilename: '[id].css',
+            }),
+          ],
+    ),
     module: {
       rules: [
         {
           test: /\.(js|ts|tsx)$/,
-          // include: /(packages)\/.+/,
           exclude: /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view)/,
           use: [
             {

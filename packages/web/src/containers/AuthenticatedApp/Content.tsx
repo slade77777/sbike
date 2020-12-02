@@ -4,8 +4,9 @@ import {Route, Switch} from 'react-router-dom';
 import Account from '../Account';
 import {Routes} from '../../enum';
 import DevicesList from '../DevicesList';
-import Profile from './Profile';
+import Company from '../Company';
 import DeviceDetail from '../DevicesList/DeviceDetail';
+import Profile from './Profile';
 
 const Content = () => {
   return (
@@ -32,7 +33,7 @@ const Content = () => {
           <Account />
         </Route>
         <Route path={Routes.CompaniesManagement} exact>
-          <div>Company</div>
+          <Company />
         </Route>
         <Route path={Routes.AlertMovingReport} exact>
           <div>Company</div>

@@ -15,7 +15,7 @@ import {Device} from 'shared-logic';
 //   },
 // ];
 
-const DevicesTable: FC<{devices: Device[]}> = ({devices}) => {
+const CompaniesList: FC<{devices: Device[]}> = ({devices}) => {
   const routeMatch = useRouteMatch();
   const columns = [
     {
@@ -65,4 +65,4 @@ const DevicesTable: FC<{devices: Device[]}> = ({devices}) => {
   );
 };
 
-export default DevicesTable;
+export default CompaniesList;

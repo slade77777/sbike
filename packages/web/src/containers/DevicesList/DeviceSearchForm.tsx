@@ -59,30 +59,22 @@ const DeviceSearchForm: FC<Props> = ({onSubmit}) => {
           />
         </Form.Item>
         <Form.Item>
-          <Button
-            type="default"
-            onClick={() => searchByRange(SearchType.TODAY)}>
+          <Button onClick={() => searchByRange(SearchType.TODAY)}>
             Ngày hôm nay
           </Button>
         </Form.Item>
         <Form.Item>
-          <Button
-            type="default"
-            onClick={() => searchByRange(SearchType.YESTERDAY)}>
+          <Button onClick={() => searchByRange(SearchType.YESTERDAY)}>
             Ngày hôm qua
           </Button>
         </Form.Item>
         <Form.Item>
-          <Button
-            type="default"
-            onClick={() => searchByRange(SearchType.ONE_HOUR_AGO)}>
+          <Button onClick={() => searchByRange(SearchType.ONE_HOUR_AGO)}>
             1 giờ trước
           </Button>
         </Form.Item>
         <Form.Item>
-          <Button
-            type="default"
-            onClick={() => searchByRange(SearchType.THIRTY_MINUTES_AGO)}>
+          <Button onClick={() => searchByRange(SearchType.THIRTY_MINUTES_AGO)}>
             30 phút trước
           </Button>
         </Form.Item>

@@ -116,7 +116,7 @@ const Account = () => {
                 {labels.ADD_NEW}
               </Button>
             }>
-            <AccountsList accounts={state.users} editUser={openToUpdateUser} />
+            <AccountsList editUser={openToUpdateUser} />
           </Card>
         </Col>
       </Row>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useEffect, useCallback, useRef, useReducer} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -69,23 +69,29 @@ type Coordinate = {
 };
 
 const Observer: React.FC<Props> = ({}) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [allowPermission, setAllowPermission] = useState(false);
-  const [deviceLocation, setDeviceLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
-  const [mapLocation, setMapLocation] = useState({
-    latitude: 21.0278,
-    longitude: 105.8342,
-    longitudeDelta: 0.02,
-    latitudeDelta: 0.02,
-  });
-  const [currentLocation, setCurrentLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
-  const [carDirection, setCarDirection] = useState([]);
+  const [states, setState] = useReducer(
+    (states: any, newState: any) => ({...states, ...newState}),
+    {
+      modalVisible: false,
+      allowPermission: false,
+      deviceLocation: {
+        latitude: 0,
+        longitude: 0,
+      },
+      mapLocation: {
+        latitude: 21.0278,
+        longitude: 105.8342,
+        longitudeDelta: 0.02,
+        latitudeDelta: 0.02,
+      },
+      currentLocation: {
+        latitude: 0,
+        longitude: 0,
+      },
+      carDirection: []
+    },
+  );
+
   const intervalDirectCar = useRef(null);
 
   useEffect(() => {
@@ -100,15 +106,15 @@ const Observer: React.FC<Props> = ({}) => {
         console.log(response);
         // @ts-ignore
         if (response === 'granted') {
-          setAllowPermission(true);
+          setState({allowPermission: true});
           const interval = setInterval(() => {
             Geolocation.getCurrentPosition(
               (position) => {
                 position.coords &&
-                  setCurrentLocation({
+                  setState({currentLocation: {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
-                  });
+                  }});
               },
               (error) => {
                 console.log(error);
@@ -122,11 +128,11 @@ const Observer: React.FC<Props> = ({}) => {
           }, 10000);
           return () => clearInterval(interval);
         } else {
-          setAllowPermission(false);
+          setState({allowPermission: false});
         }
       })
       .catch(() => {
-        setAllowPermission(false);
+        setState({allowPermission: false});
       });
   }, []);
 
@@ -138,20 +144,22 @@ const Observer: React.FC<Props> = ({}) => {
   const deviceData = data?.data;
 
   const redirectCarLocation = (deviceId: string) => {
-    setModalVisible(false);
+    setState({modalVisible: false});
     getDeviceById('', deviceId)
       .then((data) => {
         const deviceInfo = data.data;
         const position = deviceInfo?.position;
-        setDeviceLocation({
-          latitude: position?.latitude || 21.0278,
-          longitude: position?.longitude || 105.8342,
-        });
-        setMapLocation({
-          ...mapLocation,
-          latitude: position?.latitude || 21.0278,
-          longitude: position?.longitude || 105.8342,
-        });
+        setState({
+          deviceLocation: {
+            latitude: position?.latitude || 21.0278,
+            longitude: position?.longitude || 105.8342,
+          },
+          mapLocation: {
+            ...states.mapLocation,
+            latitude: position?.latitude || 21.0278,
+            longitude: position?.longitude || 105.8342,
+          }
+        })
       })
       .catch(() => {
         alert('không tìm thấy vị trí');
@@ -159,16 +167,18 @@ const Observer: React.FC<Props> = ({}) => {
   };
 
   const displayCurrentLocation = () => {
-    setMapLocation({
-      ...currentLocation,
-      longitudeDelta: 0.1,
-      latitudeDelta: 0.1,
-    });
+    setState({
+      mapLocation: {
+        ...states.currentLocation,
+        longitudeDelta: 0.1,
+        latitudeDelta: 0.1,
+      }
+    })
   };
 
   const debouncedSetLocation = useCallback(
     _.debounce((coordinate: Coordinate) => {
-      setMapLocation(coordinate);
+      setState({mapLocation: coordinate});
     }, 200),
     [],
   );
@@ -182,8 +192,8 @@ const Observer: React.FC<Props> = ({}) => {
   }
 
   const showDirectionToCar = () => {
-    const origin = `${currentLocation.latitude},${currentLocation.longitude}`;
-    const destination = `${deviceLocation.latitude},${deviceLocation.longitude}`;
+    const origin = `${states.currentLocation.latitude},${states.currentLocation.longitude}`;
+    const destination = `${states.deviceLocation.latitude},${states.deviceLocation.longitude}`;
     const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${Config.GOOGLE_MAPS_KEY}&mode=driving`;
     fetch(url)
       .then((response) => response.json())
@@ -198,11 +208,11 @@ const Observer: React.FC<Props> = ({}) => {
             const centerPoint = direction[Math.round(direction.length / 2)];
             if (distance) {
               const zoom = distance / 100000;
-              setMapLocation({
-                longitudeDelta: zoom,
-                latitudeDelta: zoom,
-                ...centerPoint,
-              });
+              setState({mapLocation: {
+                  longitudeDelta: zoom,
+                  latitudeDelta: zoom,
+                  ...centerPoint,
+                }})
             }
           }
         }
@@ -231,7 +241,7 @@ const Observer: React.FC<Props> = ({}) => {
       </View>
       <TouchableOpacity
         onPress={() => {
-          setModalVisible(false);
+          setState({modalVisible: false});
           navigation.navigate('DeviceInformation', {deviceId: item.deviceID});
         }}
         style={styles.tableCol}>
@@ -246,28 +256,28 @@ const Observer: React.FC<Props> = ({}) => {
         style={StyleSheet.absoluteFillObject}
         zoomEnabled={true}
         provider={PROVIDER_GOOGLE}
-        region={mapLocation}
+        region={states.mapLocation}
         onRegionChange={(coordinate) => debouncedSetLocation(coordinate)}>
-        {deviceLocation.latitude ? (
-          <Marker coordinate={deviceLocation}>
+        {states.deviceLocation.latitude ? (
+          <Marker coordinate={states.deviceLocation}>
             <Icon name="car" color={color.yellow} size={25} />
           </Marker>
         ) : (
           <View />
         )}
-        {currentLocation.latitude ? (
-          <Marker coordinate={currentLocation}>
+        {states.currentLocation.latitude ? (
+          <Marker coordinate={states.currentLocation}>
             <Icon name="user" color={'red'} size={15} />
           </Marker>
         ) : (
           <View />
         )}
-        {carDirection.length > 0 && (
+        {states.carDirection.length > 0 && (
           <Polyline
             coordinates={[
-              currentLocation, // optional
-              ...carDirection,
-              deviceLocation,
+              states.currentLocation,
+              ...states.carDirection,
+              states.deviceLocation,
             ]}
             strokeWidth={4}
           />
@@ -275,7 +285,7 @@ const Observer: React.FC<Props> = ({}) => {
       </MapView>
       <TouchableOpacity
         onPress={() => {
-          setModalVisible(true);
+          setState({modalVisible: true});
         }}
         style={{position: 'absolute', left: 10, top: 10}}>
         <View
@@ -290,7 +300,7 @@ const Observer: React.FC<Props> = ({}) => {
           <Text style={{textAlign: 'center', fontWeight: 'bold'}}>Chọn xe</Text>
         </View>
       </TouchableOpacity>
-      {deviceLocation.latitude && allowPermission ? (
+      {states.deviceLocation.latitude && states.allowPermission ? (
         <TouchableOpacity
           style={{
             position: 'absolute',
@@ -307,7 +317,7 @@ const Observer: React.FC<Props> = ({}) => {
       ) : (
         <View />
       )}
-      {(allowPermission && currentLocation.latitude) ?  (
+      {(states.allowPermission && states.currentLocation.latitude) ?  (
         <TouchableOpacity
           style={{
             position: 'absolute',
@@ -322,12 +332,12 @@ const Observer: React.FC<Props> = ({}) => {
           <Icon name={'user'} size={24} color={'black'} />
         </TouchableOpacity>
       ) : <View/>}
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+      <Modal animationType="slide" transparent={true} visible={states.modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <TouchableOpacity
               onPress={() => {
-                setModalVisible(false);
+                setState({modalVisible: false});
               }}>
               <Icon name="close" color={'black'} size={25} />
             </TouchableOpacity>

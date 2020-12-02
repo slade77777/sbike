@@ -10,7 +10,8 @@ import {useRoute} from '@react-navigation/native';
 import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
 import color from '../config/color';
 import {HistoryPicker} from '../components/History/HistoryPicker';
-import {getHistory} from 'shared-logic/src';
+import {formatToSearch, getHistory} from 'shared-logic/src';
+import dayjs from "dayjs";
 
 type Props = {};
 
@@ -23,10 +24,11 @@ const TransportHistoryFilter: React.FC<Props> = ({}) => {
   const deviceInfo = data?.data || {};
 
   const handleNavigate = () => {
+    const range = formatToSearch([dayjs(timeStart), dayjs(timeEnd)])
     getHistory({
       deviceID: deviceId,
-      from: timeStart.getTime().toString(),
-      to: timeEnd.getTime().toString(),
+      from: range[0],
+      to: range[1],
     })
       .then((data) => {
         console.log(data);

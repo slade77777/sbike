@@ -15,6 +15,7 @@ const AccountsList: FC<Props> = ({editUser}) => {
       title: 'Họ tên',
       dataIndex: 'fullName',
       key: 'fullName',
+      render: (text: string) => text || 'Unknown',
     },
     {
       title: 'Tên đăng nhập',
@@ -26,10 +27,10 @@ const AccountsList: FC<Props> = ({editUser}) => {
       dataIndex: 'permission',
       key: 'permission',
       render: (values: Array<string>) => {
-        const mappedValue = values.map((vl) => getRoleNameByValue(vl));
+        const mappedValue = values?.map((vl) => getRoleNameByValue(vl));
         return (
           <Space direction={'vertical'} size="small">
-            {mappedValue.map((r, index: number) => (
+            {mappedValue?.map((r, index: number) => (
               <div key={index}>
                 <Tag color="geekblue">{r}</Tag>
               </div>

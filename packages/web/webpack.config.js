@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
@@ -6,9 +7,25 @@ const Dotenv = require('dotenv-webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const packages = path.resolve(__dirname, '..');
 
 module.exports = (env) => {
   const devMode = env && env.dev;
+
+  const alias = fs
+    .readdirSync(packages)
+    .filter((name) => !name.startsWith('.'))
+    .reduce(
+      (acc, name) => ({
+        ...acc,
+        [`${name}`]: path.resolve(
+          packages,
+          name,
+          require(`../${name}/package.json`).source,
+        ),
+      }),
+      {},
+    );
 
   return {
     entry: ['@babel/polyfill', path.resolve(__dirname, './index.js')],
@@ -84,6 +101,7 @@ module.exports = (env) => {
     },
     resolve: {
       fallback: {crypto: false},
+      alias,
       extensions: [
         '.web.js',
         '.web.jsx',

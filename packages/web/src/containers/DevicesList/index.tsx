@@ -1,12 +1,28 @@
 import React from 'react';
-import {Card} from 'antd';
+import {useQuery} from 'react-query';
+import {Card, Spin} from 'antd';
+import {getDeviceByCompany, useUserInfo} from 'shared-logic';
 import DevicesTable from './DevicesTable';
 
 const DevicesList = () => {
+  const userRes = useUserInfo();
+  console.log(userRes);
+  const {data, isLoading} = useQuery(
+    [
+      'companyDevice',
+      userRes.data?.data?.companyID && userRes.data.data.companyID,
+    ],
+    getDeviceByCompany,
+    {
+      retry: true,
+    },
+  );
   return (
-    <Card title="Danh sách xe">
-      <DevicesTable />
-    </Card>
+    <Spin spinning={isLoading}>
+      <Card title="Danh sách xe">
+        <DevicesTable devices={data?.data || []} />
+      </Card>
+    </Spin>
   );
 };
 

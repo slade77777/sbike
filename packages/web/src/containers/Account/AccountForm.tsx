@@ -97,7 +97,7 @@ const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
         label="Công ty"
         rules={[{required: true, message: 'Chưa chọn công ty!'}]}>
         <Select placeholder="Chọn công ty">
-          <Select.Option value="9999">SBIKE</Select.Option>
+          <Select.Option value="53680">SBIKE</Select.Option>
         </Select>
       </Form.Item>
 

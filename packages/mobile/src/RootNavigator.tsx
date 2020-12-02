@@ -12,11 +12,13 @@ import Home from './screens/Home';
 import {useAuthState} from './context/auth-context';
 import User from './screens/User';
 import DeviceInformation from './screens/DeviceInformation';
+import TransportHistoryFilter from "./screens/TransportHistoryFilter";
 
 export type MainStackParamList = {
   Home: undefined;
   SignIn: undefined;
   User: undefined;
+  TransportHistoryFilter: {deviceId: string};
   DeviceInformation: {deviceId: string};
 };
 
@@ -135,6 +137,14 @@ const AppRoot = () => {
                 headerBackTitle: ' ',
               }}
               component={DeviceInformation}
+            />
+            <Stack.Screen
+              name="TransportHistoryFilter"
+              options={{
+                headerTitle: 'Lịch sử di chuyển',
+                headerBackTitle: ' ',
+              }}
+              component={TransportHistoryFilter}
             />
           </>
         ) : (

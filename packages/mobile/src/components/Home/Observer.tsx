@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -86,6 +86,7 @@ const Observer: React.FC<Props> = ({}) => {
     longitude: 0,
   });
   const [carDirection, setCarDirection] = useState([]);
+  const intervalDirectCar = useRef(null);
 
   useEffect(() => {
     // @ts-ignore
@@ -171,6 +172,14 @@ const Observer: React.FC<Props> = ({}) => {
     }, 200),
     [],
   );
+
+  const setFollowLocation = () => {
+    // @ts-ignore
+    clearInterval(intervalDirectCar?.current);
+    showDirectionToCar();
+    // @ts-ignore
+    intervalDirectCar.current = setInterval(() => showDirectionToCar(), 10000);
+  }
 
   const showDirectionToCar = () => {
     const origin = `${currentLocation.latitude},${currentLocation.longitude}`;
@@ -417,4 +426,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Observer;
+export default React.memo(Observer);

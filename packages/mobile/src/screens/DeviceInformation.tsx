@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
 import dayjs from 'dayjs';
 import color from '../config/color';
@@ -17,6 +17,7 @@ type Props = {};
 
 const DeviceInformation: React.FC<Props> = ({}) => {
   const route = useRoute<any>();
+  const navigation = useNavigation();
   const deviceId = route?.params?.deviceId;
   const {data} = useDeviceId(deviceId);
   const deviceInfo = data?.data || {};
@@ -37,10 +38,10 @@ const DeviceInformation: React.FC<Props> = ({}) => {
           alignItems: 'center',
           backgroundColor: 'white',
         }}>
-        <View style={style.tool}>
+        <TouchableOpacity onPress={() => navigation.navigate('TransportHistoryFilter', {deviceId})} style={style.tool}>
           <Icon name={'road'} size={50} color={color.blue} />
           <Text>Lộ trình</Text>
-        </View>
+        </TouchableOpacity>
         <View style={style.tool}>
           <Icon name={'toggle-switch'} size={50} color={color.yellow} />
           <Text>Tắt, bật máy</Text>
@@ -138,4 +139,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default DeviceInformation;
+export default React.memo(DeviceInformation);

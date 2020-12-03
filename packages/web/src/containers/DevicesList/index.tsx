@@ -6,7 +6,6 @@ import DevicesTable from './DevicesTable';
 
 const DevicesList = () => {
   const userRes = useUserInfo();
-  console.log(userRes);
   const {data, isLoading} = useQuery(
     [
       'companyDevice',

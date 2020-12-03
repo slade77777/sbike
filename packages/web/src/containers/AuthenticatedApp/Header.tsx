@@ -3,6 +3,7 @@ import {Button, Dropdown, Layout, Menu} from 'antd';
 import {useUserInfo} from 'shared-logic';
 import {Link} from 'react-router-dom';
 import {DownOutlined, UserOutlined} from '@ant-design/icons';
+import {useAuthState} from '../../context/auth-context';
 import LogoutButton from './LogoutButton';
 
 type Props = {
@@ -10,7 +11,18 @@ type Props = {
 };
 
 const Header: FC<Props> = ({title = 'HỆ THỐNG GIÁM SÁT SBIKE'}) => {
-  const {data} = useUserInfo();
+  const {handleLogout} = useAuthState();
+  const {data} = useUserInfo({
+    onSuccess: (res) => {
+      if (res.status === 401) {
+        handleLogout();
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   const menu = (
     <Menu>
       <Menu.Item>

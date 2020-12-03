@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {login, setToken, User, logout} from 'shared-logic';
+import {login, setToken, User, logout, UserResponse} from 'shared-logic';
 import {useMutation} from 'react-query';
 
 type AuthType = {
@@ -7,6 +7,7 @@ type AuthType = {
   userInfo?: User | null;
   onLogin: (user: User) => void;
   onLogout: () => void;
+  handleLogout: () => void;
   loginLoading?: boolean;
 };
 
@@ -14,6 +15,7 @@ const AuthContext = React.createContext<AuthType>({
   isAuth: false,
   onLogin: () => null,
   onLogout: () => null,
+  handleLogout: () => null,
   userInfo: null,
 });
 
@@ -34,20 +36,28 @@ const AuthProvider: FC<Props> = ({children}) => {
     }
   }, []);
 
+  function handleLogout() {
+    localStorage.removeItem('session');
+    setIsAuth(false);
+  }
+
+  function handleLoginSuccess(data: UserResponse) {
+    setIsAuth(true);
+    setUserInfo(data?.user);
+    localStorage.setItem('session', data.session);
+    setToken(data.session);
+  }
+
   const [logoutMutation, loginState] = useMutation(logout, {
     onSuccess: () => {
-      localStorage.removeItem('session');
-      setIsAuth(false);
+      handleLogout();
     },
   });
 
   const [loginMutation] = useMutation(login, {
     onSuccess: (res) => {
       if (res?.data?.session) {
-        setIsAuth(true);
-        setUserInfo(res?.data?.user);
-        localStorage.setItem('session', res.data.session);
-        setToken(res.data.session);
+        handleLoginSuccess(res.data);
       }
     },
   });
@@ -60,6 +70,7 @@ const AuthProvider: FC<Props> = ({children}) => {
         onLogin: loginMutation,
         loginLoading: loginState.isLoading,
         userInfo,
+        handleLogout,
       }}>
       {children}
     </AuthContext.Provider>

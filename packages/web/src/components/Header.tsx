@@ -1,28 +1,19 @@
 import React, {FC} from 'react';
 import {Button, Dropdown, Layout, Menu} from 'antd';
-import {useUserInfo} from 'shared-logic';
 import {Link} from 'react-router-dom';
-import {DownOutlined, UserOutlined} from '@ant-design/icons';
-import {useAuthState} from '../../context/auth-context';
-import LogoutButton from './LogoutButton';
+import {DownOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons';
 
 type Props = {
   title?: string;
+  userDisplayName: string;
+  onLogout: () => void;
 };
 
-const Header: FC<Props> = ({title = 'HỆ THỐNG GIÁM SÁT SBIKE'}) => {
-  const {handleLogout} = useAuthState();
-  const {data} = useUserInfo({
-    onSuccess: (res) => {
-      if (res.status === 401) {
-        handleLogout();
-      }
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
+const Header: FC<Props> = ({
+  userDisplayName,
+  onLogout,
+  title = 'HỆ THỐNG GIÁM SÁT SBIKE',
+}) => {
   const menu = (
     <Menu>
       <Menu.Item>
@@ -33,7 +24,9 @@ const Header: FC<Props> = ({title = 'HỆ THỐNG GIÁM SÁT SBIKE'}) => {
         </Link>
       </Menu.Item>
       <Menu.Item>
-        <LogoutButton />
+        <Button type="link" icon={<LogoutOutlined />} onClick={onLogout}>
+          Đăng xuất
+        </Button>
       </Menu.Item>
     </Menu>
   );
@@ -42,7 +35,7 @@ const Header: FC<Props> = ({title = 'HỆ THỐNG GIÁM SÁT SBIKE'}) => {
       <h3>{title}</h3>
       <Dropdown overlay={menu}>
         <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-          Xin chào: {data?.data?.fullName || data?.data?.userName || ''}{' '}
+          Xin chào: {userDisplayName}
           <DownOutlined />
         </a>
       </Dropdown>

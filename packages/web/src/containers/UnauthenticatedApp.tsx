@@ -1,7 +1,7 @@
 import React from 'react';
 import {Row, Col, Typography} from 'antd';
-import Login from '../../pages/Login';
-import Logo from '../../components/Logo';
+import Logo from '../components/Logo';
+import Login from './Authen/Login';
 
 const {Title} = Typography;
 

@@ -4,7 +4,7 @@ import {Card, Spin} from 'antd';
 import {getDeviceByCompany, useUserInfo} from 'shared-logic';
 import DevicesTable from './DevicesTable';
 
-const DevicesList = () => {
+const Devices = () => {
   const userRes = useUserInfo();
   const {data, isLoading} = useQuery(
     [
@@ -25,4 +25,4 @@ const DevicesList = () => {
   );
 };
 
-export default DevicesList;
+export default Devices;

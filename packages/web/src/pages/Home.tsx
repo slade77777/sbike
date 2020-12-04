@@ -1,6 +1,4 @@
 import React from 'react';
-// import {Link} from 'react-router-dom';
-// import {useProjects} from 'shared-logic';
 import {useAuthState} from '../context/auth-context';
 
 const AuthenticatedApp = React.lazy(

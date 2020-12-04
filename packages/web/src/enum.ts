@@ -1,45 +1,46 @@
-export enum Routes {
+export enum RoutesEnum {
   Tracking = '/giam-sat',
-  Devices = '/danh-sach-thiet-bi',
-  UserManagement = '/quan-ly-nguoi-dung',
-  CompaniesManagement = '/quan-ly-cong-ty',
-  AlertMovingReport = '/canh-bao-di-chuyen',
-  TurnOnOfReport = '/tat-bat-may',
-  OverSpeedReport = '/vuot-qua-toc-do',
-  InOutSafeZoneReport = '/vao-ra-vung-an-toan',
+  Devices = '/thiet-bi',
+  Management = '/quan-ly',
+  UserManagement = 'nguoi-dung',
+  CompaniesManagement = 'cong-ty',
+  AlertMovingReport = 'canh-bao-di-chuyen',
+  TurnOnOfReport = 'tat-bat-may',
+  OverSpeedReport = 'vuot-qua-toc-do',
+  InOutSafeZoneReport = 'vao-ra-vung-an-toan',
 }
 
 export const ROUTES = {
-  [Routes.Tracking]: {
-    route: Routes.Tracking,
+  [RoutesEnum.Tracking]: {
+    route: RoutesEnum.Tracking,
     title: 'Giám sát',
   },
-  [Routes.Devices]: {
-    route: Routes.Devices,
+  [RoutesEnum.Devices]: {
+    route: RoutesEnum.Devices,
     title: 'Thiết bị',
   },
-  [Routes.UserManagement]: {
-    route: Routes.UserManagement,
+  [RoutesEnum.UserManagement]: {
+    route: RoutesEnum.UserManagement,
     title: 'Quản lý người dùng',
   },
-  [Routes.CompaniesManagement]: {
-    route: Routes.CompaniesManagement,
+  [RoutesEnum.CompaniesManagement]: {
+    route: RoutesEnum.CompaniesManagement,
     title: 'Quản lý công ty',
   },
-  [Routes.AlertMovingReport]: {
-    route: Routes.AlertMovingReport,
+  [RoutesEnum.AlertMovingReport]: {
+    route: RoutesEnum.AlertMovingReport,
     title: 'Cảnh báo di chuyển',
   },
-  [Routes.TurnOnOfReport]: {
-    route: Routes.TurnOnOfReport,
+  [RoutesEnum.TurnOnOfReport]: {
+    route: RoutesEnum.TurnOnOfReport,
     title: 'Tắt/Bật máy',
   },
-  [Routes.OverSpeedReport]: {
-    route: Routes.OverSpeedReport,
+  [RoutesEnum.OverSpeedReport]: {
+    route: RoutesEnum.OverSpeedReport,
     title: 'Quá tốc độ',
   },
-  [Routes.InOutSafeZoneReport]: {
-    route: Routes.InOutSafeZoneReport,
+  [RoutesEnum.InOutSafeZoneReport]: {
+    route: RoutesEnum.InOutSafeZoneReport,
     title: 'Vào/Ra vùng an toàn',
   },
 };

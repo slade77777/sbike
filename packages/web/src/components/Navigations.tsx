@@ -13,32 +13,33 @@ import {
   PERMISSION_UPDATE_COMPANY,
   PERMISSION_UPDATE_USER,
 } from 'shared-logic';
-import {ROUTES, Routes as RoutEnum} from '../../enum';
+import {ROUTES, RoutesEnum} from '../enum';
 
 const NAVS = [
   {
-    key: RoutEnum.Tracking,
+    key: RoutesEnum.Tracking,
     icon: <DashboardOutlined />,
     route: '/',
     name: 'Giám sát',
     permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
   },
   {
-    key: RoutEnum.Devices,
+    key: RoutesEnum.Devices,
     icon: <CarOutlined />,
     permissions: [],
   },
   {
     key: 'management',
+    route: '/quan-ly',
     icon: <PieChartOutlined />,
     title: 'Quản lý',
     subMenus: [
       {
-        key: RoutEnum.UserManagement,
+        key: RoutesEnum.UserManagement,
         permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
       },
       {
-        key: RoutEnum.CompaniesManagement,
+        key: RoutesEnum.CompaniesManagement,
         permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
       },
     ],
@@ -46,31 +47,31 @@ const NAVS = [
   {
     key: 'report',
     icon: <LineChartOutlined />,
-    route: '/report',
+    route: '/bao-cao',
     title: 'Báo cáo',
     permissions: [PERMISSION_UPDATE_COMPANY, PERMISSION_GET_ALL_COMPANY],
     subMenus: [
       {
-        key: RoutEnum.AlertMovingReport,
+        key: RoutesEnum.AlertMovingReport,
         permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
       },
       {
-        key: RoutEnum.TurnOnOfReport,
+        key: RoutesEnum.TurnOnOfReport,
         permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
       },
       {
-        key: RoutEnum.OverSpeedReport,
+        key: RoutesEnum.OverSpeedReport,
         permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
       },
       {
-        key: RoutEnum.InOutSafeZoneReport,
+        key: RoutesEnum.InOutSafeZoneReport,
         permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
       },
     ],
   },
 ];
 
-const NavBar = () => {
+const Navigations = () => {
   return (
     <Menu
       theme="dark"
@@ -82,7 +83,9 @@ const NavBar = () => {
           <Menu.SubMenu key={nav.key} icon={nav.icon} title={nav.title}>
             {nav.subMenus.map((sub) => (
               <Menu.Item key={sub.key}>
-                <Link to={ROUTES[sub.key].route}>{ROUTES[sub.key].title}</Link>
+                <Link to={`${nav.route}/${ROUTES[sub.key].route}`}>
+                  {ROUTES[sub.key].title}
+                </Link>
               </Menu.Item>
             ))}
           </Menu.SubMenu>
@@ -96,4 +99,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Navigations;

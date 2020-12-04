@@ -22,6 +22,8 @@ export function setSecureAxiosInstance(baseURL: string) {
     function (response) {
       if (response.status !== 200) {
         return Promise.reject(response.data);
+      } else if (response.status === 200 && response.data.errorCode === 1) {
+        return Promise.reject(response.data);
       }
       return response;
     },

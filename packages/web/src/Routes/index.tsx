@@ -2,11 +2,11 @@ import React from 'react';
 import {Layout} from 'antd';
 import {Route, Switch} from 'react-router-dom';
 import {RoutesEnum} from '../enum';
-import TrackingPage from '../pages/TrackingPage';
-import ProfilePage from '../pages/ProfilePage';
-import DevicePage from '../pages/DevicePage';
-import ManagementPage from '../pages/ManagementPage';
-import ReportPage from '../pages/ReportPage';
+const TrackingPage = React.lazy(() => import('../pages/TrackingPage'));
+const ProfilePage = React.lazy(() => import('../pages/ProfilePage'));
+const DevicePage = React.lazy(() => import('../pages/DevicePage'));
+const ManagementPage = React.lazy(() => import('../pages/ManagementPage'));
+const ReportPage = React.lazy(() => import('../pages/ReportPage'));
 
 const Routes = () => {
   return (

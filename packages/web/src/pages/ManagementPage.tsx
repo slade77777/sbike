@@ -1,20 +1,24 @@
-import React from 'react';
+import React, {Suspense} from 'react';
+import {Spin} from 'antd';
 import {Switch, Route, useRouteMatch} from 'react-router-dom';
-import Company from '../containers/Company';
 import {RoutesEnum} from '../enum';
-import Account from '../containers/Account';
+
+const Account = React.lazy(() => import('../containers/Account'));
+const Company = React.lazy(() => import('../containers/Company'));
 
 const ManagementPage = () => {
   const {path} = useRouteMatch();
   return (
-    <Switch>
-      <Route path={`${path}/${RoutesEnum.CompaniesManagement}`} exact>
-        <Company />
-      </Route>
-      <Route path={`${path}/${RoutesEnum.UserManagement}`} exact>
-        <Account />
-      </Route>
-    </Switch>
+    <Suspense fallback={<Spin />}>
+      <Switch>
+        <Route path={`${path}/${RoutesEnum.CompaniesManagement}`} exact>
+          <Company />
+        </Route>
+        <Route path={`${path}/${RoutesEnum.UserManagement}`} exact>
+          <Account />
+        </Route>
+      </Switch>
+    </Suspense>
   );
 };
 

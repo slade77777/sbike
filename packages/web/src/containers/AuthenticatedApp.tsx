@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
-import {Layout} from 'antd';
+import React, {useState, Suspense} from 'react';
+import {Layout, Spin} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
 import {useMutation} from 'react-query';
+import {LoadScript} from '@react-google-maps/api';
 import {logout, useUserInfo} from 'shared-logic';
 import '../styles/main.scss';
 import Logo from '../components/Logo';
@@ -49,7 +50,15 @@ const AuthenticatedApp = () => {
             onLogout={async () => await logoutMutation()}
             userDisplayName={data?.data?.userName || ''}
           />
-          <Routes />
+          <Suspense fallback={<Spin />}>
+            <LoadScript
+              googleMapsApiKey={
+                process.env.GOOGLE_MAPS_KEY ||
+                'AIzaSyDjgghF4mwFy-wsFzQnlTYpnbMJXEqIlNg'
+              }>
+              <Routes />
+            </LoadScript>
+          </Suspense>
         </Layout>
       </Layout>
     </BrowserRouter>

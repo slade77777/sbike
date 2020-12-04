@@ -1,6 +1,5 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import {Switch, Route, useRouteMatch} from 'react-router-dom';
-import {Spin} from 'antd';
 
 const Devices = React.lazy(() => import('../containers/Devices'));
 const DeviceDetail = React.lazy(
@@ -10,16 +9,14 @@ const DeviceDetail = React.lazy(
 const DevicePage = () => {
   const {path} = useRouteMatch();
   return (
-    <Suspense fallback={<Spin />}>
-      <Switch>
-        <Route path={path} exact>
-          <Devices />
-        </Route>
-        <Route path={`${path}/:deviceID`} exact>
-          <DeviceDetail />
-        </Route>
-      </Switch>
-    </Suspense>
+    <Switch>
+      <Route path={path} exact>
+        <Devices />
+      </Route>
+      <Route path={`${path}/:deviceID`} exact>
+        <DeviceDetail />
+      </Route>
+    </Switch>
   );
 };
 

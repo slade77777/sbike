@@ -1,11 +1,6 @@
 import React, {FC} from 'react';
-import {GoogleMap, Polyline} from '@react-google-maps/api';
-
-const containerStyle = {
-  width: '100%',
-  height: '80vh',
-  marginTop: 20,
-};
+import {Polyline} from '@react-google-maps/api';
+import Map from '../../components/Map';
 
 type Props = {
   paths: Array<{
@@ -14,7 +9,7 @@ type Props = {
   }>;
   altitude?: number;
 };
-const Map: FC<Props> = ({paths}) => {
+const DeviceMap: FC<Props> = ({paths}) => {
   const options = {
     strokeColor: '#4dff4d',
     strokeOpacity: 1,
@@ -32,14 +27,11 @@ const Map: FC<Props> = ({paths}) => {
   };
   return (
     <div>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={paths?.[0] || {lat: 21.027763, lng: 105.83416}}
-        zoom={18}>
+      <Map>
         <Polyline path={paths} options={options} />
-      </GoogleMap>
+      </Map>
     </div>
   );
 };
 
-export default Map;
+export default DeviceMap;

@@ -15,7 +15,7 @@
     "@babel/polyfill": "^7.8.7",
     "@react-google-maps/api": "^1.13.0",
     "@types/uuid": "^8.3.0",
-    "antd": "^4.8.0",
+    "antd": "^4.9.1",
     "crypto-js": "^4.0.0",
     "dayjs": "^1.9.6",
     "history": "^5.0.0",

@@ -96,3 +96,10 @@ export function getTimeRange(
       return null;
   }
 }
+//
+// export function formatDeviceTime(time): string {
+//   if (!dayjs(time).isValid()) {
+//     return '';
+//   }
+//   return
+// }

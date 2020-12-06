@@ -5,7 +5,7 @@ import {DownOutlined, MenuOutlined} from '@ant-design/icons';
 import DevicesTable from './DevicesTable';
 
 const DevicesDropDown: FC<{
-  onSelectDevice: (pos: {latitude: number; latitude: number}) => void;
+  onSelectDevice: (pos: {latitude: number; longitude: number}) => void;
 }> = ({onSelectDevice}) => {
   const [visible, setVisible] = useState(false);
 
@@ -34,7 +34,7 @@ const DevicesDropDown: FC<{
                   title: 'Biển số',
                   dataIndex: 'carNumber',
                   key: 'carNumber',
-                  render: (text, record) => (
+                  render: (text: string, record: any) => (
                     <Button
                       type="link"
                       onClick={() =>
@@ -55,7 +55,7 @@ const DevicesDropDown: FC<{
                   ),
                   dataIndex: 'speed',
                   key: 'speed',
-                  render: (_, record) => record.position?.speed,
+                  render: (_: string, record: any) => record.position?.speed,
                 },
                 {
                   title: (
@@ -65,14 +65,14 @@ const DevicesDropDown: FC<{
                   ),
                   dataIndex: 'deviceTime',
                   key: 'deviceTime',
-                  render: (_, record) =>
+                  render: (_: string, record: any) =>
                     format(record.position?.deviceTime, 'HH:mm'),
                 },
                 {
                   title: '',
                   dataIndex: 'action',
                   key: 'action',
-                  render: (_, record) => <MenuOutlined />,
+                  render: () => <MenuOutlined />,
                 },
               ]}
             />

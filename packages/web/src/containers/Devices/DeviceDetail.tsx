@@ -65,6 +65,8 @@ const DeviceDetail: FC = () => {
       }>
       <DeviceSearchForm onSubmit={handleSubmit} />
       <DeviceMap
+        velocity={100}
+        initialDate={Date.now()}
         paths={historyMovingData?.data?.data.map((dt: any) => ({
           lat: dt.latitude,
           lng: dt.longitude,

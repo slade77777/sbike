@@ -11,7 +11,6 @@ const defaultPosition = {
 
 const Tracking: FC = () => {
   const [position, setPosition] = useState(defaultPosition);
-  console.log(position);
   return (
     <Card>
       <DevicesDropDown
@@ -22,8 +21,11 @@ const Tracking: FC = () => {
           })
         }
       />
-      <Map>
-        <Marker position={position} />
+      <Map zoom={15}>
+        <Marker
+          position={position}
+          animation={window.google.maps.Animation.DROP}
+        />
       </Map>
     </Card>
   );

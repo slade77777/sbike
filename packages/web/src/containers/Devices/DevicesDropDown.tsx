@@ -7,14 +7,14 @@ import DevicesTable from './DevicesTable';
 const DevicesDropDown: FC<{
   onSelectDevice: (pos: {latitude: number; longitude: number}) => void;
 }> = ({onSelectDevice}) => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   return (
     <div
       style={{
         position: 'relative',
       }}>
-      <Button onClick={() => setVisible(!visible)}>
+      <Button onClick={() => setVisible(!visible)} type="primary">
         Danh sách xe <DownOutlined />
       </Button>
       {visible && (

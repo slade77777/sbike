@@ -4,8 +4,8 @@ import {EditOutlined, DownOutlined, AlertOutlined} from '@ant-design/icons';
 import {useMutation} from 'react-query';
 import {useParams} from 'react-router-dom';
 import {getHistory, useDeviceId} from 'shared-logic';
+import Polyline from '../../components/Polyline';
 import DeviceSearchForm from './DeviceSearchForm';
-import DeviceMap from './DeviceMap';
 
 const menu = (
   <Menu>
@@ -64,10 +64,8 @@ const DeviceDetail: FC = () => {
         </Space>
       }>
       <DeviceSearchForm onSubmit={handleSubmit} />
-      <DeviceMap
-        velocity={100}
-        initialDate={Date.now()}
-        paths={historyMovingData?.data?.data.map((dt: any) => ({
+      <Polyline
+        paths={historyMovingData?.data?.data?.map((dt: any) => ({
           lat: dt.latitude,
           lng: dt.longitude,
         }))}

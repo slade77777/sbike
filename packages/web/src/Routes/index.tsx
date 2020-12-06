@@ -10,12 +10,7 @@ const ReportPage = React.lazy(() => import('../pages/ReportPage'));
 
 const Routes = () => {
   return (
-    <Layout.Content
-      className="site-layout-background"
-      style={{
-        padding: 24,
-        height: '100%',
-      }}>
+    <Layout.Content className="site-layout-background">
       <Switch>
         <Route path="/" exact>
           <div>Dashboard</div>

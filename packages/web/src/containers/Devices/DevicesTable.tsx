@@ -67,10 +67,14 @@ const DevicesTable: FC<Props> = ({columns}) => {
         rowKey="deviceID"
         columns={initialColumns}
         dataSource={
-          data?.data?.map((device) => ({
-            ...device,
-            carNumber: device.carNumber || 'unknown',
-          })) || []
+          data?.data
+            ?.map((device) => ({
+              ...device,
+              carNumber: device.carNumber || 'unknown',
+            }))
+            ?.filter(
+              (dv) => !!dv.position?.longitude && !!dv.position?.latitude,
+            ) || []
         }
         bordered
       />

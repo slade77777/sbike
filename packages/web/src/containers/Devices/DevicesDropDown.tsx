@@ -29,6 +29,7 @@ const DevicesDropDown: FC<{
           }}>
           <Card>
             <DevicesTable
+              size="small"
               columns={[
                 {
                   title: 'Biển số',

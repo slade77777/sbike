@@ -2,9 +2,10 @@ import React, {FC} from 'react';
 import styled from 'styled-components';
 import GoogleMapReact, {Props as GoogleMapProps} from 'google-map-react';
 
-const Wrapper = styled.main`
+const Wrapper = styled.div`
   width: 100%;
   height: calc(100vh - 64px);
+  position: relative;
 `;
 
 type Props =

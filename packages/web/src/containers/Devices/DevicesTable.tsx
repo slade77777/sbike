@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {Table, Space, Button, Spin} from 'antd';
 import {EditOutlined, EyeOutlined} from '@ant-design/icons';
+import {SizeType} from 'antd/es/config-provider/SizeContext';
 import {Link, useRouteMatch} from 'react-router-dom';
 import {Device, getDeviceByCompany, useUserInfo} from 'shared-logic';
 import {useQuery} from 'react-query';
@@ -8,9 +9,10 @@ import {useQuery} from 'react-query';
 type Props = {
   devices?: Device[];
   columns?: Array<any> | null;
+  size: SizeType;
 };
 
-const DevicesTable: FC<Props> = ({columns}) => {
+const DevicesTable: FC<Props> = ({columns, ...props}) => {
   const routeMatch = useRouteMatch();
   const userRes = useUserInfo();
   const {data, isLoading} = useQuery(
@@ -64,6 +66,7 @@ const DevicesTable: FC<Props> = ({columns}) => {
   return (
     <Spin spinning={isLoading}>
       <Table
+        {...props}
         rowKey="deviceID"
         columns={initialColumns}
         dataSource={

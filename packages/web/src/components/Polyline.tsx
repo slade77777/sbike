@@ -17,18 +17,17 @@ function animateCircle(line: any) {
     const icons = line.get('icons');
     icons[0].offset = count / 2 + '%';
     line.set('icons', icons);
-  }, 20);
+  }, 100);
 }
 
 const Polyline: FC<Props> = ({paths}) => {
-  const mapRef = useRef<{
-    map: any;
-    maps: any;
-  }>({map: null, maps: null});
+  const mapRef = useRef(null);
+  const mapApiRef = useRef(null);
 
   useEffect(() => {
-    if (mapRef.current && mapRef.current.maps) {
-      const flightPath = new mapRef.current.maps.Polyline({
+    let flightPath: any = null;
+    if (mapRef.current && mapApiRef.current) {
+      flightPath = new mapApiRef.current.Polyline({
         path: paths,
         strokeColor: '#4dff4d',
         strokeOpacity: 1,
@@ -43,18 +42,21 @@ const Polyline: FC<Props> = ({paths}) => {
         zIndex: 1,
         geodesic: true,
       });
-      flightPath?.setMap(mapRef.current.map);
+      flightPath.setMap(mapRef.current);
     }
+    return () => {
+      flightPath?.setMap(null);
+    };
   }, [paths]);
 
   useEffect(() => {
-    if (mapRef.current.maps) {
+    if (mapApiRef.current) {
       const lineSymbol = {
-        path: mapRef.current.maps.SymbolPath.CIRCLE,
-        scale: 8,
+        path: mapApiRef.current.SymbolPath.FORWARD_CLOSED_ARROW,
+        scale: 4,
         strokeColor: '#393',
       };
-      const line = new mapRef.current.maps.Polyline({
+      const line = new mapApiRef.current.Polyline({
         path: paths,
         icons: [
           {
@@ -62,7 +64,7 @@ const Polyline: FC<Props> = ({paths}) => {
             offset: '100%',
           },
         ],
-        map: mapRef.current.map,
+        map: mapRef.current,
       });
 
       animateCircle(line);
@@ -72,15 +74,14 @@ const Polyline: FC<Props> = ({paths}) => {
   return (
     <div>
       <GoogleMap
-        defaultZoom={10}
+        defaultZoom={15}
+        center={paths?.[0]}
         resetBoundsOnResize
         defaultCenter={HANOI_LOCATION}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({map, maps}) => {
-          mapRef.current = {
-            map,
-            maps,
-          };
+          mapRef.current = map;
+          mapApiRef.current = maps;
         }}
       />
     </div>

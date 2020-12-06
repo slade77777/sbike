@@ -728,7 +728,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SS5C7GH48;
@@ -747,7 +747,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.SbikeMobile.com;
 				PRODUCT_NAME = SbikeMobile;
-				PROVISIONING_PROFILE_SPECIFIER = "iOS Team Store Provisioning Profile: vn.SbikeMobile.com";
+				PROVISIONING_PROFILE_SPECIFIER = "Sbike Dev";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -760,7 +760,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SS5C7GH48;
@@ -774,7 +774,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.SbikeMobile.com;
 				PRODUCT_NAME = SbikeMobile;
-				PROVISIONING_PROFILE_SPECIFIER = "iOS Team Store Provisioning Profile: vn.SbikeMobile.com";
+				PROVISIONING_PROFILE_SPECIFIER = "Sbike Dev";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -13,6 +13,7 @@ import {useAuthState} from './context/auth-context';
 import User from './screens/User';
 import DeviceInformation from './screens/DeviceInformation';
 import TransportHistoryFilter from "./screens/TransportHistoryFilter";
+import TransportHistory from "./screens/TransportHistory";
 
 export type MainStackParamList = {
   Home: undefined;
@@ -20,6 +21,7 @@ export type MainStackParamList = {
   User: undefined;
   TransportHistoryFilter: {deviceId: string};
   DeviceInformation: {deviceId: string};
+  TransportHistory: {data: Array<any>};
 };
 
 const Stack = createStackNavigator<MainStackParamList>();
@@ -40,7 +42,7 @@ const AppRoot = () => {
                   API_KEY: user.userToken,
                 }),
               }).then((res) => {
-                if (res.status !== 401) {
+                if (res.status === 200) {
                   res.json().then((data) => {
                     setToken(user?.userToken);
                     dispatch({
@@ -145,6 +147,14 @@ const AppRoot = () => {
                 headerBackTitle: ' ',
               }}
               component={TransportHistoryFilter}
+            />
+            <Stack.Screen
+              name="TransportHistory"
+              options={{
+                headerTitle: 'Chi tiết di chuyển',
+                headerBackTitle: ' ',
+              }}
+              component={TransportHistory}
             />
           </>
         ) : (

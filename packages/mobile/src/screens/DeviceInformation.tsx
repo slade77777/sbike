@@ -139,4 +139,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default React.memo(DeviceInformation);
+export default DeviceInformation;

@@ -3,9 +3,10 @@ import {Layout, Spin} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
 import '../styles/main.scss';
 import Logo from '../components/Logo';
-import Header from '../components/Header';
 import Navigations from '../components/Navigations';
 import Routes from '../Routes';
+import HelloUser from './Authen/HelloUser';
+import Logout from './Authen/Logout';
 
 const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -18,12 +19,24 @@ const AuthenticatedApp = () => {
           collapsed={collapsed}
           collapsedWidth={50}
           width={250}
+          style={{
+            position: 'relative',
+          }}
           onCollapse={() => setCollapsed(!collapsed)}>
           <Logo status={collapsed ? 'small' : 'large'} />
+          {!collapsed && <HelloUser />}
           <Navigations />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 80,
+              padding: '0 10px',
+              width: '100%',
+            }}>
+            <Logout hideText={collapsed} />
+          </div>
         </Layout.Sider>
         <Layout className="site-layout">
-          <Header />
           <Suspense fallback={<Spin />}>
             <Routes />
           </Suspense>

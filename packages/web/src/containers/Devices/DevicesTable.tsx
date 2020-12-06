@@ -9,7 +9,7 @@ import {useQuery} from 'react-query';
 type Props = {
   devices?: Device[];
   columns?: Array<any> | null;
-  size: SizeType;
+  size?: SizeType;
 };
 
 const DevicesTable: FC<Props> = ({columns, ...props}) => {

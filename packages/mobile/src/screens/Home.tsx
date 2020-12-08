@@ -28,11 +28,10 @@ const Home: React.FC = () => {
         renderScene={renderScene}
         onIndexChange={setIndex}
         tabBarPosition="bottom"
-        removeClippedSubviews={true}
         initialLayout={{width: Dimensions.get('window').width}}
       />
     </SafeAreaView>
   );
 };
 
-export default React.memo(Home);
+export default Home;

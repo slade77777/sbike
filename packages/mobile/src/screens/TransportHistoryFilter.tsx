@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  Platform,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
@@ -24,7 +25,10 @@ import ActionSheet from 'react-native-actionsheet';
 
 type Props = {};
 
-const dateRangeOptions = ['Hôm nay', 'Hôm qua', '1 giờ trước', '30 phút trước'];
+const dateRangeOptions =
+  Platform.OS === 'android'
+    ? ['Hôm nay', 'Hôm qua', '1 giờ trước', '30 phút trước', 'cancel']
+    : ['Hôm nay', 'Hôm qua', '1 giờ trước', '30 phút trước'];
 
 const TransportHistoryFilter: React.FC<Props> = ({}) => {
   const [timeStart, setTimeStart] = useState(new Date());
@@ -35,30 +39,41 @@ const TransportHistoryFilter: React.FC<Props> = ({}) => {
   const {data} = useDeviceId(deviceId);
   const deviceInfo = data?.data || {};
   const navigation = useNavigation();
+  const actionSheet = useRef();
 
   const handleNavigate = () => {
-    const range = formatToSearch([dayjs(timeStart), dayjs(timeEnd)]);
-    getHistory({
-      deviceID: deviceId,
-      from: range[0],
-      to: range[1],
-    })
-      .then((res) => {
-        const data = res.data;
-        if (data.length > 0) {
-          navigation.navigate('TransportHistory', {data});
-        } else {
-          alert('Không có dữ liệu');
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const start = dayjs(timeStart);
+    const end = dayjs(timeEnd);
+    if (start.isBefore(end)) {
+      if (end.diff(start, 'day') < 6) {
+        const range = formatToSearch([start, end]);
+        getHistory({
+          deviceID: deviceId,
+          from: range[0],
+          to: range[1],
+        })
+          .then((res) => {
+            const data = res.data;
+            if (data.length > 0) {
+              navigation.navigate('TransportHistory', {data});
+            } else {
+              alert('Không có dữ liệu');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        alert('Xin chọn khoảng thời gian tối đa 5 ngày')
+      }
+    } else {
+      alert('Thời điểm không hợp lệ')
+    }
   };
 
   const showActionSheet = () => {
     // @ts-ignore
-    actionSheet.show();
+    actionSheet?.current.show();
   };
 
   const handleChooseTime = (index: number) => {
@@ -67,25 +82,33 @@ const TransportHistoryFilter: React.FC<Props> = ({}) => {
       case 0:
         setDateRange(dateRangeOptions[0]);
         dateRange = getTodayRange();
+        setDateChoice(dateRange);
         break;
       case 1:
         setDateRange(dateRangeOptions[1]);
         dateRange = getYesterdayRange();
+        setDateChoice(dateRange);
         break;
       case 2:
         setDateRange(dateRangeOptions[2]);
         dateRange = getOneHourAgoRange();
+        setDateChoice(dateRange);
         break;
       case 3:
         setDateRange(dateRangeOptions[3]);
         dateRange = getThirtyMinutesAgoRange();
+        setDateChoice(dateRange);
         break;
     }
+
+  };
+
+  const setDateChoice = (dateRange: Array<any>) => {
     // @ts-ignore
     setTimeStart(dateRange[0]);
     // @ts-ignore
     setTimeEnd(dateRange[1]);
-  };
+  }
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
@@ -106,14 +129,14 @@ const TransportHistoryFilter: React.FC<Props> = ({}) => {
           <Text style={style.label}>Từ</Text>
           <HistoryPicker
             chooseDate={(date: Date) => setTimeStart(date)}
-            dateChoice={timeStart}
+            dateChoice={new Date(timeStart)}
           />
         </View>
         <View style={style.row}>
           <Text style={style.label}>Đến</Text>
           <HistoryPicker
             chooseDate={(date: Date) => setTimeEnd(date)}
-            dateChoice={timeEnd}
+            dateChoice={new Date(timeEnd)}
           />
         </View>
       </View>
@@ -139,10 +162,10 @@ const TransportHistoryFilter: React.FC<Props> = ({}) => {
         </TouchableOpacity>
       </View>
       <ActionSheet
-        ref={(o) => (actionSheet = o)}
+        ref={actionSheet}
         title={'Chọn quãng thời gian'}
         options={dateRangeOptions}
-        cancelButtonIndex={5}
+        cancelButtonIndex={Platform.OS === 'ios' ? 5 : 4}
         onPress={(index: number) => handleChooseTime(index)}
       />
     </ScrollView>

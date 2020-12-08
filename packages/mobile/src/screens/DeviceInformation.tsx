@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
@@ -25,7 +25,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
   if (!data) {
     return <View style={{flex: 1, backgroundColor: 'c7c7cc'}} />;
   }
-
+  console.log(deviceInfo);
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#c7c7cc'}}>
       <View
@@ -43,7 +43,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
           <Text>Lộ trình</Text>
         </TouchableOpacity>
         <View style={style.tool}>
-          <Icon name={'toggle-switch'} size={50} color={color.yellow} />
+          <EntypoIcon name={'switch'} size={50} color={color.yellow} />
           <Text>Tắt, bật máy</Text>
         </View>
         <View style={style.tool}>
@@ -94,7 +94,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
         </View>
         <View style={style.row}>
           <Text style={style.label}>Động cơ</Text>
-          <Text style={style.value}>{deviceInfo.carNumber}</Text>
+          <Text style={style.value}>{deviceInfo.terminalString}</Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Toạ độ</Text>

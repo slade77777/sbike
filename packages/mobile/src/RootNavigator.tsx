@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/FontAwesome';
+  import Icon from 'react-native-vector-icons/FontAwesome';
 import {setToken} from 'shared-logic';
 import Config from 'react-native-config';
 import SignIn from './screens/SignIn';
@@ -14,6 +14,7 @@ import User from './screens/User';
 import DeviceInformation from './screens/DeviceInformation';
 import TransportHistoryFilter from "./screens/TransportHistoryFilter";
 import TransportHistory from "./screens/TransportHistory";
+import color from "./config/color";
 
 export type MainStackParamList = {
   Home: undefined;
@@ -92,7 +93,20 @@ const AppRoot = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={(props) => {
+        return {
+          headerStyle: {
+            backgroundColor: 'white',
+          },
+          headerTintColor: 'black',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerLeft: (() => <TouchableOpacity onPress={() => props.navigation.goBack()} style={{paddingLeft: 5}}>
+            <Icon name={'chevron-left'} size={24} color={color.blue}/>
+          </TouchableOpacity>)
+        }
+      }}>
         {state.userData.userToken ? (
           <>
             <Stack.Screen

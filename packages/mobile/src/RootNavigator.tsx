@@ -102,7 +102,7 @@ const AppRoot = () => {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerLeft: (() => <TouchableOpacity onPress={() => props.navigation.goBack()} style={{paddingLeft: 5}}>
+          headerLeft: (() => <TouchableOpacity onPress={() => props.navigation.goBack()} style={{paddingLeft: 5, width: 100}}>
             <Icon name={'chevron-left'} size={24} color={color.blue}/>
           </TouchableOpacity>)
         }

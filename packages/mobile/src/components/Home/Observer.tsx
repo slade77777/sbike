@@ -180,13 +180,13 @@ const Observer: React.FC<Props> = ({}) => {
 
   const setFollowLocation = (deviceId: string) => {
     // @ts-ignore
-    clearInterval(intervalDirectCar?.current);
+    // clearInterval(intervalDirectCar?.current);
     redirectCarLocation(deviceId, true);
     // @ts-ignore
-    intervalDirectCar.current = setInterval(
-      () => redirectCarLocation(deviceId, false),
-      10000,
-    );
+    // intervalDirectCar.current = setInterval(
+    //   () => redirectCarLocation(deviceId, false),
+    //   10000,
+    // );
   };
 
   const displayCurrentLocation = () => {
@@ -297,6 +297,7 @@ const Observer: React.FC<Props> = ({}) => {
               states.deviceLocation,
             ]}
             strokeWidth={4}
+            strokeColor={color.blue}
           />
         )}
       </MapView>

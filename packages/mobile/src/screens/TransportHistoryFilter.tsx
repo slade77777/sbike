@@ -5,7 +5,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Platform,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
@@ -25,10 +24,7 @@ import ActionSheet from 'react-native-actionsheet';
 
 type Props = {};
 
-const dateRangeOptions =
-  Platform.OS === 'android'
-    ? ['Hôm nay', 'Hôm qua', '1 giờ trước', '30 phút trước', 'cancel']
-    : ['Hôm nay', 'Hôm qua', '1 giờ trước', '30 phút trước'];
+const dateRangeOptions = ['Hôm nay', 'Hôm qua', '1 giờ trước', '30 phút trước', 'cancel']
 
 const TransportHistoryFilter: React.FC<Props> = ({}) => {
   const [timeStart, setTimeStart] = useState(new Date());
@@ -165,7 +161,7 @@ const TransportHistoryFilter: React.FC<Props> = ({}) => {
         ref={actionSheet}
         title={'Chọn quãng thời gian'}
         options={dateRangeOptions}
-        cancelButtonIndex={Platform.OS === 'ios' ? 5 : 4}
+        cancelButtonIndex={4}
         onPress={(index: number) => handleChooseTime(index)}
       />
     </ScrollView>

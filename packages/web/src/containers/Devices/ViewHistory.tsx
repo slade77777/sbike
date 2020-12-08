@@ -2,7 +2,7 @@ import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
 import {LatLng} from 'shared-logic';
 import styled from 'styled-components';
 import {PlayCircleFilled, PauseCircleFilled} from '@ant-design/icons';
-import {Button, Progress} from 'antd';
+import {Button} from 'antd';
 import {
   createHistoryPath,
   createMovingLine,

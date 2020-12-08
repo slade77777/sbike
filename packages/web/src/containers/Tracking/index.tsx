@@ -26,20 +26,26 @@ const Tracking: FC = () => {
       <StyledButton>
         <DevicesDropDown onSelectDevice={goToLocation} />
       </StyledButton>
-      <GoogleMap
-        defaultZoom={14}
-        center={position}
-        defaultCenter={defaultPosition}>
-        <Marker {...position}>
-          <CarSVG width={30} />
-        </Marker>
-      </GoogleMap>
+      <StyledGoogleMap>
+        <GoogleMap
+          defaultZoom={14}
+          center={position}
+          defaultCenter={defaultPosition}>
+          <Marker {...position}>
+            <CarSVG width={40} />
+          </Marker>
+        </GoogleMap>
+      </StyledGoogleMap>
     </StyledContainer>
   );
 };
 
 const StyledContainer = styled.div`
   position: relative;
+`;
+
+const StyledGoogleMap = styled.div`
+  height: 100vh;
 `;
 
 const StyledButton = styled.div`

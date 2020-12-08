@@ -39,7 +39,7 @@ const DetailWrapper: FC<Props> = ({data, info}) => {
             })
           }
         />
-        {state && data && (
+        {state && data && data.length > 0 && (
           <ViewHistory
             paths={data}
             map={state.mapInstance}

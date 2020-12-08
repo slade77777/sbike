@@ -1,7 +1,7 @@
 import React, {FC, useMemo} from 'react';
 import {useMutation} from 'react-query';
 import {useParams} from 'react-router-dom';
-import {Card} from 'antd';
+import {Card, message} from 'antd';
 import {getHistory} from 'shared-logic';
 import DeviceSearchForm from './DeviceSearchForm';
 import DetailWrapper from './DetailWrapper';
@@ -22,7 +22,11 @@ const DeviceDetail: FC = () => {
 
   const handleSubmit = async ({fromTo}: any) => {
     try {
-      await mutate({deviceID, from: fromTo[0], to: fromTo[1]});
+      const res = await mutate({deviceID, from: fromTo[0], to: fromTo[1]});
+      console.log(res);
+      if (res?.data?.length === 0 || !res?.data) {
+        message.warning('Không có dữ liệu');
+      }
     } catch (e) {
       console.log(e);
     }

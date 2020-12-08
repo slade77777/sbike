@@ -1,11 +1,11 @@
 import React, {FC, useState} from 'react';
 import {Button, Popover} from 'antd';
-import {format} from 'shared-logic';
+import {format, LatLng} from 'shared-logic';
 import {DownOutlined, MenuOutlined} from '@ant-design/icons';
 import DevicesTable from './DevicesTable';
 
 const DevicesDropDown: FC<{
-  onSelectDevice: (pos: {latitude: number; longitude: number}) => void;
+  onSelectDevice: (pos: LatLng) => void;
 }> = ({onSelectDevice}) => {
   const [visible, setVisible] = useState(true);
 
@@ -26,8 +26,8 @@ const DevicesDropDown: FC<{
                   type="link"
                   onClick={() =>
                     onSelectDevice({
-                      latitude: record?.position?.latitude,
-                      longitude: record?.position?.longitude,
+                      lat: record?.position?.latitude,
+                      lng: record?.position?.longitude,
                     })
                   }>
                   {text}

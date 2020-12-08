@@ -23,7 +23,6 @@ const DeviceDetail: FC = () => {
   const handleSubmit = async ({fromTo}: any) => {
     try {
       const res = await mutate({deviceID, from: fromTo[0], to: fromTo[1]});
-      console.log(res);
       if (res?.data?.length === 0 || !res?.data) {
         message.warning('Không có dữ liệu');
       }

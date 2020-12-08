@@ -37,3 +37,8 @@ export type AlertConfig = {
   alertPolygon?: Array<any>;
   alertSpeed?: number;
 };
+
+export type LatLng = {
+  lat: number;
+  lng: number;
+};

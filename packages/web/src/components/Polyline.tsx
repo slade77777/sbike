@@ -1,89 +1,95 @@
-import React, {FC, useEffect, useRef} from 'react';
-import {HANOI_LOCATION} from '../contants/common';
-import GoogleMap from './GoogleMap';
+import React, {FC, useEffect, useMemo, useRef} from 'react';
+import {Button} from 'antd';
 
-type Props = {
-  paths: Array<{
-    lat: number;
-    lng: number;
-  }>;
+type LatLong = {
+  lat: number;
+  lng: number;
 };
 
-function animateCircle(line: any) {
-  let count = 0;
-  window.setInterval(() => {
-    count = (count + 1) % 200;
+type Props = {
+  paths: Array<LatLong>;
+  maps: any;
+  map: any;
+};
 
-    const icons = line.get('icons');
-    icons[0].offset = count / 2 + '%';
-    line.set('icons', icons);
-  }, 100);
-}
+const PATH_STYLES = {
+  strokeColor: '#4dff4d',
+  strokeOpacity: 1,
+  strokeWeight: 3,
+  fillColor: '#4dff4d',
+  fillOpacity: 0.35,
+  clickable: false,
+  draggable: false,
+  editable: false,
+  visible: true,
+  radius: 3000,
+  zIndex: 1,
+  geodesic: true,
+};
 
-const Polyline: FC<Props> = ({paths}) => {
-  const mapRef = useRef(null);
-  const mapApiRef = useRef(null);
-
-  useEffect(() => {
-    let flightPath: any = null;
-    if (mapRef.current && mapApiRef.current) {
-      flightPath = new mapApiRef.current.Polyline({
-        path: paths,
-        strokeColor: '#4dff4d',
-        strokeOpacity: 1,
-        strokeWeight: 3,
-        fillColor: '#4dff4d',
-        fillOpacity: 0.35,
-        clickable: false,
-        draggable: false,
-        editable: false,
-        visible: true,
-        radius: 3000,
-        zIndex: 1,
-        geodesic: true,
-      });
-      flightPath.setMap(mapRef.current);
-    }
-    return () => {
-      flightPath?.setMap(null);
-    };
-  }, [paths]);
-
-  useEffect(() => {
-    if (mapApiRef.current) {
-      const lineSymbol = {
-        path: mapApiRef.current.SymbolPath.FORWARD_CLOSED_ARROW,
+function genIcons(maps: any) {
+  return [
+    {
+      icon: {
+        path: maps?.SymbolPath.FORWARD_CLOSED_ARROW,
         scale: 4,
         strokeColor: '#393',
-      };
-      const line = new mapApiRef.current.Polyline({
-        path: paths,
-        icons: [
-          {
-            icon: lineSymbol,
-            offset: '100%',
-          },
-        ],
-        map: mapRef.current,
-      });
+      },
+      offset: '0%',
+    },
+  ];
+}
 
-      animateCircle(line);
-    }
-  }, [paths]);
+function createHistoryPath(maps: any, paths: Array<LatLong>) {
+  return new maps.Polyline({
+    path: paths,
+    ...PATH_STYLES,
+  });
+}
+
+function createMovingLine(maps: any, map: any, icons: Array<any>) {
+  return new maps.Polyline({
+    icons,
+    map,
+  });
+}
+
+const Polyline: FC<Props> = ({paths, map, maps}) => {
+  const intervalId = useRef(0);
+  const iconsRef = useRef(genIcons(maps));
+
+  const historyPath = useMemo(() => createHistoryPath(maps, paths), [
+    maps,
+    paths,
+  ]);
+
+  const movingLine = useMemo(
+    () => createMovingLine(maps, map, iconsRef.current),
+    [map, maps],
+  );
+
+  useEffect(() => {
+    historyPath.setMap(map);
+    return () => {
+      historyPath.setMap(null);
+    };
+  }, [historyPath, map, maps.Polyline, paths]);
+
+  function startPlayback() {
+    movingLine.setPath(paths);
+    let count = 0;
+    intervalId.current = setInterval(() => {
+      count = (count + 1) % 200;
+
+      const icons = movingLine.get('icons');
+      icons[0].offset = count / 2 + '%';
+      movingLine.set('icons', icons);
+    }, 100);
+  }
 
   return (
     <div>
-      <GoogleMap
-        defaultZoom={15}
-        center={paths?.[0]}
-        resetBoundsOnResize
-        defaultCenter={HANOI_LOCATION}
-        yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={({map, maps}) => {
-          mapRef.current = map;
-          mapApiRef.current = maps;
-        }}
-      />
+      <Button onClick={startPlayback}>Start </Button>
     </div>
   );
 };

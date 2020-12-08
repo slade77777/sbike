@@ -1,13 +1,14 @@
-import React, {FC, useEffect, useMemo, useRef} from 'react';
+import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
 import {LatLng} from 'shared-logic';
 import styled from 'styled-components';
-import {PlayCircleFilled} from '@ant-design/icons';
+import {PlayCircleFilled, PauseCircleFilled} from '@ant-design/icons';
 import {Button, Progress} from 'antd';
 import {
   createHistoryPath,
   createMovingLine,
   genIcons,
 } from '../../utils/googleMapUtils';
+import ProcessPath from './ProcessPath';
 
 type Props = {
   paths: Array<LatLng>;
@@ -15,9 +16,16 @@ type Props = {
   map: any;
 };
 
+const LIMITED_COUNT = 200;
+
 const ViewHistory: FC<Props> = ({paths, map, maps}) => {
+  const [playing, setPlaying] = useState(false);
   const intervalId = useRef(0);
   const iconsRef = useRef(genIcons(maps));
+  const countRef = useRef(0);
+  const [percent, setPercent] = useState(0);
+
+  // const limitedCount = useMemo(() => paths.length || 1, [paths]);
 
   const historyPath = useMemo(() => createHistoryPath(maps, paths), [
     maps,
@@ -38,15 +46,25 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   }, [historyPath, map, maps.Polyline, movingLine, paths]);
 
   function startPlayback() {
-    movingLine.setPath(paths);
-    let count = 0;
-    intervalId.current = setInterval(() => {
-      count = (count + 1) % 200;
-
-      const icons = movingLine.get('icons');
-      icons[0].offset = count / 2 + '%';
-      movingLine.set('icons', icons);
-    }, 100);
+    if (playing) {
+      clearInterval(intervalId.current);
+    } else {
+      if (!movingLine?.get('path')) {
+        movingLine.setPath(paths);
+      }
+      intervalId.current = setInterval(() => {
+        countRef.current = (countRef.current + 1) % LIMITED_COUNT;
+        if (countRef.current >= LIMITED_COUNT - 1) {
+          clearInterval(intervalId.current);
+          setPlaying(false);
+        }
+        const icons = movingLine.get('icons');
+        icons[0].offset = countRef.current / 2 + '%';
+        movingLine.set('icons', icons);
+        setPercent((100 * countRef.current) / LIMITED_COUNT);
+      }, 100);
+    }
+    setPlaying(!playing);
   }
 
   return (
@@ -54,11 +72,17 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
       <Button
         shape="circle"
         onClick={startPlayback}
-        icon={<PlayCircleFilled style={{fontSize: 24}} />}
+        icon={
+          playing ? (
+            <PauseCircleFilled style={{fontSize: 24}} />
+          ) : (
+            <PlayCircleFilled style={{fontSize: 24}} />
+          )
+        }
         type="link"
         size="small"
       />
-      <Progress percent={60} status="active" size="small" />
+      <ProcessPath percent={percent} />
     </StyledController>
   );
 };

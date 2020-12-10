@@ -72,7 +72,7 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
       icons[0].offset = (100 * countRef.current) / steps + '%';
       movingLine.set('icons', icons);
       countRef.current = (countRef.current + 1) % steps;
-      if (movingLine.get('icons')[0].offset >= '99.5%') {
+      if (countRef.current === steps - 1) {
         icons[0].offset = '100%';
         movingLine.set('icons', icons);
         window.clearInterval(intervalId.current);

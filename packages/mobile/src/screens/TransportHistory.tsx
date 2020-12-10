@@ -87,18 +87,18 @@ const TransportHistory: React.FC<Props> = () => {
 
   useEffect(() => {
     if (isPlaying && time < data.length - 1) {
-      setTimeout(() => {
-        if (Platform.OS === 'android') {
-          if (marker) {
-            marker?.current?.animateMarkerToCoordinate(
-              {
-                latitude: data[time].latitude,
-                longitude: data[time].longitude,
-              },
-              speed,
-            );
-          }
+      if (Platform.OS === 'android') {
+        if (marker) {
+          marker?.current?.animateMarkerToCoordinate(
+            {
+              latitude: data[time].latitude,
+              longitude: data[time].longitude,
+            },
+            speed,
+          );
         }
+      }
+      setTimeout(() => {
         setTime(time + 1);
         const mapLimit = getBoundingBox(mapLocation);
         if (
@@ -138,6 +138,8 @@ const TransportHistory: React.FC<Props> = () => {
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 25,
+        borderColor: speed === 500/index ? 'black' : 'white',
+        borderWidth: 1
       }}>
       <Text style={{color: 'black', fontWeight: 'bold'}}>X{index}</Text>
     </TouchableOpacity>

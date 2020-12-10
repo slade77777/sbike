@@ -16,16 +16,30 @@ type Props = {
   map: any;
 };
 
-const LIMITED_COUNT = 200;
+const STEPS = 1000;
+const DEFAULT_SPEED = 100;
+
+enum SpeedEnum {
+  NORMAL = 1,
+  X2 = 2,
+  X4 = 4,
+  X8 = 8,
+}
+
+const SPEED_BUTTONS = [
+  {speed: SpeedEnum.NORMAL, label: '1'},
+  {speed: SpeedEnum.X2, label: '2x'},
+  {speed: SpeedEnum.X4, label: '4x'},
+  {speed: SpeedEnum.X8, label: '8x'},
+];
 
 const ViewHistory: FC<Props> = ({paths, map, maps}) => {
-  const [playing, setPlaying] = useState(false);
+  const [isMoving, setIsMoving] = useState(false);
   const intervalId = useRef(0);
   const iconsRef = useRef(genIcons(maps));
   const countRef = useRef(0);
   const [percent, setPercent] = useState(0);
-
-  // const limitedCount = useMemo(() => paths.length || 1, [paths]);
+  const [speed, setSpeed] = useState(SpeedEnum.NORMAL);
 
   const historyPath = useMemo(() => createHistoryPath(maps, paths), [
     maps,
@@ -45,35 +59,50 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
     };
   }, [historyPath, map, maps.Polyline, movingLine, paths]);
 
-  function startPlayback() {
-    if (playing) {
-      clearInterval(intervalId.current);
-    } else {
-      if (!movingLine?.get('path')) {
-        movingLine.setPath(paths);
-      }
-      intervalId.current = setInterval(() => {
-        countRef.current = (countRef.current + 1) % LIMITED_COUNT;
-        if (countRef.current >= LIMITED_COUNT - 1) {
-          clearInterval(intervalId.current);
-          setPlaying(false);
-        }
-        const icons = movingLine.get('icons');
-        icons[0].offset = countRef.current / 2 + '%';
-        movingLine.set('icons', icons);
-        setPercent((100 * countRef.current) / LIMITED_COUNT);
-      }, 100);
+  function animateCar(newSpeed: SpeedEnum) {
+    if (intervalId.current) {
+      window.clearInterval(intervalId.current);
     }
-    setPlaying(!playing);
+    if (!movingLine?.get('path')) {
+      movingLine.setPath(paths);
+    }
+    intervalId.current = window.setInterval(() => {
+      countRef.current = (countRef.current + 1) % STEPS;
+      if (countRef.current >= STEPS - 1) {
+        window.clearInterval(intervalId.current);
+        setIsMoving(false);
+      }
+      const icons = movingLine.get('icons');
+      icons[0].offset = (100 * countRef.current) / STEPS + '%';
+      movingLine.set('icons', icons);
+      setPercent((100 * countRef.current) / STEPS);
+    }, DEFAULT_SPEED / newSpeed);
+  }
+
+  function stop() {
+    window.clearInterval(intervalId.current);
+    setIsMoving(false);
+  }
+
+  function start() {
+    animateCar(speed);
+    setIsMoving(true);
+  }
+
+  function changeSpeed(xTimes: SpeedEnum) {
+    if (isMoving) {
+      animateCar(xTimes);
+    }
+    setSpeed(xTimes);
   }
 
   return (
     <StyledController>
       <Button
         shape="circle"
-        onClick={startPlayback}
+        onClick={isMoving ? stop : start}
         icon={
-          playing ? (
+          isMoving ? (
             <PauseCircleFilled style={{fontSize: 24}} />
           ) : (
             <PlayCircleFilled style={{fontSize: 24}} />
@@ -83,6 +112,15 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
         size="small"
       />
       <ProcessPath percent={percent} />
+      {SPEED_BUTTONS.map((btn) => (
+        <Button
+          size="small"
+          key={btn.label}
+          type={speed === btn.speed ? 'primary' : 'default'}
+          onClick={() => changeSpeed(btn.speed)}>
+          {btn.label}
+        </Button>
+      ))}
     </StyledController>
   );
 };
@@ -92,13 +130,13 @@ const StyledController = styled.div`
   border-radius: 2px;
   bottom: 50px;
   left: 50%;
-  width: 40%;
+  width: 50%;
   padding: 6px;
   background-color: rgba(255, 255, 255, 1);
   transform: translateX(-50%);
   z-index: 10;
   display: grid;
-  grid-template-columns: 24px auto;
+  grid-template-columns: 24px auto repeat(${SPEED_BUTTONS.length}, 40px);
   align-items: center;
   grid-gap: 10px;
   box-shadow: 0 2px 8px #f0f1f2;

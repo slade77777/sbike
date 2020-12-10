@@ -9,7 +9,7 @@ export function genIcons(maps: any) {
         scale: 4,
         strokeColor: '#fc8621',
       },
-      offset: '0%',
+      offset: '100%',
     },
   ];
 }

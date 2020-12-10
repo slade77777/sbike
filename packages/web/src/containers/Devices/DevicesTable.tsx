@@ -1,23 +1,26 @@
 import React, {FC} from 'react';
-import {Table, Space, Button} from 'antd';
+import {Table, Space, Button, Spin} from 'antd';
 import {EditOutlined, EyeOutlined} from '@ant-design/icons';
 import {Link, useRouteMatch} from 'react-router-dom';
-import {Device} from 'shared-logic';
+import {Device, getDeviceByCompany, useUserInfo} from 'shared-logic';
+import {useQuery} from 'react-query';
 
-// const data = [
-//   {
-//     key: '1',
-//     deviceID: '022202700999',
-//     cardNumber: '30F88888',
-//     deviceType: 'Xe may',
-//     expiredDate: '30/11/2020',
-//     updatedDate: '30/11/2020',
-//   },
-// ];
+type Props = {
+  devices?: Device[];
+  columns?: Array<any> | null;
+};
 
-const DevicesTable: FC<{devices: Device[]}> = ({devices}) => {
+const DevicesTable: FC<Props> = ({columns}) => {
   const routeMatch = useRouteMatch();
-  const columns = [
+  const userRes = useUserInfo();
+  const {data, isLoading} = useQuery(
+    [
+      'companyDevice',
+      userRes.data?.data?.companyID && userRes.data.data.companyID,
+    ],
+    getDeviceByCompany,
+  );
+  const initialColumns = columns || [
     {
       title: 'Mã thiết bị',
       dataIndex: 'deviceID',
@@ -25,8 +28,8 @@ const DevicesTable: FC<{devices: Device[]}> = ({devices}) => {
     },
     {
       title: 'Biển số xe',
-      dataIndex: 'cardNumber',
-      key: 'cardNumber',
+      dataIndex: 'carNumber',
+      key: 'carNumber',
     },
     {
       title: 'Loại thiết bị',
@@ -59,9 +62,19 @@ const DevicesTable: FC<{devices: Device[]}> = ({devices}) => {
     },
   ];
   return (
-    <div>
-      <Table columns={columns} dataSource={devices || []} bordered />
-    </div>
+    <Spin spinning={isLoading}>
+      <Table
+        rowKey="deviceID"
+        columns={initialColumns}
+        dataSource={
+          data?.data?.map((device) => ({
+            ...device,
+            carNumber: device.carNumber || 'unknown',
+          })) || []
+        }
+        bordered
+      />
+    </Spin>
   );
 };
 

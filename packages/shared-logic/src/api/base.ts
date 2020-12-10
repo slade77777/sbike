@@ -20,10 +20,15 @@ export function setSecureAxiosInstance(baseURL: string) {
 
   secureInstance.interceptors.response.use(
     function (response) {
+      if (response.status !== 200) {
+        return Promise.reject(response.data);
+      } else if (response.status === 200 && response.data.errorCode === 1) {
+        return Promise.reject(response.data);
+      }
       return response;
     },
     function (error) {
-      return error;
+      return Promise.reject(error);
     },
   );
 }

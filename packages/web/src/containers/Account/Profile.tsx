@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, Col, Row, Spin} from 'antd';
 import {useUserInfo} from 'shared-logic';
-import AccountForm from '../Account/AccountForm';
+import AccountForm from './AccountForm';
 
 const Profile = () => {
   const {data, isLoading} = useUserInfo();

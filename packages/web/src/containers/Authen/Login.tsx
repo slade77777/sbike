@@ -1,30 +1,24 @@
 import React from 'react';
-import {Form, Input, Button} from 'antd';
+import {Form, Input, Button, Alert} from 'antd';
+import {useMutation} from 'react-query';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-import {User} from 'shared-logic';
-import {encrypt} from '../utils/aesUtil';
-import {useAuthState} from '../context/auth-context';
-// import {ACTION_ERROR} from '../contants/common';
+import {login, User} from 'shared-logic';
+import {encrypt} from '../../utils/aesUtil';
+import {useAuthState} from '../../context/auth-context';
 
 const Login = () => {
-  const {onLogin, loginLoading} = useAuthState();
-  // const [loginMutate, {isLoading, isError}] = useMutation(login);
+  const [loginMutate, {isLoading, error, isError}] = useMutation(login);
+  const {handleLoginSuccess} = useAuthState();
 
   const onFinish = async (values: User) => {
-    onLogin({
+    const encryptedValues = {
       ...values,
       password: encrypt(values.password),
-    });
-    // try {
-    //   const dataLogin = await loginMutate();
-    //   if (dataLogin?.data?.session && dataLogin?.data?.errorCode === 0) {
-    //     onLoginSuccess(dataLogin?.data?.session);
-    //   } else if (dataLogin?.data?.errorCode === 1) {
-    //     message.error(dataLogin?.data?.message);
-    //   }
-    // } catch (err) {
-    //   message.error(ACTION_ERROR);
-    // }
+    };
+    const dataLogin = await loginMutate(encryptedValues);
+    if (dataLogin?.data?.session && dataLogin?.data?.errorCode === 0) {
+      handleLoginSuccess(dataLogin?.data);
+    }
   };
 
   return (
@@ -52,10 +46,11 @@ const Login = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" block loading={loginLoading}>
+        <Button type="primary" htmlType="submit" block loading={isLoading}>
           Log in
         </Button>
       </Form.Item>
+      {isError && <Alert message={error?.message} type="error" showIcon />}
     </Form>
   );
 };

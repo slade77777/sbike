@@ -5,7 +5,7 @@ import {useMutation} from 'react-query';
 import {useParams} from 'react-router-dom';
 import {getHistory, useDeviceId} from 'shared-logic';
 import DeviceSearchForm from './DeviceSearchForm';
-import Map from './Map';
+import DeviceMap from './DeviceMap';
 
 const menu = (
   <Menu>
@@ -64,7 +64,7 @@ const DeviceDetail: FC = () => {
         </Space>
       }>
       <DeviceSearchForm onSubmit={handleSubmit} />
-      <Map
+      <DeviceMap
         paths={historyMovingData?.data?.data.map((dt: any) => ({
           lat: dt.latitude,
           lng: dt.longitude,

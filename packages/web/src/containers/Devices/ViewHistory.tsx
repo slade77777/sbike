@@ -136,7 +136,7 @@ const StyledController = styled.div`
   transform: translateX(-50%);
   z-index: 10;
   display: grid;
-  grid-template-columns: 24px auto repeat(${SPEED_BUTTONS.length}, 40px);
+  grid-template-columns: 24px auto repeat(${SPEED_BUTTONS.length}, 32px);
   align-items: center;
   grid-gap: 10px;
   box-shadow: 0 2px 8px #f0f1f2;

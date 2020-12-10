@@ -1,4 +1,11 @@
-import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {LatLng} from 'shared-logic';
 import styled from 'styled-components';
 import {PlayCircleFilled, PauseCircleFilled} from '@ant-design/icons';
@@ -78,7 +85,7 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
         window.clearInterval(intervalId.current);
         setIsMoving(false);
       }
-      setPercent((100 * countRef.current) / steps);
+      setPercent(countRef.current);
     }, DEFAULT_SPEED / newSpeed);
   }
 
@@ -87,17 +94,31 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
     setIsMoving(false);
   }
 
-  function start() {
+  const onChangeValue = useCallback(
+    (vl: number) => {
+      countRef.current = vl;
+      const icons = movingLine.get('icons');
+      icons[0].offset = (100 * vl) / steps + '%';
+      movingLine.set('icons', icons);
+      setPercent(vl);
+    },
+    [movingLine, steps],
+  );
+
+  const start = useCallback(() => {
     animateCar(speed);
     setIsMoving(true);
-  }
+  }, [animateCar, speed]);
 
-  function changeSpeed(xTimes: SpeedEnum) {
-    if (isMoving) {
-      animateCar(xTimes);
-    }
-    setSpeed(xTimes);
-  }
+  const changeSpeed = useCallback(
+    (xTimes: SpeedEnum) => {
+      if (isMoving) {
+        animateCar(xTimes);
+      }
+      setSpeed(xTimes);
+    },
+    [animateCar, isMoving],
+  );
 
   return (
     <StyledController>
@@ -114,7 +135,7 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
         type="link"
         size="small"
       />
-      <ProcessPath percent={percent} />
+      <ProcessPath value={percent} steps={steps} onChange={onChangeValue} />
       {SPEED_BUTTONS.map((btn) => (
         <Button
           size="small"

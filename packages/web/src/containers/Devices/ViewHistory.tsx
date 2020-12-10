@@ -16,7 +16,7 @@ type Props = {
   map: any;
 };
 
-const STEPS = 1000;
+const DEFAULT_STEPS = 1000;
 const DEFAULT_SPEED = 100;
 
 enum SpeedEnum {
@@ -40,6 +40,7 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   const countRef = useRef(0);
   const [percent, setPercent] = useState(0);
   const [speed, setSpeed] = useState(SpeedEnum.NORMAL);
+  const steps = paths?.length || DEFAULT_STEPS;
 
   const historyPath = useMemo(() => createHistoryPath(maps, paths), [
     maps,
@@ -67,15 +68,17 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
       movingLine.setPath(paths);
     }
     intervalId.current = window.setInterval(() => {
-      countRef.current = (countRef.current + 1) % STEPS;
-      if (countRef.current >= STEPS - 1) {
+      const icons = movingLine.get('icons');
+      icons[0].offset = (100 * countRef.current) / steps + '%';
+      movingLine.set('icons', icons);
+      countRef.current = (countRef.current + 1) % steps;
+      if (movingLine.get('icons')[0].offset >= '99.5%') {
+        icons[0].offset = '100%';
+        movingLine.set('icons', icons);
         window.clearInterval(intervalId.current);
         setIsMoving(false);
       }
-      const icons = movingLine.get('icons');
-      icons[0].offset = (100 * countRef.current) / STEPS + '%';
-      movingLine.set('icons', icons);
-      setPercent((100 * countRef.current) / STEPS);
+      setPercent((100 * countRef.current) / steps);
     }, DEFAULT_SPEED / newSpeed);
   }
 

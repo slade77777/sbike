@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { SearchView } from './SearchView';
-import { ResultView } from './ResultView';
+import {SearchView} from "../components/Report/SearchView";
+import {ResultView} from "../components/Report/ResultView";
 
 const DATA = [
   {

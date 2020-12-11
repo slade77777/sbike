@@ -8,7 +8,7 @@ const Item = ({ item }) => (
   </View>
 );
 
-export const ResultView = (props) => {
+export const ResultView: React.FC = (props) => {
   const renderItem = ({ item }) => (
     <Item item={item} />
   );

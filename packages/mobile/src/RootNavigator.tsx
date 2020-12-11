@@ -15,6 +15,10 @@ import DeviceInformation from './screens/DeviceInformation';
 import TransportHistoryFilter from "./screens/TransportHistoryFilter";
 import TransportHistory from "./screens/TransportHistory";
 import color from "./config/color";
+import {AreaReport} from "./screens/AreaReport";
+import {MoveReport} from "./screens/MoveReport";
+import {SpeedReport} from "./screens/SpeedReport";
+import {OnOffReport} from "./screens/OnOffReport";
 
 export type MainStackParamList = {
   Home: undefined;
@@ -23,6 +27,10 @@ export type MainStackParamList = {
   TransportHistoryFilter: {deviceId: string};
   DeviceInformation: {deviceId: string};
   TransportHistory: {data: Array<any>};
+  AreaReport: undefined,
+  MoveReport: undefined,
+  OnOffReport: undefined,
+  SpeedReport: undefined
 };
 
 const Stack = createStackNavigator<MainStackParamList>();
@@ -169,6 +177,38 @@ const AppRoot = () => {
                 headerBackTitle: ' ',
               }}
               component={TransportHistory}
+            />
+            <Stack.Screen
+              name="AreaReport"
+              options={{
+                headerTitle: 'Báo cáo vùng an toàn',
+                headerBackTitle: ' ',
+              }}
+              component={AreaReport}
+            />
+            <Stack.Screen
+              name="MoveReport"
+              options={{
+                headerTitle: 'Báo cáo di chuyển',
+                headerBackTitle: ' ',
+              }}
+              component={MoveReport}
+            />
+            <Stack.Screen
+              name="OnOffReport"
+              options={{
+                headerTitle: 'Báo cáo tắt/bật máy',
+                headerBackTitle: ' ',
+              }}
+              component={OnOffReport}
+            />
+            <Stack.Screen
+              name="SpeedReport"
+              options={{
+                headerTitle: 'Báo cáo quá tốc độ',
+                headerBackTitle: ' ',
+              }}
+              component={SpeedReport}
             />
           </>
         ) : (

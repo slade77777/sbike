@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchView } from './SearchView';
+import { SearchView } from '../components/Report/SearchView';
 
 export const SpeedReport = () => {
   return (

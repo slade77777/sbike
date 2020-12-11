@@ -61,6 +61,14 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
 
   useEffect(() => {
     historyPath.setMap(map);
+    const icons = movingLine.get('icons');
+    if (!movingLine?.get('path')) {
+      movingLine.setPath(paths);
+    }
+    if (countRef.current < 1) {
+      icons[0].offset = '0%';
+      movingLine.set('icons', icons);
+    }
     return () => {
       historyPath.setMap(null);
       movingLine.setPath([]);
@@ -70,9 +78,6 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   function animateCar(newSpeed: SpeedEnum) {
     if (intervalId.current) {
       window.clearInterval(intervalId.current);
-    }
-    if (!movingLine?.get('path')) {
-      movingLine.setPath(paths);
     }
     intervalId.current = window.setInterval(() => {
       const icons = movingLine.get('icons');
@@ -105,20 +110,17 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
     [movingLine, steps],
   );
 
-  const start = useCallback(() => {
+  function start() {
     animateCar(speed);
     setIsMoving(true);
-  }, [animateCar, speed]);
+  }
 
-  const changeSpeed = useCallback(
-    (xTimes: SpeedEnum) => {
-      if (isMoving) {
-        animateCar(xTimes);
-      }
-      setSpeed(xTimes);
-    },
-    [animateCar, isMoving],
-  );
+  function changeSpeed(xTimes: SpeedEnum) {
+    if (isMoving) {
+      animateCar(xTimes);
+    }
+    setSpeed(xTimes);
+  }
 
   return (
     <StyledController>

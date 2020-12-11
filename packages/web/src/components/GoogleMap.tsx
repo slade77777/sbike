@@ -16,6 +16,7 @@ type Props =
 const GoogleMap: FC<Props> = ({children, ...props}) => (
   <Wrapper>
     <GoogleMapReact
+      debounced
       bootstrapURLKeys={{
         key:
           process.env.GOOGLE_MAPS_KEY ||

@@ -1,9 +1,12 @@
-import React, {FC, useMemo, useState} from 'react';
+import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
 import styled from 'styled-components';
 import {useQuery} from 'react-query';
-import {getDeviceByCompany, LatLng, useUserInfo} from 'shared-logic';
+import {Device, getDeviceByCompany, LatLng, useUserInfo} from 'shared-logic';
 import DevicesDropDown from '../Devices/DevicesDropDown';
 import GoogleMap from '../../components/GoogleMap';
+import {apiIsLoaded} from '../../utils/googleMapUtils';
+
+// @ts-ignore
 import CarSVG from '../../images/car.svg';
 
 const defaultPosition = {
@@ -11,38 +14,30 @@ const defaultPosition = {
   lng: 105.83416,
 };
 
-const Marker: FC<{children: React.ReactNode}> = ({children}) => children;
-
-// Return map bounds based on list of places
-const getMapBounds = (_: any, maps: any, places: Array<LatLng>) => {
-  const bounds = new maps.LatLngBounds();
-
-  places.forEach((place) => {
-    bounds.extend(new maps.LatLng(place.lat, place.lng));
-  });
-  return bounds;
-};
-
-// Re-center map when resizing the window
-const bindResizeListener = (map: any, maps: any, bounds: any) => {
-  maps.event.addDomListenerOnce(map, 'idle', () => {
-    maps.event.addDomListener(window, 'resize', () => {
-      map.fitBounds(bounds);
-    });
-  });
-};
-
-const apiIsLoaded = (map: any, maps: any, places: Array<LatLng>) => {
-  // Get bounds by our places
-  const bounds = getMapBounds(map, maps, places);
-  // Fit map to bounds
-  map.fitBounds(bounds);
-  // Bind the resize listener
-  bindResizeListener(map, maps, bounds);
-};
+function mappingData(data: Array<Device>): Array<LatLng> {
+  return (
+    data
+      .map((dv) => ({
+        lat: dv?.position?.latitude || 0,
+        lng: dv?.position?.longitude || 0,
+      }))
+      ?.filter((lc) => lc.lng && lc.lat) || []
+  );
+}
+const Marker: FC<{children: any}> = ({children}) => children;
 
 const Tracking: FC = () => {
   const [position, setPosition] = useState(defaultPosition);
+  const isFirst = useRef(true);
+  const [state, setState] = useState<{
+    mapApiLoaded: boolean;
+    mapInstance: any;
+    mapApi: any;
+  } | null>({
+    mapApiLoaded: false,
+    mapInstance: null,
+    mapApi: null,
+  });
 
   function goToLocation(pos: LatLng) {
     setPosition(pos);
@@ -57,14 +52,14 @@ const Tracking: FC = () => {
     getDeviceByCompany,
   );
 
-  const places = useMemo(
-    () =>
-      data?.data?.map((dv) => ({
-        lat: dv?.position?.latitude,
-        lng: dv?.position?.longitude,
-      })) || [],
-    [data],
-  );
+  const places = useMemo(() => mappingData(data?.data || []), [data]);
+
+  useEffect(() => {
+    if (state?.mapApiLoaded) {
+      apiIsLoaded(state?.mapInstance, state?.mapApi, places);
+      isFirst.current = false;
+    }
+  }, [places, state]);
 
   return (
     <StyledContainer>
@@ -75,7 +70,15 @@ const Tracking: FC = () => {
         <GoogleMap
           defaultZoom={12}
           center={position || defaultPosition}
-          defaultCenter={defaultPosition}>
+          defaultCenter={defaultPosition}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({map, maps}) =>
+            setState({
+              mapInstance: map,
+              mapApi: maps,
+              mapApiLoaded: true,
+            })
+          }>
           {places.map((place, index) => (
             <Marker key={index} {...place}>
               <CarSVG width={40} />

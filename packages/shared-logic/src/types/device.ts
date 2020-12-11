@@ -23,8 +23,8 @@ export type DeviceLocation = {
   direction?: string;
   extendStatus?: number;
   ioStatus?: number;
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
   satellite?: number;
   serverTime?: string;
   speed?: number;

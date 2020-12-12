@@ -26,7 +26,7 @@ const DetailWrapper: FC<Props> = ({data, info}) => {
       {state && info}
       <StyledGoogleWrapper>
         <GoogleMap
-          defaultZoom={12}
+          defaultZoom={14}
           center={data?.[0]}
           resetBoundsOnResize
           defaultCenter={HANOI_LOCATION}
@@ -41,7 +41,7 @@ const DetailWrapper: FC<Props> = ({data, info}) => {
         />
         {state && data && data.length > 0 && (
           <ViewHistory
-            paths={data}
+            paths={data.map((p) => new state.mapApi.LatLng(p.lat, p.lng))}
             map={state.mapInstance}
             maps={state.mapApi}
           />

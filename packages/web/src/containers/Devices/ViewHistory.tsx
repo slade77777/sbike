@@ -45,6 +45,7 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   const intervalId = useRef(0);
   const iconsRef = useRef(genIcons(maps));
   const countRef = useRef(0);
+  const mapBounds = useRef(map.getBounds());
   const [percent, setPercent] = useState(0);
   const [speed, setSpeed] = useState(SpeedEnum.NORMAL);
   const steps = paths?.length || DEFAULT_STEPS;
@@ -75,15 +76,38 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
     };
   }, [historyPath, map, maps.Polyline, movingLine, paths]);
 
+  useEffect(() => {
+    map.addListener('idle', () => {
+      mapBounds.current = map.getBounds();
+    });
+  }, [map]);
+
   function animateCar(newSpeed: SpeedEnum) {
     if (intervalId.current) {
       window.clearInterval(intervalId.current);
     }
+    let panCount = 0;
+    let panPoint = null;
     intervalId.current = window.setInterval(() => {
+      //Check this point is inside map bound
+      if (!mapBounds.current.contains(paths[countRef.current])) {
+        panCount = panCount + 1;
+        panPoint = paths[countRef.current];
+        window.clearInterval(intervalId.current);
+      } else {
+        panCount = 0;
+        panPoint = null;
+      }
+      if (panCount === 1) {
+        map.panTo(panPoint);
+        animateCar(speed);
+      }
+
       const icons = movingLine.get('icons');
       icons[0].offset = (100 * countRef.current) / steps + '%';
       movingLine.set('icons', icons);
       countRef.current = (countRef.current + 1) % steps;
+
       if (countRef.current === steps - 1) {
         icons[0].offset = '100%';
         movingLine.set('icons', icons);

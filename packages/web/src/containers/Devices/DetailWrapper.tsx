@@ -26,7 +26,7 @@ const DetailWrapper: FC<Props> = ({data, info}) => {
       {state && info}
       <StyledGoogleWrapper>
         <GoogleMap
-          defaultZoom={14}
+          defaultZoom={15}
           center={data?.[0]}
           resetBoundsOnResize
           defaultCenter={HANOI_LOCATION}

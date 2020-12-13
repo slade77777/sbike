@@ -87,26 +87,22 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
       window.clearInterval(intervalId.current);
     }
     let panCount = 0;
-    let panPoint = null;
     intervalId.current = window.setInterval(() => {
-      //Check this point is inside map bound
-      if (!mapBounds.current.contains(paths[countRef.current])) {
-        panCount = panCount + 1;
-        panPoint = paths[countRef.current];
-        window.clearInterval(intervalId.current);
-      } else {
-        panCount = 0;
-        panPoint = null;
-      }
-      if (panCount === 1) {
-        map.panTo(panPoint);
-        animateCar(speed);
-      }
-
       const icons = movingLine.get('icons');
       icons[0].offset = (100 * countRef.current) / steps + '%';
       movingLine.set('icons', icons);
       countRef.current = (countRef.current + 1) % steps;
+
+      //Check this point is inside map bound
+      if (!mapBounds.current.contains(paths[countRef.current])) {
+        panCount = panCount + 1;
+      } else {
+        panCount = 0;
+      }
+      if (panCount === 1) {
+        map.panTo(paths[countRef.current]);
+      }
+      //end check inside map
 
       if (countRef.current === steps - 1) {
         icons[0].offset = '100%';

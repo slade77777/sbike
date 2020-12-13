@@ -40,6 +40,14 @@ const SPEED_BUTTONS = [
   {speed: SpeedEnum.X8, label: '8x'},
 ];
 
+function fitMap(maps: any, map: any, paths: Array<any>) {
+  const bounds = new maps.LatLngBounds();
+  for (let i = 0; i < paths.length; i++) {
+    bounds.extend(paths[i]);
+  }
+  map.fitBounds(bounds);
+}
+
 const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   const [isMoving, setIsMoving] = useState(false);
   const intervalId = useRef(0);
@@ -77,10 +85,11 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   }, [historyPath, map, maps.Polyline, movingLine, paths]);
 
   useEffect(() => {
+    fitMap(maps, map, paths);
     map.addListener('idle', () => {
       mapBounds.current = map.getBounds();
     });
-  }, [map]);
+  }, [map, maps, maps.LatLngBounds, paths]);
 
   function animateCar(newSpeed: SpeedEnum) {
     if (intervalId.current) {

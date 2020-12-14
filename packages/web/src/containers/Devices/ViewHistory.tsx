@@ -19,8 +19,7 @@ type Props = {
   map: any;
 };
 
-const DEFAULT_STEPS = 1000;
-const DEFAULT_SPEED = 100;
+const DEFAULT_SPEED = 500;
 
 enum SpeedEnum {
   NORMAL = 1,
@@ -36,13 +35,13 @@ const SPEED_BUTTONS = [
   {speed: SpeedEnum.X8, label: '8x'},
 ];
 
-// function fitMap(maps: any, map: any, paths: Array<any>) {
-//   const bounds = new maps.LatLngBounds();
-//   for (let i = 0; i < paths.length; i++) {
-//     bounds.extend(paths[i]);
-//   }
-//   map.fitBounds(bounds);
-// }
+function fitMap(maps: any, map: any, paths: Array<any>) {
+  const bounds = new maps.LatLngBounds();
+  for (let i = 0; i < paths.length; i++) {
+    bounds.extend(paths[i]);
+  }
+  map.fitBounds(bounds);
+}
 
 const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   const [isMoving, setIsMoving] = useState(false);
@@ -51,7 +50,6 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   const countRef = useRef(0);
   const [percent, setPercent] = useState(0);
   const [speed, setSpeed] = useState(SpeedEnum.NORMAL);
-  const steps = paths?.length || DEFAULT_STEPS;
 
   const historyPath = useMemo(() => createHistoryPath(maps, paths), [
     maps,
@@ -79,6 +77,7 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   );
 
   useEffect(() => {
+    fitMap(maps, map, paths);
     historyPath.setMap(map);
     const mkIcon = marker.getIcon();
 
@@ -103,11 +102,14 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
     if (intervalId.current) {
       window.clearInterval(intervalId.current);
     }
-    // let count = 0;
-    let panCount = 0;
-    intervalId.current = window.setInterval(() => {
-      countRef.current = countRef.current + 1;
 
+    if (countRef.current === paths.length) {
+      countRef.current = 0;
+    }
+
+    let panCount = 0;
+
+    intervalId.current = window.setInterval(() => {
       // Check this point is inside map bound
       if (!map.getBounds().contains(paths[countRef.current])) {
         panCount = panCount + 1;
@@ -127,9 +129,10 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
 
       //Move marker
       marker.setPosition(paths[countRef.current]);
-
+      countRef.current = countRef.current + 1;
       if (countRef.current === paths.length) {
         clearInterval(intervalId.current);
+        setIsMoving(false);
       }
       setPercent(countRef.current);
     }, DEFAULT_SPEED / newSpeed);
@@ -180,7 +183,11 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
         type="link"
         size="small"
       />
-      <ProcessPath value={percent} steps={steps} onChange={onChangeValue} />
+      <ProcessPath
+        value={percent}
+        steps={paths.length}
+        onChange={onChangeValue}
+      />
       {SPEED_BUTTONS.map((btn) => (
         <Button
           size="small"

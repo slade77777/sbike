@@ -15,3 +15,7 @@ export async function getDeviceById(
 ): ServerResponse<Device> {
   return secureInstance.get(`/device/GetDeviceInfo/${deviceId}`);
 }
+
+export async function updateDeviceInfo(params: Device) {
+  return secureInstance.put(`/device/UpdateDeviceInfo`, params);
+}

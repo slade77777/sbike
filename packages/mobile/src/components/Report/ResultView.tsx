@@ -1,23 +1,28 @@
 import React from 'react';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
 
-const Item = ({ item }) => (
-  <View style={styles.item}>
-    <Text style={{}}>{item.time}</Text>
-    <Text style={{}}>{item.action}</Text>
-  </View>
-);
+type Props = {
+  data: Array<any>
+}
 
-export const ResultView: React.FC = (props) => {
-  const renderItem = ({ item }) => (
-    <Item item={item} />
+type Item = {
+  time: string,
+  action: string
+}
+
+export const ResultView: React.FC<Props> = ({data}) => {
+  const renderItem = (item: Item) => (
+    <View style={styles.item}>
+      <Text style={{}}>{item.time}</Text>
+      <Text style={{}}>{item.action}</Text>
+    </View>
   );
   
   return (
     <View style= {styles.container}>
       <FlatList
-      data={props.data}
-      renderItem={renderItem}
+      data={data}
+      renderItem={(item) => renderItem(item.item)}
       keyExtractor={(_, index) => index.toString()}
       />
     </View>

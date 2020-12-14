@@ -162,6 +162,9 @@ const TransportHistory: React.FC<Props> = () => {
         region={new AnimatedRegion(mapLocation)}>
         <MapView.Marker.Animated
           ref={marker}
+          style={{ transform: [{
+            rotate: data[time].direction.toString() + 'deg'
+          }]}}
           coordinate={{
             latitude: data[time].latitude,
             longitude: data[time].longitude,

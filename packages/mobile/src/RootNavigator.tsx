@@ -19,6 +19,7 @@ import {AreaReport} from "./screens/AreaReport";
 import {MoveReport} from "./screens/MoveReport";
 import {SpeedReport} from "./screens/SpeedReport";
 import {OnOffReport} from "./screens/OnOffReport";
+import {SettingWarning} from "./screens/SettingWarning";
 
 export type MainStackParamList = {
   Home: undefined;
@@ -30,7 +31,8 @@ export type MainStackParamList = {
   AreaReport: undefined,
   MoveReport: undefined,
   OnOffReport: undefined,
-  SpeedReport: undefined
+  SpeedReport: undefined,
+  SettingWarning: {deviceId: string}
 };
 
 const Stack = createStackNavigator<MainStackParamList>();
@@ -149,7 +151,7 @@ const AppRoot = () => {
             <Stack.Screen
               name="User"
               options={{
-                headerTitle: 'User',
+                headerTitle: 'Thông tin người dùng',
                 headerBackTitle: ' ',
               }}
               component={User}
@@ -209,6 +211,14 @@ const AppRoot = () => {
                 headerBackTitle: ' ',
               }}
               component={SpeedReport}
+            />
+            <Stack.Screen
+              name="SettingWarning"
+              options={{
+                headerTitle: 'Cài đặt cảnh báo',
+                headerBackTitle: ' ',
+              }}
+              component={SettingWarning}
             />
           </>
         ) : (

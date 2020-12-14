@@ -12,6 +12,7 @@ export type Device = {
   logined?: boolean;
   position?: DeviceLocation;
   terminalString?: string;
+  isSettingEngineOn?: boolean;
 };
 
 export type DeviceLocation = {

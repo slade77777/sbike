@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
-import useDeviceCompany from 'shared-logic/src/hooks/useDeviceCompany';
+import {useDeviceByCompany} from 'shared-logic';
 import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Device} from 'shared-logic';
@@ -14,7 +14,7 @@ const Devices: React.FC<Props> = ({}) => {
   const navigation = useNavigation();
   const {state} = useAuthState();
   const userInfo = state?.userData;
-  const {data} = useDeviceCompany(userInfo?.companyID);
+  const {data} = useDeviceByCompany(userInfo?.companyID);
   const deviceData = data?.data;
 
   const renderItem = (item: Device) => {

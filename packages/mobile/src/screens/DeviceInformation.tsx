@@ -12,6 +12,8 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
 import dayjs from 'dayjs';
 import color from '../config/color';
+// @ts-ignore
+import ToggleSwitch from 'toggle-switch-react-native';
 
 type Props = {};
 
@@ -25,7 +27,6 @@ const DeviceInformation: React.FC<Props> = ({}) => {
   if (!data) {
     return <View style={{flex: 1, backgroundColor: 'c7c7cc'}} />;
   }
-  console.log(deviceInfo);
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#c7c7cc'}}>
       <View
@@ -43,13 +44,21 @@ const DeviceInformation: React.FC<Props> = ({}) => {
           <Text>Lộ trình</Text>
         </TouchableOpacity>
         <View style={style.tool}>
-          <EntypoIcon name={'switch'} size={50} color={color.yellow} />
-          <Text>Tắt, bật máy</Text>
+          <ToggleSwitch
+            isOn={deviceInfo.isSettingEngineOn}
+            onColor="green"
+            offColor="red"
+            label=""
+            labelStyle={{ display: 'none' }}
+            size="large"
+            onToggle={(isOn: boolean) => console.log("changed to : ", isOn)}
+          />
+          <Text style={{marginTop: 11}}>Tắt, bật máy</Text>
         </View>
-        <View style={style.tool}>
+        <TouchableOpacity onPress={() => navigation.navigate('SettingWarning', {deviceId})} style={style.tool}>
           <EntypoIcon name={'warning'} size={50} color={'black'} />
           <Text>Cảnh báo</Text>
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={style.wrapper}>
         <View style={style.row}>
@@ -134,7 +143,7 @@ const style = StyleSheet.create({
     color: color.blue,
   },
   tool: {
-    justifyContent: 'center',
+    flexDirection: 'column',
     alignItems: 'center'
   },
 });

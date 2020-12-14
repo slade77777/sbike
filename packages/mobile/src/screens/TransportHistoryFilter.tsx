@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
+import {useDeviceId} from "shared-logic";
 import color from '../config/color';
 import {HistoryPicker} from '../components/History/HistoryPicker';
 import {

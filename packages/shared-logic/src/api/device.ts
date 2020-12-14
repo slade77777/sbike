@@ -17,5 +17,5 @@ export async function getDeviceById(
 }
 
 export async function updateDeviceInfo(params: Device) {
-  return secureInstance.put(`/device/UpdateDeviceInfo`, params);
+  return secureInstance.post(`/device/UpdateDeviceInfo`, params);
 }

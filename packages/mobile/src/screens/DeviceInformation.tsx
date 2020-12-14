@@ -14,6 +14,10 @@ import dayjs from 'dayjs';
 import color from '../config/color';
 // @ts-ignore
 import ToggleSwitch from 'toggle-switch-react-native';
+import {updateDeviceInfo} from "shared-logic/src";
+import {useMutation, useQueryCache} from 'react-query';
+// @ts-ignore
+import Spinner from 'react-native-loading-spinner-overlay';
 
 type Props = {};
 
@@ -23,12 +27,29 @@ const DeviceInformation: React.FC<Props> = ({}) => {
   const deviceId = route?.params?.deviceId;
   const {data} = useDeviceId(deviceId);
   const deviceInfo = data?.data || {};
+  const queryCache = useQueryCache();
+
+  const [mutate, { isLoading }] = useMutation(updateDeviceInfo, {
+    onSettled: () => {
+      queryCache.invalidateQueries(['deviceId', deviceId])
+    }
+  });
+
+  const updateDevice = (type: string, value: any) => {
+    let data = Object.assign(deviceInfo);
+    data[type] = value;
+    mutate(data);
+  }
 
   if (!data) {
     return <View style={{flex: 1, backgroundColor: 'c7c7cc'}} />;
   }
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#c7c7cc'}}>
+      <Spinner
+        visible={isLoading}
+        textContent={''}
+      />
       <View
         style={{
           flexDirection: 'row',
@@ -51,7 +72,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
             label=""
             labelStyle={{ display: 'none' }}
             size="large"
-            onToggle={(isOn: boolean) => console.log("changed to : ", isOn)}
+            onToggle={(isOn: boolean) => updateDevice('isSettingEngineOn', isOn)}
           />
           <Text style={{marginTop: 11}}>Tắt, bật máy</Text>
         </View>

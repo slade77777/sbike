@@ -18,6 +18,7 @@ import {useRoute} from '@react-navigation/native';
 import color from '../config/color';
 import {Svg, Circle} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/AntDesign';
+import EntyIcon from 'react-native-vector-icons/Entypo';
 // @ts-ignore
 import _ from 'lodash';
 
@@ -162,14 +163,12 @@ const TransportHistory: React.FC<Props> = () => {
         region={new AnimatedRegion(mapLocation)}>
         <MapView.Marker.Animated
           ref={marker}
-          style={{ transform: [{
-            rotate: data[time].direction.toString() + 'deg'
-          }]}}
+          rotation={data[time].direction - 45}
           coordinate={{
             latitude: data[time].latitude,
             longitude: data[time].longitude,
           }}>
-          <Icon name="car" color={color.yellow} size={25} />
+          <EntyIcon name="direction" color={color.yellow} size={25} />
         </MapView.Marker.Animated>
         <Polyline coordinates={data} strokeWidth={4} strokeColor={color.blue} />
       </Animated>

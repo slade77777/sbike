@@ -17,7 +17,7 @@ export function genIcons(maps: any) {
 
 export function createHistoryPath(maps: any, paths: Array<LatLng>) {
   return new maps.Polyline({
-    path: paths,
+    path: paths.map((p) => ({lat: p.lat, lng: p.lng})),
     ...MAP_PATH_STYLES,
   });
 }

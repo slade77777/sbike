@@ -41,7 +41,7 @@ const DetailWrapper: FC<Props> = ({data, info}) => {
         />
         {state && data && data.length > 0 && (
           <ViewHistory
-            paths={data.map((p) => new state.mapApi.LatLng(p.lat, p.lng))}
+            paths={data}
             map={state.mapInstance}
             maps={state.mapApi}
           />

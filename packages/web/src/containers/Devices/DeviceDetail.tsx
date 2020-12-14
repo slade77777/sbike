@@ -16,6 +16,7 @@ const DeviceDetail: FC = () => {
       historyMovingData?.data?.data?.map((dt: any) => ({
         lat: dt.latitude,
         lng: dt.longitude,
+        direction: dt.direction,
       })),
     [historyMovingData],
   );

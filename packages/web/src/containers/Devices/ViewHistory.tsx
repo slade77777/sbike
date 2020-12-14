@@ -10,11 +10,7 @@ import {LatLng} from 'shared-logic';
 import styled from 'styled-components';
 import {PlayCircleFilled, PauseCircleFilled} from '@ant-design/icons';
 import {Button} from 'antd';
-import {
-  createHistoryPath,
-  createMovingLine,
-  genIcons,
-} from '../../utils/googleMapUtils';
+import {createHistoryPath} from '../../utils/googleMapUtils';
 import ProcessPath from './ProcessPath';
 
 type Props = {
@@ -40,20 +36,19 @@ const SPEED_BUTTONS = [
   {speed: SpeedEnum.X8, label: '8x'},
 ];
 
-function fitMap(maps: any, map: any, paths: Array<any>) {
-  const bounds = new maps.LatLngBounds();
-  for (let i = 0; i < paths.length; i++) {
-    bounds.extend(paths[i]);
-  }
-  map.fitBounds(bounds);
-}
+// function fitMap(maps: any, map: any, paths: Array<any>) {
+//   const bounds = new maps.LatLngBounds();
+//   for (let i = 0; i < paths.length; i++) {
+//     bounds.extend(paths[i]);
+//   }
+//   map.fitBounds(bounds);
+// }
 
 const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   const [isMoving, setIsMoving] = useState(false);
   const intervalId = useRef(0);
-  const iconsRef = useRef(genIcons(maps));
+  // const iconsRef = useRef(genIcons(maps));
   const countRef = useRef(0);
-  const mapBounds = useRef(map.getBounds());
   const [percent, setPercent] = useState(0);
   const [speed, setSpeed] = useState(SpeedEnum.NORMAL);
   const steps = paths?.length || DEFAULT_STEPS;
@@ -63,47 +58,58 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
     paths,
   ]);
 
-  const movingLine = useMemo(
-    () => createMovingLine(maps, map, iconsRef.current),
-    [map, maps],
+  // const movingLine = useMemo(
+  //   () => createMovingLine(maps, map, iconsRef.current),
+  //   [map, maps],
+  // );
+
+  const marker = useMemo(
+    () =>
+      new maps.Marker({
+        position: paths[0],
+        icon: {
+          path: maps.SymbolPath.FORWARD_CLOSED_ARROW,
+          scale: 4,
+          strokeColor: '#fc8621',
+          fillColor: '#fc8621',
+          rotation: 90,
+        },
+      }),
+    [maps.Marker, maps.SymbolPath.FORWARD_CLOSED_ARROW, paths],
   );
 
   useEffect(() => {
     historyPath.setMap(map);
-    const icons = movingLine.get('icons');
-    if (!movingLine?.get('path')) {
-      movingLine.setPath(paths);
-    }
+    const mkIcon = marker.getIcon();
+
+    // if (!movingLine?.get('path')) {
+    //   movingLine.setPath(paths);
+    // }
     if (countRef.current < 1) {
-      icons[0].offset = '0%';
-      movingLine.set('icons', icons);
+      mkIcon.rotation = paths[0].direction;
+      marker.setIcon(mkIcon);
     }
+
+    marker.setMap(map);
+
     return () => {
       historyPath.setMap(null);
-      movingLine.setPath([]);
+      marker.setMap(null);
+      // movingLine.setPath([]);
     };
-  }, [historyPath, map, maps.Polyline, movingLine, paths]);
-
-  useEffect(() => {
-    fitMap(maps, map, paths);
-    map.addListener('idle', () => {
-      mapBounds.current = map.getBounds();
-    });
-  }, [map, maps, maps.LatLngBounds, paths]);
+  }, [historyPath, map, maps.Polyline, marker, paths]);
 
   function animateCar(newSpeed: SpeedEnum) {
     if (intervalId.current) {
       window.clearInterval(intervalId.current);
     }
+    // let count = 0;
     let panCount = 0;
     intervalId.current = window.setInterval(() => {
-      const icons = movingLine.get('icons');
-      icons[0].offset = (100 * countRef.current) / steps + '%';
-      movingLine.set('icons', icons);
-      countRef.current = (countRef.current + 1) % steps;
+      countRef.current = countRef.current + 1;
 
-      //Check this point is inside map bound
-      if (!mapBounds.current.contains(paths[countRef.current])) {
+      // Check this point is inside map bound
+      if (!map.getBounds().contains(paths[countRef.current])) {
         panCount = panCount + 1;
       } else {
         panCount = 0;
@@ -111,13 +117,19 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
       if (panCount === 1) {
         map.panTo(paths[countRef.current]);
       }
-      //end check inside map
+      // end check inside map
 
-      if (countRef.current === steps - 1) {
-        icons[0].offset = '100%';
-        movingLine.set('icons', icons);
-        window.clearInterval(intervalId.current);
-        setIsMoving(false);
+      //set rotation
+      const mkIcon = marker.getIcon();
+      mkIcon.rotation = paths[countRef.current].direction;
+      marker.setIcon(mkIcon);
+      //End rotation
+
+      //Move marker
+      marker.setPosition(paths[countRef.current]);
+
+      if (countRef.current === paths.length) {
+        clearInterval(intervalId.current);
       }
       setPercent(countRef.current);
     }, DEFAULT_SPEED / newSpeed);
@@ -130,13 +142,15 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
 
   const onChangeValue = useCallback(
     (vl: number) => {
+      const mkIcon = marker.getIcon();
+      mkIcon.rotation = paths[vl].direction;
+      marker.setIcon(mkIcon);
+      marker.setPosition(paths[vl]);
+
       countRef.current = vl;
-      const icons = movingLine.get('icons');
-      icons[0].offset = (100 * vl) / steps + '%';
-      movingLine.set('icons', icons);
       setPercent(vl);
     },
-    [movingLine, steps],
+    [marker, paths],
   );
 
   function start() {

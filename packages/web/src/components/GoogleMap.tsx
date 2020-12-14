@@ -21,6 +21,7 @@ const GoogleMap: FC<Props> = ({children, ...props}) => (
         key:
           process.env.GOOGLE_MAPS_KEY ||
           'AIzaSyDjgghF4mwFy-wsFzQnlTYpnbMJXEqIlNg',
+        libraries: ['drawing', 'geometry'],
       }}
       {...props}>
       {children}

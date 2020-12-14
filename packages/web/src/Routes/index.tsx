@@ -1,6 +1,6 @@
 import React from 'react';
 import {Layout} from 'antd';
-import {Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import {RoutesEnum} from '../enum';
 const TrackingPage = React.lazy(() => import('../pages/TrackingPage'));
 const ProfilePage = React.lazy(() => import('../pages/ProfilePage'));
@@ -10,15 +10,10 @@ const ReportPage = React.lazy(() => import('../pages/ReportPage'));
 
 const Routes = () => {
   return (
-    <Layout.Content
-      className="site-layout-background"
-      style={{
-        padding: 24,
-        height: '100%',
-      }}>
+    <Layout.Content className="site-layout-background">
       <Switch>
         <Route path="/" exact>
-          <div>Dashboard</div>
+          <Redirect to={RoutesEnum.Tracking} />
         </Route>
         <Route path={RoutesEnum.Tracking}>
           <TrackingPage />

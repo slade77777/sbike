@@ -77,6 +77,7 @@ const Navigations = () => {
       theme="dark"
       defaultSelectedKeys={['1']}
       mode="inline"
+      style={{position: 'relative'}}
       collapsedWidth={50}>
       {NAVS.map((nav) =>
         nav.subMenus ? (

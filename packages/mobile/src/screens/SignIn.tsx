@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, SafeAreaView, TouchableOpacity} from 'react-native';
+import {Text, View, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import InputText from '../components/InputText';
 import color from '../config/color';
 import {useAuthState} from '../context/auth-context';
@@ -18,18 +18,10 @@ const SignIn: React.FC = () => {
         justifyContent: 'space-between',
       }}>
       <View>
-        <View>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: '#FFF',
-              fontWeight: 'bold',
-              fontSize: 40,
-              letterSpacing: 4,
-              marginTop: 40,
-            }}>
-            Sbike
-          </Text>
+        <View style={{ alignItems: 'center', paddingVertical: 50}}>
+          <View style={{backgroundColor: 'white', width: 150, height: 150, borderRadius: 75, alignItems: 'center', justifyContent: 'center'}}>
+            <Image style={{width: 100, height: 100}} source={require('../assets/images/LogoApp.png')} width={100} height={100}/>
+          </View>
         </View>
         <InputText
           label={'username'}
@@ -58,23 +50,6 @@ const SignIn: React.FC = () => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
-      <View style={{marginBottom: 20}}>
-        <Text style={{textAlign: 'center', color: '#FFF', fontSize: 15}}>
-          No account?
-        </Text>
-        <TouchableOpacity style={{}} onPress={() => {}}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: '#FFF',
-              fontWeight: 'bold',
-              fontSize: 20,
-              textDecorationLine: 'underline',
-            }}>
-            Register
-          </Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

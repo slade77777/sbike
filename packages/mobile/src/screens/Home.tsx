@@ -3,7 +3,7 @@ import {Dimensions, SafeAreaView} from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import Observer from '../components/Home/Observer';
 import Devices from '../components/Home/Devices';
-import Report from '../components/Home/Report';
+import Report from "../components/Home/Report";
 import color from '../config/color';
 
 const Home: React.FC = () => {
@@ -34,4 +34,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default React.memo(Home);
+export default Home;

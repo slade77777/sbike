@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet} from 'react-native';
 
 type Props = {
   keyboardType?: string;
@@ -18,18 +18,11 @@ const InputText: React.FC<Props> = ({
 }) => {
   return (
     <View>
-      <Text
-        style={{
-          fontSize: 16,
-          fontWeight: 'bold',
-          color: 'white',
-          marginHorizontal: 15,
-        }}>
-        {label}
-      </Text>
       <View style={styles.item}>
         <TextInput
           {...other}
+          placeholder={label}
+          placeholderTextColor={'grey'}
           onChangeText={(val) => onChangeText?.(val)}
           keyboardType={keyboardType}
           style={[

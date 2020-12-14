@@ -76,7 +76,7 @@ const AuthProvider: FC<Props> = ({children}) => {
           })
           .catch(() => console.log('error'));
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert(error.message));
   };
 
   const handleLogout = () => {

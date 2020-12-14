@@ -25,8 +25,8 @@ export type DeviceLocation = {
   direction?: string;
   extendStatus?: number;
   ioStatus?: number;
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
   satellite?: number;
   serverTime?: string;
   speed?: number;
@@ -38,4 +38,10 @@ export type AlertConfig = {
   alertMoving?: boolean;
   alertPolygon?: Array<any>;
   alertSpeed?: number;
+};
+
+export type LatLng = {
+  lat: number;
+  lng: number;
+  direction: number;
 };

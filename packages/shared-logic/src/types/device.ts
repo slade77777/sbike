@@ -22,7 +22,7 @@ export type DeviceLocation = {
   csq?: string;
   deviceID?: string;
   deviceTime?: string;
-  direction?: string;
+  direction?: number;
   extendStatus?: number;
   ioStatus?: number;
   latitude: number;

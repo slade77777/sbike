@@ -1,8 +1,26 @@
 import React, {FC, useState} from 'react';
-import {Button, Popover} from 'antd';
+import {Button, Menu, Popover, Dropdown} from 'antd';
 import {format, LatLng} from 'shared-logic';
+import {Link} from 'react-router-dom';
 import {DownOutlined, MenuOutlined} from '@ant-design/icons';
+import {RoutesEnum} from '../../enum';
 import DevicesTable from './DevicesTable';
+
+const DropdownMenu: FC<{deviceID: string}> = ({deviceID}) => (
+  <Menu>
+    <Menu.Item>
+      <Link to={RoutesEnum.Devices + '/' + deviceID}>Xem lại lộ trình</Link>
+    </Menu.Item>
+    <Menu.Item>Cập nhật thông tin</Menu.Item>
+    <Menu.Item>Điều khiển Tắt / Bật máy</Menu.Item>
+    <Menu.SubMenu title="Cảnh báo">
+      <Menu.Item>Cảnh báo di chuyển</Menu.Item>
+      <Menu.Item>Cảnh báo tắt / bật máy</Menu.Item>
+      <Menu.Item>Cảnh báo quá tốc độ</Menu.Item>
+      <Menu.Item>Cảnh báo vùng an toàn</Menu.Item>
+    </Menu.SubMenu>
+  </Menu>
+);
 
 const DevicesDropDown: FC<{
   onSelectDevice: (pos: LatLng) => void;
@@ -28,6 +46,7 @@ const DevicesDropDown: FC<{
                     onSelectDevice({
                       lat: record?.position?.latitude,
                       lng: record?.position?.longitude,
+                      direction: record?.position.direction,
                     })
                   }>
                   {text}
@@ -59,7 +78,12 @@ const DevicesDropDown: FC<{
               title: '',
               dataIndex: 'action',
               key: 'action',
-              render: () => <MenuOutlined />,
+              render: (_: string, record: any) => (
+                <Dropdown
+                  overlay={<DropdownMenu deviceID={record?.deviceID} />}>
+                  <Button type="link" icon={<MenuOutlined />} />
+                </Dropdown>
+              ),
             },
           ]}
         />

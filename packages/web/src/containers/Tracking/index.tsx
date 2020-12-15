@@ -20,6 +20,7 @@ function mappingData(data: Array<Device>): Array<LatLng> {
       .map((dv) => ({
         lat: dv?.position?.latitude || 0,
         lng: dv?.position?.longitude || 0,
+        direction: dv?.position?.direction || 0,
       }))
       ?.filter((lc) => lc.lng && lc.lat) || []
   );

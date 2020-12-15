@@ -26,11 +26,11 @@ function mappingData(data: Array<Device>): Array<LatLng> {
       ?.filter((lc) => lc.lng && lc.lat) || []
   );
 }
-const Marker: FC<{
-  children: any;
-  lat: number;
-  lng: number;
-}> = ({children}) => children;
+// const Marker: FC<{
+//   children: any;
+//   lat: number;
+//   lng: number;
+// }> = ({children}) => children;
 
 const Tracking: FC = () => {
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
@@ -44,7 +44,6 @@ const Tracking: FC = () => {
     mapInstance: null,
     mapApi: null,
   });
-  const [showInfo, setShowInfo] = useState<string>('');
 
   function goToLocation(device: Device) {
     setSelectedDevice(device);
@@ -68,11 +67,6 @@ const Tracking: FC = () => {
     }
   }, [places, state]);
 
-  function onChildClickCallback(key: string) {
-    const foundKey = data?.data?.find((dt) => dt.deviceID === key);
-    setShowInfo(foundKey?.deviceID || '');
-  }
-
   return (
     <StyledContainer>
       <StyledButton>
@@ -80,7 +74,7 @@ const Tracking: FC = () => {
       </StyledButton>
       <StyledGoogleMap>
         <GoogleMap
-          defaultZoom={12}
+          defaultZoom={10}
           center={
             {
               lat: selectedDevice?.position?.latitude || 0,
@@ -96,20 +90,14 @@ const Tracking: FC = () => {
               mapApiLoaded: true,
             })
           }
-          onChildClick={onChildClickCallback}>
-          {data?.data?.map((device) => (
-            <Marker
-              key={device.deviceID}
-              lat={device?.position?.latitude || 0}
-              lng={device?.position?.longitude || 0}>
-              <CarSVG width={40} />
-              {selectedDevice?.carNumber === device.carNumber ||
-              showInfo === device.deviceID ? (
-                <InfoWindow device={device} />
-              ) : null}
-            </Marker>
-          ))}
-        </GoogleMap>
+        />
+        {state?.mapApiLoaded && data?.data && (
+          <InfoWindow
+            devices={data?.data}
+            map={state?.mapInstance}
+            maps={state?.mapApi}
+          />
+        )}
       </StyledGoogleMap>
     </StyledContainer>
   );

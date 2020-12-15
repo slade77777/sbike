@@ -35,6 +35,7 @@ const InfoWindow: FC<Props> = ({maps, map, devices}) => {
           lng: device?.position?.longitude,
         },
         map,
+        animation: maps.Animation.DROP,
         icon: {
           url: carPng,
           scaledSize: new maps.Size(50, 50),
@@ -48,7 +49,14 @@ const InfoWindow: FC<Props> = ({maps, map, devices}) => {
         infoWindow.open(map, marker);
       });
     }
-  }, [devices, map, maps.InfoWindow, maps.Marker]);
+  }, [
+    devices,
+    map,
+    maps.Animation.DROP,
+    maps.InfoWindow,
+    maps.Marker,
+    maps.Size,
+  ]);
 
   return <></>;
 };

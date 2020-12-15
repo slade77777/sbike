@@ -5,8 +5,6 @@ import {Device, getDeviceByCompany, LatLng, useUserInfo} from 'shared-logic';
 import DevicesDropDown from '../Devices/DevicesDropDown';
 import GoogleMap from '../../components/GoogleMap';
 import {apiIsLoaded} from '../../utils/googleMapUtils';
-// @ts-ignore
-import CarSVG from '../../images/car.svg';
 
 import InfoWindow from './InfoWindow';
 

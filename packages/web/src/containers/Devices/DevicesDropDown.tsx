@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
 import {Button, Menu, Popover, Dropdown} from 'antd';
-import {format, LatLng} from 'shared-logic';
+import {Device, format} from 'shared-logic';
 import {Link} from 'react-router-dom';
 import {DownOutlined, MenuOutlined} from '@ant-design/icons';
 import {RoutesEnum} from '../../enum';
@@ -23,7 +23,7 @@ const DropdownMenu: FC<{deviceID: string}> = ({deviceID}) => (
 );
 
 const DevicesDropDown: FC<{
-  onSelectDevice: (pos: LatLng) => void;
+  onSelectDevice: (device: Device) => void;
 }> = ({onSelectDevice}) => {
   const [visible, setVisible] = useState(true);
 
@@ -40,15 +40,7 @@ const DevicesDropDown: FC<{
               dataIndex: 'carNumber',
               key: 'carNumber',
               render: (text: string, record: any) => (
-                <Button
-                  type="link"
-                  onClick={() =>
-                    onSelectDevice({
-                      lat: record?.position?.latitude,
-                      lng: record?.position?.longitude,
-                      direction: record?.position.direction,
-                    })
-                  }>
+                <Button type="link" onClick={() => onSelectDevice(record)}>
                   {text}
                 </Button>
               ),

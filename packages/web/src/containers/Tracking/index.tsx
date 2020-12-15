@@ -5,9 +5,10 @@ import {Device, getDeviceByCompany, LatLng, useUserInfo} from 'shared-logic';
 import DevicesDropDown from '../Devices/DevicesDropDown';
 import GoogleMap from '../../components/GoogleMap';
 import {apiIsLoaded} from '../../utils/googleMapUtils';
-
 // @ts-ignore
 import CarSVG from '../../images/car.svg';
+
+import InfoWindow from './InfoWindow';
 
 const defaultPosition = {
   lat: 21.027763,
@@ -25,10 +26,14 @@ function mappingData(data: Array<Device>): Array<LatLng> {
       ?.filter((lc) => lc.lng && lc.lat) || []
   );
 }
-const Marker: FC<{children: any}> = ({children}) => children;
+const Marker: FC<{
+  children: any;
+  lat: number;
+  lng: number;
+}> = ({children}) => children;
 
 const Tracking: FC = () => {
-  const [position, setPosition] = useState(defaultPosition);
+  const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
   const isFirst = useRef(true);
   const [state, setState] = useState<{
     mapApiLoaded: boolean;
@@ -39,9 +44,10 @@ const Tracking: FC = () => {
     mapInstance: null,
     mapApi: null,
   });
+  const [showInfo, setShowInfo] = useState<string>('');
 
-  function goToLocation(pos: LatLng) {
-    setPosition(pos);
+  function goToLocation(device: Device) {
+    setSelectedDevice(device);
   }
 
   const userRes = useUserInfo();
@@ -62,6 +68,11 @@ const Tracking: FC = () => {
     }
   }, [places, state]);
 
+  function onChildClickCallback(key: string) {
+    const foundKey = data?.data?.find((dt) => dt.deviceID === key);
+    setShowInfo(foundKey?.deviceID || '');
+  }
+
   return (
     <StyledContainer>
       <StyledButton>
@@ -70,7 +81,12 @@ const Tracking: FC = () => {
       <StyledGoogleMap>
         <GoogleMap
           defaultZoom={12}
-          center={position || defaultPosition}
+          center={
+            {
+              lat: selectedDevice?.position?.latitude || 0,
+              lng: selectedDevice?.position?.longitude || 0,
+            } || defaultPosition
+          }
           defaultCenter={defaultPosition}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({map, maps}) =>
@@ -79,10 +95,18 @@ const Tracking: FC = () => {
               mapApi: maps,
               mapApiLoaded: true,
             })
-          }>
-          {places.map((place, index) => (
-            <Marker key={index} {...place}>
+          }
+          onChildClick={onChildClickCallback}>
+          {data?.data?.map((device) => (
+            <Marker
+              key={device.deviceID}
+              lat={device?.position?.latitude || 0}
+              lng={device?.position?.longitude || 0}>
               <CarSVG width={40} />
+              {selectedDevice?.carNumber === device.carNumber ||
+              showInfo === device.deviceID ? (
+                <InfoWindow device={device} />
+              ) : null}
             </Marker>
           ))}
         </GoogleMap>

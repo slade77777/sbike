@@ -28,6 +28,7 @@ type Props = {
 };
 const InfoWindow: FC<Props> = ({maps, map, devices}) => {
   useEffect(() => {
+    const markers: Array<any> = [];
     for (let device of devices) {
       const marker = new maps.Marker({
         position: {
@@ -35,20 +36,27 @@ const InfoWindow: FC<Props> = ({maps, map, devices}) => {
           lng: device?.position?.longitude,
         },
         map,
-        animation: maps.Animation.DROP,
         icon: {
           url: carPng,
           scaledSize: new maps.Size(50, 50),
         },
       });
+      markers.push(marker);
       const infoWindow = new maps.InfoWindow({
         content: content(device),
       });
       infoWindow.open(map, marker);
-      marker.addListener('click', () => {
+      marker.addListener('mouseover', () => {
         infoWindow.open(map, marker);
       });
     }
+    return () => {
+      for (let mk of markers) {
+        if (mk) {
+          mk.setMap(null);
+        }
+      }
+    };
   }, [
     devices,
     map,

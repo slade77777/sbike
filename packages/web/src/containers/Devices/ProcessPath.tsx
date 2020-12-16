@@ -14,7 +14,7 @@ const ProcessPath: FC<Props> = ({afterChange, steps, value, onChange}) => {
       value={value}
       onChange={onChange}
       min={0}
-      max={steps}
+      max={steps-1}
       onAfterChange={afterChange}
     />
   );

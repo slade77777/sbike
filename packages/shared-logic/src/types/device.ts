@@ -44,4 +44,8 @@ export type LatLng = {
   lat: number;
   lng: number;
   direction: number;
+  time: any;
+  speed: number;
+  batteryVoltage: number;
+  status: number;
 };

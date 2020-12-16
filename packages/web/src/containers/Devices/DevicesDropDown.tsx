@@ -37,6 +37,7 @@ const DevicesDropDown: FC<{
           columns={[
             {
               title: 'Biển số',
+              align: 'center',
               dataIndex: 'carNumber',
               key: 'carNumber',
               render: (text: string, record: any) => (
@@ -51,6 +52,7 @@ const DevicesDropDown: FC<{
                   Vận tốc <br /> (km/h)
                 </span>
               ),
+              align: 'center',
               dataIndex: 'speed',
               key: 'speed',
               render: (_: string, record: any) => record.position?.speed,
@@ -61,15 +63,17 @@ const DevicesDropDown: FC<{
                   Thời gian <br /> (HH:mm)
                 </span>
               ),
+              align: 'center',
               dataIndex: 'deviceTime',
               key: 'deviceTime',
               render: (_: string, record: any) =>
-                format(record.position?.deviceTime, 'HH:mm'),
+                record.position?.deviceTime.includes('0001-01-01') ? '' : format(record.position?.deviceTime, 'HH:mm'),
             },
             {
               title: '',
               dataIndex: 'action',
               key: 'action',
+              align: 'center',
               render: (_: string, record: any) => (
                 <Dropdown
                   overlay={<DropdownMenu deviceID={record?.deviceID} />}>

@@ -17,6 +17,10 @@ const DeviceDetail: FC = () => {
         lat: dt.latitude,
         lng: dt.longitude,
         direction: dt.direction,
+        time: dt.serverTime,
+        speed: dt.speed,
+        batteryVoltage: dt.batteryVoltage,
+        status: dt.status,
       })),
     [historyMovingData],
   );

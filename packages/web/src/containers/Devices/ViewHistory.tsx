@@ -12,6 +12,7 @@ import {PlayCircleFilled, PauseCircleFilled} from '@ant-design/icons';
 import {Button} from 'antd';
 import {createHistoryPath} from '../../utils/googleMapUtils';
 import ProcessPath from './ProcessPath';
+import {format} from 'shared-logic';
 
 type Props = {
   paths: Array<LatLng>;
@@ -29,7 +30,7 @@ enum SpeedEnum {
 }
 
 const SPEED_BUTTONS = [
-  {speed: SpeedEnum.NORMAL, label: '1'},
+  {speed: SpeedEnum.NORMAL, label: '1x'},
   {speed: SpeedEnum.X2, label: '2x'},
   {speed: SpeedEnum.X4, label: '4x'},
   {speed: SpeedEnum.X8, label: '8x'},
@@ -110,6 +111,8 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
     let panCount = 0;
 
     intervalId.current = window.setInterval(() => {
+      console.log(countRef.current, paths[countRef.current]);
+
       // Check this point is inside map bound
       if (!map.getBounds().contains(paths[countRef.current])) {
         panCount = panCount + 1;
@@ -130,7 +133,7 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
       //Move marker
       marker.setPosition(paths[countRef.current]);
       countRef.current = countRef.current + 1;
-      if (countRef.current === paths.length) {
+      if (countRef.current === (paths.length - 1)) {
         clearInterval(intervalId.current);
         setIsMoving(false);
       }
@@ -169,37 +172,66 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   }
 
   return (
-    <StyledController>
-      <Button
-        shape="circle"
-        onClick={isMoving ? stop : start}
-        icon={
-          isMoving ? (
-            <PauseCircleFilled style={{fontSize: 24}} />
-          ) : (
-            <PlayCircleFilled style={{fontSize: 24}} />
-          )
-        }
-        type="link"
-        size="small"
-      />
-      <ProcessPath
-        value={percent}
-        steps={paths.length}
-        onChange={onChangeValue}
-      />
-      {SPEED_BUTTONS.map((btn) => (
+    <>
+      <LocationInfoStyle>
+        <div>Thời gian: {format(paths[countRef.current].time, 'HH:mm:ss DD/MM/YYYY')}</div>
+        <div>Tọa độ: {paths[countRef.current].lat},{paths[countRef.current].lng}</div>
+        <div>Vận tốc: {paths[countRef.current].speed}</div>
+        <div>Điện áp acquy: {paths[countRef.current].batteryVoltage} mV</div>
+        <div>Động cơ: {(paths[countRef.current].status & 1) > 0 ? 'Bật':'Tắt'}</div>
+      </LocationInfoStyle>
+      <StyledController>
         <Button
+          shape="circle"
+          onClick={isMoving ? stop : start}
+          icon={
+            isMoving ? (
+              <PauseCircleFilled style={{fontSize: 24}} />
+            ) : (
+              <PlayCircleFilled style={{fontSize: 24}} />
+            )
+          }
+          type="link"
           size="small"
-          key={btn.label}
-          type={speed === btn.speed ? 'primary' : 'default'}
-          onClick={() => changeSpeed(btn.speed)}>
-          {btn.label}
-        </Button>
-      ))}
-    </StyledController>
+        />
+        <ProcessPath
+          value={percent}
+          steps={paths.length}
+          onChange={onChangeValue}
+        />
+        {SPEED_BUTTONS.map((btn) => (
+          <Button
+            size="small"
+            key={btn.label}
+            type={speed === btn.speed ? 'primary' : 'default'}
+            onClick={() => changeSpeed(btn.speed)}>
+            {btn.label}
+          </Button>
+        ))}
+      </StyledController>
+    </>
+    
   );
 };
+
+const LocationInfoStyle = styled.div`
+  position: absolute;
+  border-radius: 3px;
+  top: 5px;
+  left: 8%;
+  width: 15%;
+  padding: 6px;
+  background-color: rgba(51, 59, 49, 1);
+  transform: translateX(-50%);
+  z-index: 10;
+  display: grid;
+  align-items: center;
+  grid-gap: 10px;
+  box-shadow: 0 2px 8px #f0f1f2;
+  opacity : 0.8;
+  color: rgba(255, 255, 255, 1);
+  line-height: 0.8rem;
+`;
 
 const StyledController = styled.div`
   position: absolute;

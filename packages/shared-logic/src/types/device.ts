@@ -36,9 +36,14 @@ export type DeviceLocation = {
 export type AlertConfig = {
   alertEngine?: boolean;
   alertMoving?: boolean;
-  alertPolygon?: Array<any>;
+  alertPolygon?: Array<AlertPolygon>;
   alertSpeed?: number;
 };
+
+export type AlertPolygon = {
+  latitude: number;
+  longitude: number;
+}
 
 export type LatLng = {
   lat: number;

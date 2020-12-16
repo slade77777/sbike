@@ -110,7 +110,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
       <View style={style.wrapper}>
         <View style={style.row}>
           <Text style={style.label}>Trạng thái</Text>
-          <Text style={style.value}>{deviceInfo?.position?.status || ''}</Text>
+          <Text style={style.value}>{deviceInfo?.position?.status === 786432 ? 'bật' : 'tắt'}</Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Cập nhật lúc</Text>

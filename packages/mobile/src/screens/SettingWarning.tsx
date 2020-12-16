@@ -9,8 +9,8 @@ import {
   Dimensions,
   TextInput,
 } from 'react-native';
-import {useDeviceId} from 'shared-logic';
-import {useRoute} from '@react-navigation/native';
+import {useDeviceId, updateDeviceInfo} from 'shared-logic';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {default as IconLine} from 'react-native-vector-icons/SimpleLineIcons';
 import {default as Icon5} from 'react-native-vector-icons/FontAwesome5';
 // @ts-ignore
@@ -18,12 +18,12 @@ import ToggleSwitch from 'toggle-switch-react-native';
 // @ts-ignore
 import Spinner from 'react-native-loading-spinner-overlay';
 import {useMutation, useQueryCache} from 'react-query';
-import {updateDeviceInfo} from 'shared-logic/src';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import color from '../config/color';
 const {width, height} = Dimensions.get('window');
 
 export const SettingWarning = () => {
+  const navigation = useNavigation();
   const route = useRoute<any>();
   const [modalVisible, setModalVisible] = useState(false);
   const [limitSpeed, setLimitSpeed] = useState('');
@@ -88,13 +88,13 @@ export const SettingWarning = () => {
           {alertConfig.alertSpeed}km/h
         </Text>
       </TouchableOpacity>
-      <View style={styles.row}>
+      <TouchableOpacity onPress={() => navigation.navigate('SettingSafeArea', {deviceId})} style={styles.row}>
         <View style={styles.leftInfo}>
           <Icon5 name="map-marked-alt" color={'gold'} size={20} />
           <Text style={styles.label}>Cảnh báo vùng an toàn</Text>
         </View>
         <Icon5 name="chevron-right" color={'black'} size={20} />
-      </View>
+      </TouchableOpacity>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

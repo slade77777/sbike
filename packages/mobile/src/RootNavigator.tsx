@@ -20,6 +20,7 @@ import {MoveReport} from "./screens/MoveReport";
 import {SpeedReport} from "./screens/SpeedReport";
 import {OnOffReport} from "./screens/OnOffReport";
 import {SettingWarning} from "./screens/SettingWarning";
+import {SettingSafeArea} from "./screens/SettingSafeArea";
 
 export type MainStackParamList = {
   Home: undefined;
@@ -32,7 +33,8 @@ export type MainStackParamList = {
   MoveReport: undefined,
   OnOffReport: undefined,
   SpeedReport: undefined,
-  SettingWarning: {deviceId: string}
+  SettingWarning: {deviceId: string},
+  SettingSafeArea: {deviceId: string}
 };
 
 const Stack = createStackNavigator<MainStackParamList>();
@@ -219,6 +221,14 @@ const AppRoot = () => {
                 headerBackTitle: ' ',
               }}
               component={SettingWarning}
+            />
+            <Stack.Screen
+              name="SettingSafeArea"
+              options={{
+                headerTitle: 'Cài đặt vùng an toàn',
+                headerBackTitle: ' ',
+              }}
+              component={SettingSafeArea}
             />
           </>
         ) : (

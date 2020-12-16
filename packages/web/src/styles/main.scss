@@ -10,3 +10,14 @@
   display: flex;
   justify-content: space-between;
 }
+.sbike-window-info {
+  .bold {
+    font-weight: 400;
+  }
+  .device-off {
+  }
+  .device-on {
+    color: green;
+    font-weight: bold;
+  }
+}

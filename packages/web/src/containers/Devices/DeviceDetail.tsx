@@ -1,8 +1,8 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC} from 'react';
 import {useMutation} from 'react-query';
 import {useParams} from 'react-router-dom';
 import {Card, message} from 'antd';
-import {getHistory} from 'shared-logic';
+import {getHistory, useDeviceId} from 'shared-logic';
 import DeviceSearchForm from './DeviceSearchForm';
 import DetailWrapper from './DetailWrapper';
 import DeviceInfo from './DeviceInfo';
@@ -10,16 +10,7 @@ import DeviceInfo from './DeviceInfo';
 const DeviceDetail: FC = () => {
   let {deviceID} = useParams();
   const [mutate, historyMovingData] = useMutation(getHistory);
-
-  const paths = useMemo(
-    () =>
-      historyMovingData?.data?.data?.map((dt: any) => ({
-        lat: dt.latitude,
-        lng: dt.longitude,
-        direction: dt.direction,
-      })),
-    [historyMovingData],
-  );
+  const deviceRes = useDeviceId(deviceID);
 
   const handleSubmit = async ({fromTo}: any) => {
     try {
@@ -36,11 +27,22 @@ const DeviceDetail: FC = () => {
     <>
       <DetailWrapper
         info={
-          <Card title={<DeviceInfo deviceID={deviceID} />} size="small">
+          <Card
+            title={
+              <DeviceInfo
+                carNumber={deviceRes?.data?.data?.carNumber || ''}
+                isLoading={deviceRes?.isLoading}
+              />
+            }
+            size="small">
             <DeviceSearchForm onSubmit={handleSubmit} />
           </Card>
         }
-        data={paths}
+        locations={historyMovingData?.data?.data}
+        deviceInfo={{
+          carNumber: deviceRes?.data?.data?.carNumber || '',
+          expriedDate: deviceRes?.data?.data?.expriedDate || '',
+        }}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import {LatLng} from 'shared-logic';
+import {DeviceLocation, format, LatLng} from 'shared-logic';
 import {MAP_PATH_STYLES} from '../contants/common';
 
 export function genIcons(maps: any) {
@@ -58,3 +58,51 @@ export const apiIsLoaded = (map: any, maps: any, places: Array<LatLng>) => {
   // Bind the resize listener
   bindResizeListener(map, maps, bounds);
 };
+
+export interface InfoWindowContent extends DeviceLocation {
+  carNumber?: string;
+  expriedDate?: string;
+}
+
+export const genInfoWindowContent = (
+  info?: {
+    carNumber?: string;
+    expriedDate?: string;
+  },
+  location?: DeviceLocation,
+) =>
+  info
+    ? `
+    <div class="sbike-window-info">
+        <div><span class="label">Biển số: </span><span class="bold">${
+          info?.carNumber
+        }</span></div>
+        <div><span class="value">${format(
+          location?.deviceTime,
+          'HH:mm:ss DD/MM/YYYY',
+        )}</span></div>
+        <p><span class="label">Tốc độ: </span> <span class="value">${
+          location?.speed
+        }</span> km/h</p>
+        <div>
+          <span class="label">Tọa độ: </span><span class="value">${
+            location?.latitude
+          }, ${location?.longitude}</span>
+        </div>
+        <div><span class="label">Cường độ sóng (GSM, GPS): </span><span class="value">${
+          location?.csq
+        }</span></div>
+        <div><span class="label">Động cơ: </span><span class="value">${
+          (location?.status! & 1) == 0
+            ? '<span class="device-off">Tắt</span>'
+            : '<span class="device-on">Bật</span>'
+        }</span></div>
+        <div><span class="label">Điện áp ắc quy: </span><span class="value">${
+          location?.batteryVoltage
+        }</span></div>
+        <div><span class="label">Ngày hết hạn: </span><span class="value">${format(
+          info?.expriedDate,
+        )}</span></div>
+      </div>
+  `
+    : null;

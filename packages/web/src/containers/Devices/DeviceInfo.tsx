@@ -1,15 +1,14 @@
 import React, {FC} from 'react';
-import {useDeviceId} from 'shared-logic';
 import {Spin} from 'antd';
 
 type Props = {
-  deviceID: string;
+  carNumber: string;
+  isLoading: boolean;
 };
-const DeviceInfo: FC<Props> = ({deviceID}) => {
-  const {data, isLoading} = useDeviceId(deviceID);
+const DeviceInfo: FC<Props> = ({carNumber, isLoading}) => {
   return (
     <Spin spinning={isLoading}>
-      <h3>{`Biển số: ${data?.data?.carNumber}`}</h3>
+      <h3>{`Biển số: ${carNumber}`}</h3>
     </Spin>
   );
 };

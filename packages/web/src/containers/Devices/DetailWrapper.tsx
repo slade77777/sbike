@@ -1,16 +1,20 @@
 import React, {FC, useState} from 'react';
 import styled from 'styled-components';
-import {LatLng} from 'shared-logic';
+import {DeviceLocation} from 'shared-logic';
 import {HANOI_LOCATION} from '../../contants/common';
 import GoogleMap from '../../components/GoogleMap';
 import ViewHistory from './ViewHistory';
 
 type Props = {
   info: React.ReactNode;
-  data?: Array<LatLng>;
+  locations?: Array<DeviceLocation>;
+  deviceInfo?: {
+    carNumber: string;
+    expriedDate: string;
+  };
 };
 
-const DetailWrapper: FC<Props> = ({data, info}) => {
+const DetailWrapper: FC<Props> = ({locations, deviceInfo, info}) => {
   const [state, setState] = useState<{
     mapApiLoaded: boolean;
     mapInstance: any;
@@ -27,7 +31,6 @@ const DetailWrapper: FC<Props> = ({data, info}) => {
       <StyledGoogleWrapper>
         <GoogleMap
           defaultZoom={12}
-          center={data?.[0]}
           resetBoundsOnResize
           defaultCenter={HANOI_LOCATION}
           yesIWantToUseGoogleMapApiInternals
@@ -39,9 +42,10 @@ const DetailWrapper: FC<Props> = ({data, info}) => {
             })
           }
         />
-        {state && data && data.length > 0 && (
+        {state && locations && locations.length > 0 && (
           <ViewHistory
-            paths={data}
+            locations={locations}
+            deviceInfo={deviceInfo}
             map={state.mapInstance}
             maps={state.mapApi}
           />

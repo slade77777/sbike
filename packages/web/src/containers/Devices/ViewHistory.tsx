@@ -6,17 +6,24 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {LatLng} from 'shared-logic';
+import {DeviceLocation} from 'shared-logic';
 import styled from 'styled-components';
 import {PlayCircleFilled, PauseCircleFilled} from '@ant-design/icons';
 import {Button} from 'antd';
-import {createHistoryPath} from '../../utils/googleMapUtils';
+import {
+  createHistoryPath,
+  genInfoWindowContent,
+} from '../../utils/googleMapUtils';
 import ProcessPath from './ProcessPath';
 
 type Props = {
-  paths: Array<LatLng>;
+  locations: Array<DeviceLocation>;
   maps: any;
   map: any;
+  deviceInfo?: {
+    carNumber: string;
+    expriedDate: string;
+  };
 };
 
 const DEFAULT_SPEED = 500;
@@ -43,7 +50,7 @@ function fitMap(maps: any, map: any, paths: Array<any>) {
   map.fitBounds(bounds);
 }
 
-const ViewHistory: FC<Props> = ({paths, map, maps}) => {
+const ViewHistory: FC<Props> = ({locations, deviceInfo, map, maps}) => {
   const [isMoving, setIsMoving] = useState(false);
   const intervalId = useRef(0);
   // const iconsRef = useRef(genIcons(maps));
@@ -51,15 +58,28 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
   const [percent, setPercent] = useState(0);
   const [speed, setSpeed] = useState(SpeedEnum.NORMAL);
 
+  const paths = useMemo(
+    () =>
+      locations?.map((dt: any) => ({
+        lat: dt.latitude,
+        lng: dt.longitude,
+        direction: dt.direction,
+      })),
+    [locations],
+  );
+
   const historyPath = useMemo(() => createHistoryPath(maps, paths), [
     maps,
     paths,
   ]);
 
-  // const movingLine = useMemo(
-  //   () => createMovingLine(maps, map, iconsRef.current),
-  //   [map, maps],
-  // );
+  const infoWindow = useMemo(
+    () =>
+      new maps.InfoWindow({
+        content: genInfoWindowContent(deviceInfo, locations?.[0]),
+      }),
+    [deviceInfo, locations, maps.InfoWindow],
+  );
 
   const marker = useMemo(
     () =>
@@ -81,22 +101,24 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
     historyPath.setMap(map);
     const mkIcon = marker.getIcon();
 
-    // if (!movingLine?.get('path')) {
-    //   movingLine.setPath(paths);
-    // }
     if (countRef.current < 1) {
       mkIcon.rotation = paths[0].direction;
       marker.setIcon(mkIcon);
     }
 
     marker.setMap(map);
+    infoWindow.open(map, marker);
+
+    marker.addListener('click', () => {
+      infoWindow.open(map, marker);
+    });
 
     return () => {
       historyPath.setMap(null);
       marker.setMap(null);
-      // movingLine.setPath([]);
+      infoWindow.close();
     };
-  }, [historyPath, map, maps.Polyline, marker, paths]);
+  }, [historyPath, infoWindow, map, maps, maps.Polyline, marker, paths]);
 
   function animateCar(newSpeed: SpeedEnum) {
     if (intervalId.current) {
@@ -127,9 +149,15 @@ const ViewHistory: FC<Props> = ({paths, map, maps}) => {
       marker.setIcon(mkIcon);
       //End rotation
 
-      //Move marker
+      //Move marker and infoWindow
       marker.setPosition(paths[countRef.current]);
+      infoWindow.setContent(
+        genInfoWindowContent(deviceInfo, locations[countRef.current]),
+      );
+
       countRef.current = countRef.current + 1;
+
+      //Stop if reach to end point
       if (countRef.current === paths.length) {
         clearInterval(intervalId.current);
         setIsMoving(false);

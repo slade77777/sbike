@@ -13,6 +13,7 @@ const defaultPosition = {
 type Props = {
   initialData?: LatLng[];
   onSubmit?: (data: LatLng[]) => void;
+  isSubmitting?: boolean;
 };
 
 enum DrawStatus {
@@ -21,7 +22,7 @@ enum DrawStatus {
   COMPLETED,
   DELETED,
 }
-const SafeZoneAlertMap: FC<Props> = ({initialData, onSubmit}) => {
+const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
   const [state, setState] = useState<{
     mapLoaded: boolean;
     map: any;
@@ -33,7 +34,9 @@ const SafeZoneAlertMap: FC<Props> = ({initialData, onSubmit}) => {
   });
 
   const [visible, setVisible] = useState<DrawStatus>(
-    initialData ? DrawStatus.INITIAL : DrawStatus.NEW,
+    initialData && initialData?.length > 0
+      ? DrawStatus.INITIAL
+      : DrawStatus.NEW,
   );
 
   const shape = useRef<any>(null);
@@ -56,6 +59,8 @@ const SafeZoneAlertMap: FC<Props> = ({initialData, onSubmit}) => {
   useEffect(() => {
     if (initialPolygon) {
       initialPolygon.setMap(state?.map);
+    }
+    if (drawingManager) {
       drawingManager.setDrawingMode(null);
     }
     return () => {
@@ -124,6 +129,7 @@ const SafeZoneAlertMap: FC<Props> = ({initialData, onSubmit}) => {
             Xóa đi vẽ lại
           </Button>
           <Button
+            loading={isSubmitting}
             disabled={
               visible === DrawStatus.NEW || visible === DrawStatus.DELETED
             }

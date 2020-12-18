@@ -13,7 +13,7 @@ const TrackingPage = () => {
       <Route path={path} exact>
         <Tracking />
       </Route>
-      <Route path={`${path}/canh-bao-vung-an-toan`} exact>
+      <Route path={`${path}/:deviceID/canh-bao-vung-an-toan`} exact>
         <SafeZoneAlert />
       </Route>
     </Switch>

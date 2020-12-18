@@ -18,7 +18,9 @@ const DropdownMenu: FC<{deviceID: string}> = ({deviceID}) => (
       <Menu.Item>Cảnh báo tắt / bật máy</Menu.Item>
       <Menu.Item>Cảnh báo quá tốc độ</Menu.Item>
       <Menu.Item>
-        <Link to="/giam-sat/canh-bao-vung-an-toan">Cảnh báo vùng an toàn</Link>
+        <Link to={`/giam-sat/${deviceID}/canh-bao-vung-an-toan`}>
+          Cảnh báo vùng an toàn
+        </Link>
       </Menu.Item>
     </Menu.SubMenu>
   </Menu>

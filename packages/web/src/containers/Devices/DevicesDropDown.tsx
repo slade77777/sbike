@@ -17,13 +17,15 @@ const DropdownMenu: FC<{deviceID: string}> = ({deviceID}) => (
       <Menu.Item>Cảnh báo di chuyển</Menu.Item>
       <Menu.Item>Cảnh báo tắt / bật máy</Menu.Item>
       <Menu.Item>Cảnh báo quá tốc độ</Menu.Item>
-      <Menu.Item>Cảnh báo vùng an toàn</Menu.Item>
+      <Menu.Item>
+        <Link to="/giam-sat/canh-bao-vung-an-toan">Cảnh báo vùng an toàn</Link>
+      </Menu.Item>
     </Menu.SubMenu>
   </Menu>
 );
 
 const DevicesDropDown: FC<{
-  onSelectDevice: (device: Device) => void;
+  onSelectDevice?: (device: Device) => void;
 }> = ({onSelectDevice}) => {
   const [visible, setVisible] = useState(true);
 
@@ -41,7 +43,7 @@ const DevicesDropDown: FC<{
               dataIndex: 'carNumber',
               key: 'carNumber',
               render: (text: string, record: any) => (
-                <Button type="link" onClick={() => onSelectDevice(record)}>
+                <Button type="link" onClick={() => onSelectDevice?.(record)}>
                   {text}
                 </Button>
               ),
@@ -67,7 +69,9 @@ const DevicesDropDown: FC<{
               dataIndex: 'deviceTime',
               key: 'deviceTime',
               render: (_: string, record: any) =>
-                record.position?.deviceTime.includes('0001-01-01') ? '' : format(record.position?.deviceTime, 'HH:mm'),
+                record.position?.deviceTime.includes('0001-01-01')
+                  ? ''
+                  : format(record.position?.deviceTime, 'HH:mm'),
             },
             {
               title: '',

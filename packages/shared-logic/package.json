@@ -15,6 +15,7 @@
     "typescript": "tsc --noEmit"
   },
   "dependencies": {
+    "firebase": "^8.2.0",
     "react-query": "^2.26.2"
   },
   "devDependencies": {

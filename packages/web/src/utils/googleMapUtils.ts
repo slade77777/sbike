@@ -107,7 +107,7 @@ export const genInfoWindowContent = (
   `
     : null;
 
-const polyOptions = {
+export const polyOptions = {
   fillColor: '#CD0000',
   strokeWeight: 0,
   fillOpacity: 0.45,

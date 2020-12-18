@@ -106,3 +106,30 @@ export const genInfoWindowContent = (
       </div>
   `
     : null;
+
+const polyOptions = {
+  fillColor: '#CD0000',
+  strokeWeight: 0,
+  fillOpacity: 0.45,
+  editable: true,
+};
+
+export function initDrawingManager(maps: any) {
+  if (!maps) {
+    return;
+  }
+  return new maps.drawing.DrawingManager({
+    drawingMode: maps.drawing.OverlayType.POLYGON,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: maps.ControlPosition.TOP_CENTER,
+      drawingModes: [maps.drawing.OverlayType.POLYGON],
+    },
+    polylineOptions: {
+      editable: true,
+    },
+    rectangleOptions: polyOptions,
+    circleOptions: polyOptions,
+    polygonOptions: polyOptions,
+  });
+}

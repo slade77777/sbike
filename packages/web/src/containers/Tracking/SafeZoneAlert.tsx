@@ -1,18 +1,12 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {Button} from 'antd';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {Button, Space} from 'antd';
 import styled from 'styled-components';
 import GoogleMap from '../../components/GoogleMap';
+import {initDrawingManager} from '../../utils/googleMapUtils';
 
 const defaultPosition = {
   lat: 21.027763,
   lng: 105.83416,
-};
-
-const polyOptions = {
-  fillColor: '#CD0000',
-  strokeWeight: 0,
-  fillOpacity: 0.45,
-  editable: true,
 };
 
 const SafeZoneAlert = () => {
@@ -26,34 +20,14 @@ const SafeZoneAlert = () => {
     maps: null,
   });
 
-  const [allOverlays, setAllOverlays] = useState<
-    {overlay: {setMap: (vl: any) => void}}[]
-  >([]);
-  const [selectedShape, setSelectedShape] = useState<{
-    setEditable: (vl: boolean) => boolean;
-    setMap: (vl: any) => void;
-  } | null>(null);
+  const [visible, setVisible] = useState(false);
 
-  const drawingManager = useMemo(
-    () =>
-      state?.maps
-        ? new state.maps.drawing.DrawingManager({
-            drawingMode: state.maps.drawing.OverlayType.POLYGON,
-            drawingControl: true,
-            drawingControlOptions: {
-              position: state.maps.ControlPosition.TOP_CENTER,
-              drawingModes: [state.maps.drawing.OverlayType.POLYGON],
-            },
-            polylineOptions: {
-              editable: true,
-            },
-            rectangleOptions: polyOptions,
-            circleOptions: polyOptions,
-            polygonOptions: polyOptions,
-          })
-        : null,
-    [state],
-  );
+  const shape = useRef<any>(null);
+
+  const drawingManager = useMemo(() => initDrawingManager(state?.maps), [
+    state,
+  ]);
+
   useEffect(() => {
     if (state?.maps && drawingManager) {
       const {map, maps} = state;
@@ -61,71 +35,62 @@ const SafeZoneAlert = () => {
       maps.event.addListener(drawingManager, 'overlaycomplete', function (
         e: any,
       ) {
-        allOverlays.push(e);
         if (e.type != maps.drawing.OverlayType.MARKER) {
-          // Switch back to non-drawing mode after drawing a shape.
           drawingManager.setDrawingMode(null);
-
-          // Add an event listener that selects the newly-drawn shape when the user
-          // mouses down on it.
-          const newShape = e.overlay;
-          newShape.type = e.type;
-          console.log(
-            e.overlay
-              .getPath()
-              .getArray()
-              .map((p: any) => p.toJSON()),
-          );
-
-          maps.event.addListener(newShape, 'click', function () {
-            setSelection(newShape);
+          drawingManager.setOptions({
+            drawingControl: false,
           });
-          setSelection(newShape);
+          shape.current = e.overlay;
+          setVisible(true);
         }
       });
     }
     return () => {
       if (drawingManager) {
-        drawingManager.setMap(null);
+        drawingManager.setOptions({
+          drawingControl: false,
+        });
       }
     };
-  }, [allOverlays, drawingManager, state]);
-
-  function setSelection(shape: any) {
-    clearSelection();
-    setSelectedShape(shape);
-    shape.setEditable(true);
-    // selectColor(shape.get('fillColor') || shape.get('strokeColor'));
-  }
-
-  function clearSelection() {
-    if (selectedShape) {
-      selectedShape?.setEditable(false);
-      setSelectedShape(null);
-    }
-  }
-
-  function deleteSelectedShape() {
-    if (selectedShape) {
-      selectedShape.setMap(null);
-    }
-  }
+  }, [drawingManager, state]);
 
   function deleteAllShape() {
-    for (let i = 0; i < allOverlays.length; i++) {
-      allOverlays[i].overlay.setMap(null);
+    shape.current?.setMap(null);
+    drawingManager.setOptions({
+      drawingControl: true,
+      drawingMode: state?.maps.drawing.OverlayType.POLYGON,
+    });
+    setVisible(false);
+  }
+
+  function showData() {
+    if (shape.current) {
+      console.log(
+        shape.current
+          .getPath()
+          .getArray()
+          .map((p: any) => p.toJSON()),
+      );
     }
-    setAllOverlays([]);
   }
 
   return (
     <StyledGoogleMap>
       <StyledBtn>
-        <Button onClick={deleteSelectedShape}>Clear</Button>
-        <Button onClick={deleteAllShape}>Clear all</Button>
+        <Space direction="horizontal">
+          <Button disabled={!visible} onClick={deleteAllShape}>
+            Xóa đi vẽ lại
+          </Button>
+          <Button
+            disabled={!visible && !shape.current}
+            type="primary"
+            onClick={showData}>
+            Thiết lập vùng an toàn
+          </Button>
+        </Space>
       </StyledBtn>
       <GoogleMap
-        defaultZoom={12}
+        defaultZoom={14}
         options={{
           disableDefaultUI: true,
           mapTypeId: 'roadmap',

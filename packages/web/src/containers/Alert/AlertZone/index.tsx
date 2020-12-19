@@ -1,8 +1,9 @@
-import React, {FC} from 'react';
+import React, {FC, useMemo} from 'react';
 // import {Button, Space} from 'antd';
 import {useParams} from 'react-router-dom';
+import {message, Spin} from 'antd';
 import {useMutation} from 'react-query';
-import {LatLng, updateDeviceInfo} from 'shared-logic';
+import {LatLng, updateDeviceInfo, useDeviceId} from 'shared-logic';
 import styled from 'styled-components';
 import SafeZoneAlertMap from './SafeZoneAlertMap';
 
@@ -10,12 +11,28 @@ type Props = {};
 
 const AlertZone: FC<Props> = () => {
   const params = useParams<{deviceID: string}>();
-  const [mutate, {isLoading}] = useMutation(updateDeviceInfo);
+  const deviceRes = useDeviceId(params?.deviceID);
+  const [mutate, {isLoading}] = useMutation(updateDeviceInfo, {
+    onSuccess: () => {
+      message.success('Thiết lập thành công!');
+    },
+    onError: () => {
+      message.error('Có lỗi xảy ra!');
+    },
+  });
+
+  const device = useMemo(() => deviceRes?.data?.data, [deviceRes]);
+  const initPolygon = useMemo(
+    () => deviceRes?.data?.data?.alertConfig?.alertPolygon,
+    [deviceRes],
+  );
+
   async function handleSubmit(data: LatLng[]) {
-    if (params?.deviceID) {
+    if (device) {
       await mutate({
-        deviceID: params.deviceID,
+        ...device,
         alertConfig: {
+          ...device?.alertConfig,
           alertPolygon: data.map((pl) => ({
             latitude: pl.lat,
             longitude: pl.lng,
@@ -25,13 +42,18 @@ const AlertZone: FC<Props> = () => {
     }
   }
   return (
-    <StyledContainer>
-      <SafeZoneAlertMap
-        initialData={[]}
-        onSubmit={handleSubmit}
-        isSubmitting={isLoading}
-      />
-    </StyledContainer>
+    <Spin spinning={deviceRes.isLoading}>
+      <StyledContainer>
+        <SafeZoneAlertMap
+          initialData={
+            initPolygon?.map((pl) => ({lat: pl.latitude, lng: pl.longitude})) ||
+            []
+          }
+          onSubmit={handleSubmit}
+          isSubmitting={isLoading}
+        />
+      </StyledContainer>
+    </Spin>
   );
 };
 

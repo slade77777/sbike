@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Form, InputNumber, Button} from 'antd';
 
 const formItemLayout = {
@@ -10,21 +10,23 @@ const buttonItemLayout = {
   wrapperCol: {span: 10, offset: 6},
 };
 
-const AlertSpeedForm = () => {
+type Props = {
+  onSubmit: (values: {limitedSpeed: number}) => void;
+  isLoading?: boolean;
+};
+const AlertSpeedForm: FC<Props> = ({onSubmit, isLoading}) => {
   const [form] = Form.useForm();
   return (
     <Form
       {...formItemLayout}
       layout="horizontal"
       form={form}
-      onFinish={(values) => {
-        console.log(values);
-      }}>
+      onFinish={onSubmit}>
       <Form.Item label="Vận tốc giới hạn" name="limitedSpeed">
-        <InputNumber placeholder="Vận tốc giới hạn" width={100} />
+        <InputNumber placeholder="Vận tốc giới hạn" style={{width: '100%'}} />
       </Form.Item>
       <Form.Item {...buttonItemLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Đồng ý
         </Button>
       </Form.Item>

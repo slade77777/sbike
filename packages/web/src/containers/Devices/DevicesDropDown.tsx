@@ -9,15 +9,13 @@ import AlertSpeed from '../Alert/AlertSpeed';
 import DevicesTable from './DevicesTable';
 
 type DropdownMenuProps = {
-  deviceID: string;
-  carNumber?: string;
+  device: Device;
   alertMoving?: (vl: any) => void;
   alertTurnOnOff?: (vl: any) => void;
   showModal?: (deviceID: string) => void;
 };
 const DropdownMenu: FC<DropdownMenuProps> = ({
-  deviceID,
-  carNumber,
+  device,
   alertMoving,
   alertTurnOnOff,
 }) => {
@@ -26,7 +24,9 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
   return (
     <Menu>
       <Menu.Item>
-        <Link to={RoutesEnum.Devices + '/' + deviceID}>Xem lại lộ trình</Link>
+        <Link to={RoutesEnum.Devices + '/' + device?.deviceID}>
+          Xem lại lộ trình
+        </Link>
       </Menu.Item>
       <Menu.Item>Cập nhật thông tin</Menu.Item>
       <Menu.Item>Điều khiển Tắt / Bật máy</Menu.Item>
@@ -41,12 +41,14 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
             <Switch onClick={alertTurnOnOff} />
           </StyledMenu>
           <StyledMenu>
-            <AlertSpeed carNumber={carNumber} deviceID={deviceID} />
+            <AlertSpeed deviceID={device?.deviceID} />
           </StyledMenu>
           <StyledMenu>
             <Button
               type="link"
-              onClick={() => history.push(`/giam-sat/${deviceID}/canh-bao`)}>
+              onClick={() =>
+                history.push(`/giam-sat/${device?.deviceID}/canh-bao`)
+              }>
               Cảnh báo vùng an toàn
             </Button>
           </StyledMenu>
@@ -122,11 +124,7 @@ const DevicesDropDown: FC<{
               render: (_: string, record: any) => (
                 <Dropdown
                   overlay={
-                    <DropdownMenu
-                      deviceID={record?.deviceID}
-                      carNumber={record?.carNumber}
-                      showModal={showModal}
-                    />
+                    <DropdownMenu device={record} showModal={showModal} />
                   }>
                   <Button type="link" icon={<MenuOutlined />} />
                 </Dropdown>

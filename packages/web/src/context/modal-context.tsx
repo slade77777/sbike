@@ -68,6 +68,8 @@ const ModalProvider: FC<Props> = ({children}) => {
       <>
         {children}
         <Modal
+          maskClosable={false}
+          destroyOnClose
           title={state.title || undefined}
           footer={false}
           visible={state.visible}

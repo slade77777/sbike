@@ -1,8 +1,8 @@
 import React, {FC, useMemo} from 'react';
-import {Button, message} from 'antd';
-import {useMutation} from 'react-query';
+import {Button} from 'antd';
 import {useParams} from 'react-router-dom';
-import {updateDeviceInfo, useDeviceId} from 'shared-logic';
+import {useDeviceId} from 'shared-logic';
+import useAlertMutation from '../useAlertMutation';
 import {useModalContext} from '../../../context/modal-context';
 import AlertSpeedForm from './AlertSpeedForm';
 
@@ -14,28 +14,16 @@ const AlertSpeed: FC<Props> = ({deviceID}) => {
   const {dispatch} = useModalContext();
   const params = useParams<{deviceID: string}>();
   const deviceRes = useDeviceId(params?.deviceID || deviceID || '');
-  const [mutate, {isLoading}] = useMutation(updateDeviceInfo, {
-    onSuccess: () => {
-      message.success('Thiết lập thành công!');
-      dispatch?.({type: 'close'});
-    },
-    onError: () => {
-      message.error('Có lỗi xảy ra!');
-    },
-  });
-
   const device = useMemo(() => deviceRes?.data?.data, [deviceRes]);
 
+  const {onSubmit, isLoading} = useAlertMutation(device || {}, () => {
+    dispatch?.({type: 'close'});
+  });
+
   async function handleSubmit(values: {limitedSpeed: number}) {
-    if (device) {
-      await mutate({
-        ...device,
-        alertConfig: {
-          ...device?.alertConfig,
-          alertSpeed: values.limitedSpeed,
-        },
-      });
-    }
+    await onSubmit({
+      alertSpeed: values.limitedSpeed,
+    });
   }
 
   function showModal() {

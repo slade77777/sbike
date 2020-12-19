@@ -1,11 +1,12 @@
 import React, {FC, useState} from 'react';
 import styled from 'styled-components';
-import {Button, Menu, Popover, Dropdown, Switch} from 'antd';
+import {Button, Menu, Popover, Dropdown} from 'antd';
 import {Device, format} from 'shared-logic';
 import {Link, useHistory} from 'react-router-dom';
 import {DownOutlined, MenuOutlined} from '@ant-design/icons';
 import {RoutesEnum} from '../../enum';
 import AlertSpeed from '../Alert/AlertSpeed';
+import AlertSwitchButton from '../Alert/AlertSwitchButton';
 import DevicesTable from './DevicesTable';
 
 type DropdownMenuProps = {
@@ -14,11 +15,7 @@ type DropdownMenuProps = {
   alertTurnOnOff?: (vl: any) => void;
   showModal?: (deviceID: string) => void;
 };
-const DropdownMenu: FC<DropdownMenuProps> = ({
-  device,
-  alertMoving,
-  alertTurnOnOff,
-}) => {
+const DropdownMenu: FC<DropdownMenuProps> = ({device}) => {
   const history = useHistory();
 
   return (
@@ -33,12 +30,20 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
       <Menu.SubMenu title="Cảnh báo">
         <div style={{width: 250}}>
           <StyledMenu>
-            <Button type="text">Cảnh báo di chuyển</Button>
-            <Switch onClick={alertMoving} />
+            <AlertSwitchButton
+              key="alertMoving"
+              device={device}
+              alertType="alertMoving"
+              label="Cảnh báo di chuyển"
+            />
           </StyledMenu>
           <StyledMenu>
-            <Button type="text">Cảnh báo tắt / bật máy</Button>
-            <Switch onClick={alertTurnOnOff} />
+            <AlertSwitchButton
+              key="alertEngine"
+              device={device}
+              alertType="alertEngine"
+              label="Cảnh báo tắt / bật máy"
+            />
           </StyledMenu>
           <StyledMenu>
             <AlertSpeed deviceID={device?.deviceID} />
@@ -60,9 +65,6 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
 
 const StyledMenu = styled.div`
   padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid aliceblue;
 `;
 

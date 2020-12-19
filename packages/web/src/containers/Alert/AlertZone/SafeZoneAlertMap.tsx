@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
-import {Button, Space} from 'antd';
+import {Button, message, Space} from 'antd';
 import {LatLng} from 'shared-logic';
 import styled from 'styled-components';
 import GoogleMap from '../../../components/GoogleMap';
@@ -16,12 +16,6 @@ type Props = {
   isSubmitting?: boolean;
 };
 
-enum DrawStatus {
-  INITIAL,
-  NEW,
-  COMPLETED,
-  DELETED,
-}
 const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
   const [state, setState] = useState<{
     mapLoaded: boolean;
@@ -32,13 +26,7 @@ const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
     map: null,
     maps: null,
   });
-
-  const [visible, setVisible] = useState<DrawStatus>(
-    initialData && initialData?.length > 0
-      ? DrawStatus.INITIAL
-      : DrawStatus.NEW,
-  );
-
+  const [visible, setVisible] = useState(false);
   const shape = useRef<any>(null);
 
   const drawingManager = useMemo(() => initDrawingManager(state?.maps), [
@@ -57,8 +45,9 @@ const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
   );
 
   useEffect(() => {
-    if (initialPolygon) {
+    if (initialPolygon && !shape.current) {
       initialPolygon.setMap(state?.map);
+      setVisible(true);
     }
     if (drawingManager) {
       drawingManager.setDrawingMode(null);
@@ -78,12 +67,13 @@ const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
         e: any,
       ) {
         if (e.type != maps.drawing.OverlayType.MARKER) {
-          drawingManager.setDrawingMode(null);
+          // drawingManager.setDrawingMode(null);
           drawingManager.setOptions({
+            drawingMode: null,
             drawingControl: false,
           });
           shape.current = e.overlay;
-          setVisible(DrawStatus.COMPLETED);
+          setVisible(true);
         }
       });
     }
@@ -104,7 +94,7 @@ const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
       drawingControl: true,
       drawingMode: state?.maps.drawing.OverlayType.POLYGON,
     });
-    setVisible(DrawStatus.DELETED);
+    setVisible(false);
   }
 
   function handleSubmit() {
@@ -114,6 +104,12 @@ const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
         .getArray()
         .map((p: any) => p.toJSON());
       onSubmit?.(points);
+    } else {
+      if (shape.current) {
+        message.warn('Bạn chưa vẽ vùng an toàn');
+      } else if (initialPolygon) {
+        message.warn('Hãy xóa hình cũ và tạo mới vùng an toàn');
+      }
     }
   }
 
@@ -121,20 +117,14 @@ const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
     <StyledGoogleMap>
       <StyledBtn>
         <Space direction="horizontal">
-          <Button
-            disabled={
-              visible === DrawStatus.NEW || visible === DrawStatus.DELETED
-            }
-            onClick={deleteAllShape}>
+          <Button disabled={!visible} onClick={deleteAllShape}>
             Xóa đi vẽ lại
           </Button>
           <Button
             loading={isSubmitting}
-            disabled={
-              visible === DrawStatus.NEW || visible === DrawStatus.DELETED
-            }
             type="primary"
-            onClick={handleSubmit}>
+            onClick={handleSubmit}
+            disabled={!visible}>
             Thiết lập vùng an toàn
           </Button>
         </Space>
@@ -160,7 +150,7 @@ const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
 };
 
 const StyledGoogleMap = styled.div`
-  height: calc(100vh - 50px);
+  height: calc(100vh);
   position: relative;
 `;
 

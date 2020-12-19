@@ -1,144 +1,28 @@
-import React from 'react';
-import dayjs from 'dayjs';
-import {SearchView} from "../components/Report/SearchView";
+import React, {useState} from 'react';
+import {SearchView} from '../components/Report/SearchView';
+import {ScrollView} from 'react-native';
+import {getReportList} from 'shared-logic/src/api/report';
 import {ResultView} from "../components/Report/ResultView";
 
-const DATA = [
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Bật máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-  {
-    action: 'Tắt máy',
-    time: dayjs().format('HH:mm:ss DD/M/YYYY')
-  },
-];
-
 export const MoveReport = () => {
+  const [dataList, setDataList] = useState([]);
+  const onSearch = (deviceId: string, timeStart: string, timeEnd: string) => {
+    getReportList(deviceId, timeStart, timeEnd, 0)
+      .then((res) => {
+        const data = res.data;
+        // @ts-ignore
+        setDataList(data);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('có lỗi xảy ra');
+      });
+  };
+
   return (
-    <>
-      <SearchView />
-      <ResultView data={DATA}/>
-    </>
+    <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+      <SearchView onSearch={onSearch} />
+      <ResultView data={dataList}/>
+    </ScrollView>
   );
 };

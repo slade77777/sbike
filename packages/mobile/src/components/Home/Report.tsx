@@ -17,7 +17,7 @@ const Report: React.FC = () => {
       <View style={styles.row}>
         <TouchableOpacity style={styles.item} onPress={openMoveReport}>
           <Icon5 name="shipping-fast" color={'gold'} size={50} />
-          <Text style={styles.text}>Cảnh báo di chuyển</Text>
+          <Text style={styles.text}>Di chuyển</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.item} onPress={openOnOffReport}>
           <Icon5 name="power-off" color={'gold'} size={50} />

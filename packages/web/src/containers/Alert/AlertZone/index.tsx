@@ -8,7 +8,7 @@ import SafeZoneAlertMap from './SafeZoneAlertMap';
 
 type Props = {};
 
-const SafeZoneAlert: FC<Props> = () => {
+const AlertZone: FC<Props> = () => {
   const params = useParams<{deviceID: string}>();
   const [mutate, {isLoading}] = useMutation(updateDeviceInfo);
   async function handleSubmit(data: LatLng[]) {
@@ -37,4 +37,4 @@ const SafeZoneAlert: FC<Props> = () => {
 
 const StyledContainer = styled.div``;
 
-export default SafeZoneAlert;
+export default AlertZone;

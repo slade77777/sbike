@@ -2,8 +2,8 @@ import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
 import {Button, Space} from 'antd';
 import {LatLng} from 'shared-logic';
 import styled from 'styled-components';
-import GoogleMap from '../../components/GoogleMap';
-import {initDrawingManager, polyOptions} from '../../utils/googleMapUtils';
+import GoogleMap from '../../../components/GoogleMap';
+import {initDrawingManager, polyOptions} from '../../../utils/googleMapUtils';
 
 const defaultPosition = {
   lat: 21.027763,
@@ -160,7 +160,7 @@ const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
 };
 
 const StyledGoogleMap = styled.div`
-  height: calc(100vh);
+  height: calc(100vh - 50px);
   position: relative;
 `;
 

@@ -1,47 +1,68 @@
 import React, {FC, useState} from 'react';
+import styled from 'styled-components';
 import {Button, Menu, Popover, Dropdown, Switch} from 'antd';
 import {Device, format} from 'shared-logic';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {DownOutlined, MenuOutlined} from '@ant-design/icons';
 import {RoutesEnum} from '../../enum';
+import AlertSpeed from '../Alert/AlertSpeed';
 import DevicesTable from './DevicesTable';
 
 type DropdownMenuProps = {
   deviceID: string;
+  carNumber?: string;
   alertMoving?: (vl: any) => void;
   alertTurnOnOff?: (vl: any) => void;
   showModal?: (deviceID: string) => void;
 };
 const DropdownMenu: FC<DropdownMenuProps> = ({
   deviceID,
+  carNumber,
   alertMoving,
   alertTurnOnOff,
-  showModal,
-}) => (
-  <Menu>
-    <Menu.Item>
-      <Link to={RoutesEnum.Devices + '/' + deviceID}>Xem lại lộ trình</Link>
-    </Menu.Item>
-    <Menu.Item>Cập nhật thông tin</Menu.Item>
-    <Menu.Item>Điều khiển Tắt / Bật máy</Menu.Item>
-    <Menu.SubMenu title="Cảnh báo">
-      <div style={{padding: 15}}>
-        Cảnh báo di chuyển <Switch onClick={alertMoving} />
-      </div>
-      <div style={{padding: 15}}>
-        Cảnh báo tắt / bật máy <Switch onClick={alertTurnOnOff} />
-      </div>
-      <Menu.Item onClick={() => showModal?.(deviceID)}>
-        Cảnh báo quá tốc độ
-      </Menu.Item>
+}) => {
+  const history = useHistory();
+
+  return (
+    <Menu>
       <Menu.Item>
-        <Link to={`/giam-sat/${deviceID}/canh-bao-vung-an-toan`}>
-          Cảnh báo vùng an toàn
-        </Link>
+        <Link to={RoutesEnum.Devices + '/' + deviceID}>Xem lại lộ trình</Link>
       </Menu.Item>
-    </Menu.SubMenu>
-  </Menu>
-);
+      <Menu.Item>Cập nhật thông tin</Menu.Item>
+      <Menu.Item>Điều khiển Tắt / Bật máy</Menu.Item>
+      <Menu.SubMenu title="Cảnh báo">
+        <div style={{width: 250}}>
+          <StyledMenu>
+            <Button type="text">Cảnh báo di chuyển</Button>
+            <Switch onClick={alertMoving} />
+          </StyledMenu>
+          <StyledMenu>
+            <Button type="text">Cảnh báo tắt / bật máy</Button>
+            <Switch onClick={alertTurnOnOff} />
+          </StyledMenu>
+          <StyledMenu>
+            <AlertSpeed carNumber={carNumber} deviceID={deviceID} />
+          </StyledMenu>
+          <StyledMenu>
+            <Button
+              type="link"
+              onClick={() => history.push(`/giam-sat/${deviceID}/canh-bao`)}>
+              Cảnh báo vùng an toàn
+            </Button>
+          </StyledMenu>
+        </div>
+      </Menu.SubMenu>
+    </Menu>
+  );
+};
+
+const StyledMenu = styled.div`
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid aliceblue;
+`;
 
 const DevicesDropDown: FC<{
   onSelectDevice?: (device: Device) => void;
@@ -103,6 +124,7 @@ const DevicesDropDown: FC<{
                   overlay={
                     <DropdownMenu
                       deviceID={record?.deviceID}
+                      carNumber={record?.carNumber}
                       showModal={showModal}
                     />
                   }>

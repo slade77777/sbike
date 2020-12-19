@@ -7,6 +7,7 @@ export * from './types/project';
 export * from './types/user';
 export * from './types/response';
 export * from './types/device';
+export * from './types/report';
 
 // TODO should rewrite as a action on reducer ???
 //export api call for agent
@@ -20,6 +21,7 @@ export {default as useUsersByCompany} from './hooks/useUsersByCompany';
 export {default as useDeviceByCompany} from './hooks/useDeviceCompany';
 export {default as useDeviceLocation} from './hooks/useDeviceLocation';
 export {default as useDeviceId} from './hooks/useDeviceId';
+export {default as useReport} from './hooks/useReport';
 export {setToken};
 
 export function setupBusinessLayer(baseUrl: string) {

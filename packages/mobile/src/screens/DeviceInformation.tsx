@@ -9,7 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import useDeviceId from 'shared-logic/src/hooks/useDeviceId';
+import {useDeviceId} from 'shared-logic';
 import dayjs from 'dayjs';
 import color from '../config/color';
 // @ts-ignore
@@ -110,7 +110,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
       <View style={style.wrapper}>
         <View style={style.row}>
           <Text style={style.label}>Trạng thái</Text>
-          <Text style={style.value}>{deviceInfo?.position?.status === 786432 ? 'bật' : 'tắt'}</Text>
+          <Text style={style.value}>{(deviceInfo?.position?.status && deviceInfo.position.status & 1) ? 'tắt' : 'bật'}</Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Cập nhật lúc</Text>

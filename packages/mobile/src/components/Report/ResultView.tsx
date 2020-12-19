@@ -1,41 +1,43 @@
 import React from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { View, FlatList, Text } from 'react-native';
+import {Report} from "shared-logic/src";
+import dayjs from "dayjs";
 
 type Props = {
-  data: Array<any>
+  data: Array<any>;
+  displaySpeed?: boolean
 }
 
-type Item = {
-  time: string,
-  action: string
-}
-
-export const ResultView: React.FC<Props> = ({data}) => {
-  const renderItem = (item: Item) => (
-    <View style={styles.item}>
-      <Text style={{}}>{item.time}</Text>
-      <Text style={{}}>{item.action}</Text>
-    </View>
-  );
+export const ResultView: React.FC<Props> = ({data, displaySpeed = false}) => {
+  const renderItem = (item: Report) => {
+    return (
+      <View
+        key={item.time}
+        style={{
+          backgroundColor: 'white',
+          width: '100%',
+          height: 50,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingHorizontal: 10,
+          borderBottomWidth: 1,
+          borderColor: 'grey'
+        }}>
+        <View>
+          <Text>{dayjs(item.time).format('H:mm:ss DD/M/YYYY')}</Text>
+          {displaySpeed && <Text>{item.position.speed}km/h</Text>}
+        </View>
+        <Text style={{ fontWeight: 'bold', lineHeight: 20, fontSize: 15}}>{item.message}</Text>
+      </View>
+    );
+  };
   
   return (
-    <View style= {styles.container}>
-      <FlatList
-      data={data}
-      renderItem={(item) => renderItem(item.item)}
-      keyExtractor={(_, index) => index.toString()}
-      />
-    </View>
+    <FlatList
+    data={data}
+    renderItem={(item) => renderItem(item.item)}
+    keyExtractor={(_, index) => index.toString()}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: 150,
-    backgroundColor: 'lemonchiffon'
-  },
-  item: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-});

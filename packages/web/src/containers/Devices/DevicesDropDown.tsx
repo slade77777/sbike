@@ -7,6 +7,7 @@ import {DownOutlined, MenuOutlined} from '@ant-design/icons';
 import {RoutesEnum} from '../../enum';
 import AlertSpeed from '../Alert/AlertSpeed';
 import AlertSwitchButton from '../Alert/AlertSwitchButton';
+import SettingEngineOnOff from '../SettingEngineOneOff';
 import DevicesTable from './DevicesTable';
 
 type DropdownMenuProps = {
@@ -26,7 +27,9 @@ const DropdownMenu: FC<DropdownMenuProps> = ({device}) => {
         </Link>
       </Menu.Item>
       <Menu.Item>Cập nhật thông tin</Menu.Item>
-      <Menu.Item>Điều khiển Tắt / Bật máy</Menu.Item>
+      <Menu.Item>
+        <SettingEngineOnOff device={device} />
+      </Menu.Item>
       <Menu.SubMenu title="Cảnh báo">
         <div style={{width: 250}}>
           <StyledMenu>

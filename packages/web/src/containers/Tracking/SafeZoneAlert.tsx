@@ -20,7 +20,6 @@ const SafeZoneAlert: FC<Props> = () => {
             latitude: pl.lat,
             longitude: pl.lng,
           })),
-          alertMoving: true,
         },
       });
     }

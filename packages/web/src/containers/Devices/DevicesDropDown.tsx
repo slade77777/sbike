@@ -1,12 +1,23 @@
 import React, {FC, useState} from 'react';
-import {Button, Menu, Popover, Dropdown} from 'antd';
+import {Button, Menu, Popover, Dropdown, Switch} from 'antd';
 import {Device, format} from 'shared-logic';
 import {Link} from 'react-router-dom';
 import {DownOutlined, MenuOutlined} from '@ant-design/icons';
 import {RoutesEnum} from '../../enum';
 import DevicesTable from './DevicesTable';
 
-const DropdownMenu: FC<{deviceID: string}> = ({deviceID}) => (
+type DropdownMenuProps = {
+  deviceID: string;
+  alertMoving?: (vl: any) => void;
+  alertTurnOnOff?: (vl: any) => void;
+  showModal?: (deviceID: string) => void;
+};
+const DropdownMenu: FC<DropdownMenuProps> = ({
+  deviceID,
+  alertMoving,
+  alertTurnOnOff,
+  showModal,
+}) => (
   <Menu>
     <Menu.Item>
       <Link to={RoutesEnum.Devices + '/' + deviceID}>Xem lại lộ trình</Link>
@@ -14,9 +25,15 @@ const DropdownMenu: FC<{deviceID: string}> = ({deviceID}) => (
     <Menu.Item>Cập nhật thông tin</Menu.Item>
     <Menu.Item>Điều khiển Tắt / Bật máy</Menu.Item>
     <Menu.SubMenu title="Cảnh báo">
-      <Menu.Item>Cảnh báo di chuyển</Menu.Item>
-      <Menu.Item>Cảnh báo tắt / bật máy</Menu.Item>
-      <Menu.Item>Cảnh báo quá tốc độ</Menu.Item>
+      <div style={{padding: 15}}>
+        Cảnh báo di chuyển <Switch onClick={alertMoving} />
+      </div>
+      <div style={{padding: 15}}>
+        Cảnh báo tắt / bật máy <Switch onClick={alertTurnOnOff} />
+      </div>
+      <Menu.Item onClick={() => showModal?.(deviceID)}>
+        Cảnh báo quá tốc độ
+      </Menu.Item>
       <Menu.Item>
         <Link to={`/giam-sat/${deviceID}/canh-bao-vung-an-toan`}>
           Cảnh báo vùng an toàn
@@ -28,7 +45,8 @@ const DropdownMenu: FC<{deviceID: string}> = ({deviceID}) => (
 
 const DevicesDropDown: FC<{
   onSelectDevice?: (device: Device) => void;
-}> = ({onSelectDevice}) => {
+  showModal?: (deviceID: string) => void;
+}> = ({onSelectDevice, showModal}) => {
   const [visible, setVisible] = useState(true);
 
   return (
@@ -82,7 +100,12 @@ const DevicesDropDown: FC<{
               align: 'center',
               render: (_: string, record: any) => (
                 <Dropdown
-                  overlay={<DropdownMenu deviceID={record?.deviceID} />}>
+                  overlay={
+                    <DropdownMenu
+                      deviceID={record?.deviceID}
+                      showModal={showModal}
+                    />
+                  }>
                   <Button type="link" icon={<MenuOutlined />} />
                 </Dropdown>
               ),

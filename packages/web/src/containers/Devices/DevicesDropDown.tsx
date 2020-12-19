@@ -1,30 +1,80 @@
 import React, {FC, useState} from 'react';
+import styled from 'styled-components';
 import {Button, Menu, Popover, Dropdown} from 'antd';
 import {Device, format} from 'shared-logic';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {DownOutlined, MenuOutlined} from '@ant-design/icons';
 import {RoutesEnum} from '../../enum';
+import AlertSpeed from '../Alert/AlertSpeed';
+import AlertSwitchButton from '../Alert/AlertSwitchButton';
+import SettingEngineOnOff from '../SettingEngineOneOff';
 import DevicesTable from './DevicesTable';
 
-const DropdownMenu: FC<{deviceID: string}> = ({deviceID}) => (
-  <Menu>
-    <Menu.Item>
-      <Link to={RoutesEnum.Devices + '/' + deviceID}>Xem lại lộ trình</Link>
-    </Menu.Item>
-    <Menu.Item>Cập nhật thông tin</Menu.Item>
-    <Menu.Item>Điều khiển Tắt / Bật máy</Menu.Item>
-    <Menu.SubMenu title="Cảnh báo">
-      <Menu.Item>Cảnh báo di chuyển</Menu.Item>
-      <Menu.Item>Cảnh báo tắt / bật máy</Menu.Item>
-      <Menu.Item>Cảnh báo quá tốc độ</Menu.Item>
-      <Menu.Item>Cảnh báo vùng an toàn</Menu.Item>
-    </Menu.SubMenu>
-  </Menu>
-);
+type DropdownMenuProps = {
+  device: Device;
+  alertMoving?: (vl: any) => void;
+  alertTurnOnOff?: (vl: any) => void;
+  showModal?: (deviceID: string) => void;
+};
+const DropdownMenu: FC<DropdownMenuProps> = ({device}) => {
+  const history = useHistory();
+
+  return (
+    <Menu>
+      <Menu.Item>
+        <Link to={RoutesEnum.Devices + '/' + device?.deviceID}>
+          Xem lại lộ trình
+        </Link>
+      </Menu.Item>
+      <Menu.Item>Cập nhật thông tin</Menu.Item>
+      <Menu.Item>
+        <SettingEngineOnOff device={device} />
+      </Menu.Item>
+      <Menu.SubMenu title="Cảnh báo">
+        <div style={{width: 250}}>
+          <StyledMenu>
+            <AlertSwitchButton
+              key="alertMoving"
+              device={device}
+              alertType="alertMoving"
+              label="Cảnh báo di chuyển"
+            />
+          </StyledMenu>
+          <StyledMenu>
+            <AlertSwitchButton
+              key="alertEngine"
+              device={device}
+              alertType="alertEngine"
+              label="Cảnh báo tắt / bật máy"
+            />
+          </StyledMenu>
+          <StyledMenu>
+            <AlertSpeed deviceID={device?.deviceID} />
+          </StyledMenu>
+          <StyledMenu>
+            <Button
+              type="link"
+              onClick={() =>
+                history.push(`/giam-sat/${device?.deviceID}/canh-bao`)
+              }>
+              Cảnh báo vùng an toàn
+            </Button>
+          </StyledMenu>
+        </div>
+      </Menu.SubMenu>
+    </Menu>
+  );
+};
+
+const StyledMenu = styled.div`
+  padding: 10px;
+  border-bottom: 1px solid aliceblue;
+`;
 
 const DevicesDropDown: FC<{
-  onSelectDevice: (device: Device) => void;
-}> = ({onSelectDevice}) => {
+  onSelectDevice?: (device: Device) => void;
+  showModal?: (deviceID: string) => void;
+}> = ({onSelectDevice, showModal}) => {
   const [visible, setVisible] = useState(true);
 
   return (
@@ -41,7 +91,7 @@ const DevicesDropDown: FC<{
               dataIndex: 'carNumber',
               key: 'carNumber',
               render: (text: string, record: any) => (
-                <Button type="link" onClick={() => onSelectDevice(record)}>
+                <Button type="link" onClick={() => onSelectDevice?.(record)}>
                   {text}
                 </Button>
               ),
@@ -67,7 +117,9 @@ const DevicesDropDown: FC<{
               dataIndex: 'deviceTime',
               key: 'deviceTime',
               render: (_: string, record: any) =>
-                record.position?.deviceTime.includes('0001-01-01') ? '' : format(record.position?.deviceTime, 'HH:mm'),
+                record.position?.deviceTime.includes('0001-01-01')
+                  ? ''
+                  : format(record.position?.deviceTime, 'HH:mm'),
             },
             {
               title: '',
@@ -76,7 +128,9 @@ const DevicesDropDown: FC<{
               align: 'center',
               render: (_: string, record: any) => (
                 <Dropdown
-                  overlay={<DropdownMenu deviceID={record?.deviceID} />}>
+                  overlay={
+                    <DropdownMenu device={record} showModal={showModal} />
+                  }>
                   <Button type="link" icon={<MenuOutlined />} />
                 </Dropdown>
               ),

@@ -7,7 +7,7 @@ export function setSecureAxiosInstance(baseURL: string) {
       'Unable to resolve Base URL. Ensure that the environment variable is properly set up',
     );
   }
-  const timeout = 20000;
+  const timeout = 5000;
   secureInstance = axios.create({
     timeout,
     baseURL,

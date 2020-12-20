@@ -1,16 +1,15 @@
-import React, {FC, useState} from 'react';
-import {LatLng} from 'shared-logic';
+import React, {FC, useMemo, useState} from 'react';
+import {Device, DeviceLocation} from 'shared-logic';
 import {HANOI_LOCATION} from '../../contants/common';
 import GoogleMap from '../../components/GoogleMap';
-import CarSVG from '../../images/car.svg';
+import useReportMap from './useReportMap';
 
 type Props = {
-  location: LatLng | null;
+  location: DeviceLocation | null;
+  devices?: Array<Device>;
 };
 
-const Marker = ({children}) => children;
-
-const ReportMap: FC<Props> = ({location}) => {
+const ReportMap: FC<Props> = ({location, devices}) => {
   const [state, setState] = useState<{
     mapApiLoaded: boolean;
     mapInstance: any;
@@ -21,12 +20,24 @@ const ReportMap: FC<Props> = ({location}) => {
     mapApi: null,
   });
 
+  const carNumber = useMemo(
+    () =>
+      devices?.find((dv) => dv.deviceID === location?.deviceID)?.carNumber ||
+      '',
+    [devices, location],
+  );
+
+  useReportMap(state?.mapInstance, state?.mapApi, location, carNumber);
+
   return (
     <GoogleMap
       defaultZoom={12}
       resetBoundsOnResize
       defaultCenter={HANOI_LOCATION}
-      center={location || HANOI_LOCATION}
+      center={{
+        lat: location?.latitude || HANOI_LOCATION.lat,
+        lng: location?.longitude || HANOI_LOCATION.lng,
+      }}
       yesIWantToUseGoogleMapApiInternals
       onGoogleApiLoaded={({map, maps}) =>
         setState({
@@ -34,11 +45,8 @@ const ReportMap: FC<Props> = ({location}) => {
           mapInstance: map,
           mapApi: maps,
         })
-      }>
-      <Marker {...location}>
-        <CarSVG width={50} />
-      </Marker>
-    </GoogleMap>
+      }
+    />
   );
 };
 

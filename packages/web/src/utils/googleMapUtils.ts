@@ -100,9 +100,9 @@ export const genInfoWindowContent = (
         <div><span class="label">Điện áp ắc quy: </span><span class="value">${
           location?.batteryVoltage
         }</span></div>
-        <div><span class="label">Ngày hết hạn: </span><span class="value">${format(
-          info?.expriedDate,
-        )}</span></div>
+        <div><span class="label">${
+          info?.expriedDate ? 'Ngày hết hạn:' : ''
+        } </span><span class="value">${format(info?.expriedDate)}</span></div>
       </div>
   `
     : null;

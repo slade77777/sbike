@@ -22,7 +22,7 @@ export type Report = {
 
 export enum ReportType {
   MOVING = 0,
-  SPEED = 1,
-  ENGINE = 2,
+  ENGINE = 1,
+  SPEED = 2,
   ZONE = 3,
 }

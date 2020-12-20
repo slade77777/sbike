@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styled from 'styled-components';
 import {Button, DatePicker, Form, InputNumber} from 'antd';
-import {format, SEARCH_HISTORY_FORMATTED_TIME} from 'shared-logic';
+import {Device, format, SEARCH_HISTORY_FORMATTED_TIME} from 'shared-logic';
 const {RangePicker} = DatePicker;
 import SelectDevices from '../Devices/SelectDevices';
 
@@ -17,9 +17,10 @@ export type ReportSearchParam = {
 
 type Props = {
   onSubmit?: (ReportSearchParam: any) => void;
+  devices: Device[];
 };
 
-const ReportHeader: FC<Props> = ({onSubmit}) => {
+const ReportHeader: FC<Props> = ({devices, onSubmit}) => {
   const onFinish = (fieldsValue: ReportSearchParam) => {
     const rangeTimeValue = fieldsValue['fromTo'];
     const values = {
@@ -35,7 +36,7 @@ const ReportHeader: FC<Props> = ({onSubmit}) => {
     <StyledHeader>
       <Form layout="inline" onFinish={onFinish}>
         <Form.Item name="deviceID" label="Chọn xe">
-          <SelectDevices />
+          <SelectDevices devices={devices} />
         </Form.Item>
         <Form.Item
           name="fromTo"

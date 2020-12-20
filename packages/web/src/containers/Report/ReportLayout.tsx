@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {useMutation} from 'react-query';
 import styled from 'styled-components';
-import {getReports, LatLng, ReportType} from 'shared-logic';
+import {Device, DeviceLocation, getReports, ReportType} from 'shared-logic';
 import ReportHeader, {ReportSearchParam} from './ReportHeader';
 import Drawer from './Drawer';
 import ReportTable from './ReportTable';
@@ -9,11 +9,12 @@ import ReportMap from './ReportMap';
 
 type Props = {
   type: string | ReportType;
+  devices?: Array<Device>;
 };
 
-const ReportLayout: FC<Props> = ({type}) => {
+const ReportLayout: FC<Props> = ({devices, type}) => {
   const [open, setOpen] = useState(true);
-  const [location, setLocation] = useState<LatLng | null>(null);
+  const [location, setLocation] = useState<DeviceLocation | null>(null);
 
   const [mutate, searchRes] = useMutation(getReports, {
     onSuccess: () => setOpen(true),
@@ -30,10 +31,11 @@ const ReportLayout: FC<Props> = ({type}) => {
 
   return (
     <StyledContainer>
-      <ReportHeader onSubmit={handleSearch} />
+      <ReportHeader onSubmit={handleSearch} devices={devices || []} />
       <StyledSearchResult>
         <Drawer toggle={() => setOpen(!open)} open={open}>
           <ReportTable
+            type={type}
             viewLocation={(vl) => setLocation(vl)}
             data={searchRes?.data?.data || []}
             loading={searchRes.isLoading}
@@ -41,7 +43,7 @@ const ReportLayout: FC<Props> = ({type}) => {
         </Drawer>
       </StyledSearchResult>
       <StyledGoogleMap>
-        <ReportMap location={location} />
+        <ReportMap location={location} devices={devices || []} />
       </StyledGoogleMap>
     </StyledContainer>
   );

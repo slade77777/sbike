@@ -55,7 +55,7 @@ const UpdateDevice: FC<Props> = ({type, device}) => {
         type="link"
         icon={<EditOutlined />}
         onClick={showModal}>
-        Sửa
+        Cập nhật
       </Button>
     );
   }

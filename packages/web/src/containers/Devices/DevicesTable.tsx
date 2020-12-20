@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Table, Space, Button, Spin} from 'antd';
-import {EyeOutlined} from '@ant-design/icons';
+import {EnvironmentOutlined} from '@ant-design/icons';
 import {SizeType} from 'antd/es/config-provider/SizeContext';
 import {Link, useRouteMatch} from 'react-router-dom';
 import {Device, getDeviceByCompany, useUserInfo, format} from 'shared-logic';
@@ -48,9 +48,7 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       dataIndex: 'expriedDate',
       key: 'expriedDate',
       render: (_: string, record: any) =>
-        record.expriedDate?.includes('0001-01-01')
-          ? ''
-          : format(record.expiredDate, 'DD/MM/YYYY'),
+        format(record.expriedDate, 'DD/MM/YYYY'),
     },
     {
       title: 'Cập nhật lúc',
@@ -69,8 +67,11 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       render: (_: string, record: any) => (
         <Space size="middle">
           <UpdateDevice device={record} type="icon" />
-          <Button type="link" icon={<EyeOutlined />}>
-            <Link to={`${routeMatch.path}/${record.deviceID}`}> Chi tiết</Link>
+          <Button type="link" icon={<EnvironmentOutlined />}>
+            <Link to={`${routeMatch.path}/${record.deviceID}`}>
+              {' '}
+              Xem lại lộ trình
+            </Link>
           </Button>
         </Space>
       ),

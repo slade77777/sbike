@@ -4,10 +4,10 @@ export enum RoutesEnum {
   Management = '/quan-ly',
   UserManagement = 'nguoi-dung',
   CompaniesManagement = 'cong-ty',
-  AlertMovingReport = 'canh-bao-di-chuyen',
-  TurnOnOfReport = 'tat-bat-may',
-  OverSpeedReport = 'vuot-qua-toc-do',
-  InOutSafeZoneReport = 'vao-ra-vung-an-toan',
+  AlertMovingReport = 0,
+  TurnOnOfReport = 1,
+  OverSpeedReport = 2,
+  InOutSafeZoneReport = 3,
 }
 
 export const ROUTES = {

@@ -21,6 +21,7 @@ const AuthenticatedApp = () => {
           width={250}
           style={{
             position: 'relative',
+            zIndex: 10,
           }}
           onCollapse={() => setCollapsed(!collapsed)}>
           <Logo status={collapsed ? 'small' : 'large'} />

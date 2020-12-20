@@ -15,6 +15,7 @@ export * from './api/project';
 export * from './api/user';
 export * from './api/location';
 export * from './api/device';
+export * from './api/report';
 export * from './constants/roles';
 export {default as useUserInfo} from './hooks/useUserInfo';
 export {default as useUsersByCompany} from './hooks/useUsersByCompany';

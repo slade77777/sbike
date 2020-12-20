@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export type Device = {
   alertConfig?: AlertConfig;
   carNumber?: string;
@@ -6,7 +8,7 @@ export type Device = {
   countryCode?: string;
   deviceID?: string;
   deviceType?: string;
-  expriedDate?: string;
+  expriedDate?: string | dayjs.Dayjs;
   factoryID?: string;
   isMoving?: boolean;
   logined?: boolean;

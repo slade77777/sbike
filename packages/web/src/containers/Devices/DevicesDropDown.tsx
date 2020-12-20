@@ -6,9 +6,10 @@ import {Link, useHistory} from 'react-router-dom';
 import {DownOutlined, MenuOutlined} from '@ant-design/icons';
 import {RoutesEnum} from '../../enum';
 import AlertSpeed from '../Alert/AlertSpeed';
-import AlertSwitchButton from '../Alert/AlertSwitchButton';
 import SettingEngineOnOff from '../SettingEngineOneOff';
+import AlertSwitchButton from '../Alert/AlertSwitchButton';
 import DevicesTable from './DevicesTable';
+import UpdateDevice from './UpdateDevice';
 
 type DropdownMenuProps = {
   device: Device;
@@ -23,14 +24,16 @@ const DropdownMenu: FC<DropdownMenuProps> = ({device}) => {
     <Menu>
       <Menu.Item>
         <Link to={RoutesEnum.Devices + '/' + device?.deviceID}>
-          Xem lại lộ trình
+          <Button type="text">Xem lại lộ trình</Button>
         </Link>
       </Menu.Item>
-      <Menu.Item>Cập nhật thông tin</Menu.Item>
+      <Menu.Item>
+        <UpdateDevice type="text" device={device} />
+      </Menu.Item>
       <Menu.Item>
         <SettingEngineOnOff device={device} />
       </Menu.Item>
-      <Menu.SubMenu title="Cảnh báo">
+      <Menu.SubMenu title="Cảnh báo" style={{paddingLeft: 15}}>
         <div style={{width: 250}}>
           <StyledMenu>
             <AlertSwitchButton

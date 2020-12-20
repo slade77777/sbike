@@ -35,7 +35,11 @@ const AlertZone: FC<Props> = () => {
         longitude: pl.lng,
       }));
       await onSubmit({
-        alertPolygon: mappedPoly,
+        ...device,
+        alertConfig: {
+          ...device.alertConfig,
+          alertPolygon: mappedPoly,
+        },
       });
       setPolygon(data);
     }

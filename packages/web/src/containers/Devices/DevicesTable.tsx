@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 import {Table, Space, Button, Spin} from 'antd';
-import {EditOutlined, EyeOutlined} from '@ant-design/icons';
+import {EyeOutlined} from '@ant-design/icons';
 import {SizeType} from 'antd/es/config-provider/SizeContext';
 import {Link, useRouteMatch} from 'react-router-dom';
 import {Device, getDeviceByCompany, useUserInfo, format} from 'shared-logic';
 import {useQuery} from 'react-query';
+import UpdateDevice from './UpdateDevice';
 
 type Props = {
   devices?: Device[];
@@ -47,7 +48,9 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       dataIndex: 'expriedDate',
       key: 'expriedDate',
       render: (_: string, record: any) =>
-        record.expriedDate?.includes('0001-01-01') ? '' : format(record.expiredDate, 'DD/MM/YYYY'),
+        record.expriedDate?.includes('0001-01-01')
+          ? ''
+          : format(record.expiredDate, 'DD/MM/YYYY'),
     },
     {
       title: 'Cập nhật lúc',
@@ -55,7 +58,9 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       dataIndex: 'serverTime',
       key: 'serverTime',
       render: (_: string, record: any) =>
-        record.position?.serverTime?.includes('0001-01-01') ? '' : format(record.position?.serverTime, 'HH:mm:ss DD/MM/YYYY'),
+        record.position?.serverTime?.includes('0001-01-01')
+          ? ''
+          : format(record.position?.serverTime, 'HH:mm:ss DD/MM/YYYY'),
     },
     {
       title: 'Hành động',
@@ -63,9 +68,7 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       key: 'action',
       render: (_: string, record: any) => (
         <Space size="middle">
-          <Button type="link" icon={<EditOutlined />}>
-            Sửa
-          </Button>
+          <UpdateDevice device={record} type="icon" />
           <Button type="link" icon={<EyeOutlined />}>
             <Link to={`${routeMatch.path}/${record.deviceID}`}> Chi tiết</Link>
           </Button>

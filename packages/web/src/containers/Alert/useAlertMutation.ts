@@ -1,6 +1,6 @@
 import {useMutation} from 'react-query';
 import {message} from 'antd';
-import {AlertConfig, Device, updateDeviceInfo} from 'shared-logic';
+import {Device, updateDeviceInfo} from 'shared-logic';
 
 export default (device: Device, onSuccessCallback?: () => void) => {
   const [mutate, {isLoading}] = useMutation(updateDeviceInfo, {
@@ -13,15 +13,9 @@ export default (device: Device, onSuccessCallback?: () => void) => {
     },
   });
 
-  async function handleSubmit(alertConfig: AlertConfig) {
+  async function handleSubmit(editedDevice: Device) {
     if (device?.alertConfig) {
-      await mutate({
-        ...device,
-        alertConfig: {
-          ...device.alertConfig,
-          ...alertConfig,
-        },
-      });
+      await mutate(editedDevice);
     }
   }
   return {onSubmit: handleSubmit, isLoading};

@@ -21,9 +21,15 @@ const AlertSpeed: FC<Props> = ({deviceID}) => {
   });
 
   async function handleSubmit(values: {limitedSpeed: number}) {
-    await onSubmit({
-      alertSpeed: values.limitedSpeed,
-    });
+    if (device) {
+      await onSubmit({
+        ...device,
+        alertConfig: {
+          ...device.alertConfig,
+          alertSpeed: values.limitedSpeed,
+        },
+      });
+    }
   }
 
   function showModal() {

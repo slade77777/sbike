@@ -22,6 +22,7 @@ const AlertSwitchButton: FC<Props> = ({
 
   async function onChange(checked: boolean) {
     await onSubmit({
+      ...device,
       [alertType]: checked,
     });
   }

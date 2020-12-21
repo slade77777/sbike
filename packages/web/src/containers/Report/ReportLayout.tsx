@@ -13,7 +13,7 @@ type Props = {
 };
 
 const ReportLayout: FC<Props> = ({devices, type}) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [location, setLocation] = useState<DeviceLocation | null>(null);
 
   const [mutate, searchRes] = useMutation(getReports, {
@@ -31,7 +31,11 @@ const ReportLayout: FC<Props> = ({devices, type}) => {
 
   return (
     <StyledContainer>
-      <ReportHeader onSubmit={handleSearch} devices={devices || []} />
+      <ReportHeader
+        onSubmit={handleSearch}
+        devices={devices || []}
+        type={type}
+      />
       <StyledSearchResult>
         <Drawer toggle={() => setOpen(!open)} open={open}>
           <ReportTable

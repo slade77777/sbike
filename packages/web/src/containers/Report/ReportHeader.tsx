@@ -1,7 +1,12 @@
 import React, {FC} from 'react';
 import styled from 'styled-components';
 import {Button, DatePicker, Form, InputNumber} from 'antd';
-import {Device, format, SEARCH_HISTORY_FORMATTED_TIME} from 'shared-logic';
+import {
+  Device,
+  format,
+  ReportType,
+  SEARCH_HISTORY_FORMATTED_TIME,
+} from 'shared-logic';
 const {RangePicker} = DatePicker;
 import SelectDevices from '../Devices/SelectDevices';
 
@@ -18,9 +23,10 @@ export type ReportSearchParam = {
 type Props = {
   onSubmit?: (ReportSearchParam: any) => void;
   devices: Device[];
+  type?: string | ReportType;
 };
 
-const ReportHeader: FC<Props> = ({devices, onSubmit}) => {
+const ReportHeader: FC<Props> = ({type, devices, onSubmit}) => {
   const onFinish = (fieldsValue: ReportSearchParam) => {
     const rangeTimeValue = fieldsValue['fromTo'];
     const values = {
@@ -50,9 +56,11 @@ const ReportHeader: FC<Props> = ({devices, onSubmit}) => {
             placeholder={['Từ lúc', 'Tới lúc']}
           />
         </Form.Item>
-        <Form.Item name="speed" label="Vận tốc giới hạn">
-          <InputNumber />
-        </Form.Item>
+        {type == ReportType.SPEED && (
+          <Form.Item name="speed" label="Vận tốc giới hạn">
+            <InputNumber />
+          </Form.Item>
+        )}
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Tìm kiếm

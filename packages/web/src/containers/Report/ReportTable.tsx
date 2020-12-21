@@ -1,5 +1,5 @@
-import React, {FC} from 'react';
-import {Button, Spin, Table} from 'antd';
+import React, {FC, useEffect, useMemo, useRef} from 'react';
+import {Button, Space, Spin, Table} from 'antd';
 import {DeviceLocation, format, ReportType} from 'shared-logic';
 import {EnvironmentOutlined} from '@ant-design/icons';
 
@@ -10,50 +10,90 @@ type Props = {
   type: string | ReportType;
 };
 
-const speedColumn = {
-  title: 'Vận tốc thực tế',
+const speedColumns = [
+  {
+    title: 'Vận tốc giới hạn',
+    dataIndex: 'message',
+    key: 'message',
+    render: (text: string) => text || 'N/A',
+  },
+  {
+    title: 'Vận tốc thực tế',
+    dataIndex: 'message',
+    key: 'message',
+    render: (_: string, record: any) => record?.position?.speed || 'N/A',
+  },
+];
+
+const timeColumn = {
+  title: 'Thời gian',
+  dataIndex: 'time',
+  key: 'time',
+  render: (_: string, record: any) => (
+    <Space direction="vertical" align="center" size={0}>
+      <span>{format(record?.time, 'HH:ss:mm')}</span>
+      <span>{format(record?.time, 'DD/MM/YYYY')}</span>
+    </Space>
+  ),
+};
+
+const engineColumn = {
+  title: 'Trạng thái máy',
   dataIndex: 'message',
   key: 'message',
-  render: (_: string, record: any) => record?.position?.speed || 'N/A',
+  render: (text: string) => text || 'N/A',
 };
 
 const ReportTable: FC<Props> = ({type, data, loading, viewLocation}) => {
-  const position = {
-    title: 'Vị trí',
-    dataIndex: 'position',
-    key: 'position',
-    render: (_: string, record: any) => (
-      <Button
-        type="text"
-        icon={<EnvironmentOutlined />}
-        onClick={() => viewLocation?.(record?.position)}
-      />
-    ),
-  };
-  const defaultColumns = [
-    {
-      title: 'Thời gian',
-      dataIndex: 'time',
-      key: 'time',
-      render: (_: string, record: any) =>
-        format(record?.time, 'HH:ss:mm-DD/MM/YYYY'),
-    },
-    {
-      title: type == ReportType.SPEED ? 'Vận tốc giới hạn' : 'Trạng thái máy',
-      dataIndex: 'message',
-      key: 'message',
-    },
-  ];
+  const currentType = useRef<string | ReportType>('');
+
+  useEffect(() => {
+    if (currentType.current != type) {
+      currentType.current = type;
+    }
+  }, [type]);
+
+  const positionColumn = useMemo(
+    () => ({
+      title: 'Vị trí',
+      dataIndex: 'position',
+      key: 'position',
+      width: 60,
+      render: (_: string, record: any) => (
+        <Button
+          type="link"
+          shape="circle"
+          icon={<EnvironmentOutlined />}
+          onClick={() => viewLocation?.(record?.position)}
+        />
+      ),
+    }),
+    [viewLocation],
+  );
+
+  const columns = useMemo(() => {
+    switch (type) {
+      case '0':
+        return [timeColumn, positionColumn];
+
+      case '1':
+        return [timeColumn, ...speedColumns, positionColumn];
+
+      case '2':
+        return [timeColumn, engineColumn, positionColumn];
+
+      default:
+        return [timeColumn, positionColumn];
+    }
+  }, [type, positionColumn]);
 
   return (
     <Spin spinning={loading}>
       <Table
-        dataSource={data || []}
-        columns={
-          type == ReportType.SPEED
-            ? [...defaultColumns, speedColumn, position]
-            : defaultColumns
-        }
+        size="small"
+        dataSource={currentType.current == type && data ? data : []}
+        columns={columns}
+        scroll={{x: 300, y: 500}}
       />
     </Spin>
   );

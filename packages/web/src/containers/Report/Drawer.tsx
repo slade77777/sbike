@@ -25,9 +25,10 @@ const Drawer: FC<Props> = ({open, toggle, children}) => {
 };
 
 const StyledDrawer = styled.div`
-  width: 320px;
+  width: 350px;
   position: relative;
   height: 100%;
+  max-height: calc(100vh - 50px);
   background-color: #fff;
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
     0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);

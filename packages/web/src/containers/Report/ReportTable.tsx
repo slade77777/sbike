@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useMemo, useRef} from 'react';
+import React, {FC, useMemo} from 'react';
 import {Button, Space, Spin, Table} from 'antd';
 import {DeviceLocation, format, ReportType} from 'shared-logic';
 import {EnvironmentOutlined} from '@ant-design/icons';
@@ -45,14 +45,6 @@ const engineColumn = {
 };
 
 const ReportTable: FC<Props> = ({type, data, loading, viewLocation}) => {
-  const currentType = useRef<string | ReportType>('');
-
-  useEffect(() => {
-    if (currentType.current != type) {
-      currentType.current = type;
-    }
-  }, [type]);
-
   const positionColumn = useMemo(
     () => ({
       title: 'Vị trí',
@@ -91,7 +83,7 @@ const ReportTable: FC<Props> = ({type, data, loading, viewLocation}) => {
     <Spin spinning={loading}>
       <Table
         size="small"
-        dataSource={currentType.current == type && data ? data : []}
+        dataSource={data}
         columns={columns}
         scroll={{x: 300, y: 500}}
       />

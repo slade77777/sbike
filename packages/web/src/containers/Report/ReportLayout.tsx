@@ -8,24 +8,32 @@ import ReportTable from './ReportTable';
 import ReportMap from './ReportMap';
 
 type Props = {
-  type: string | ReportType;
+  type: ReportType;
   devices?: Array<Device>;
+};
+
+export type DataSource = {
+  [type: string]: Array<any>;
 };
 
 const ReportLayout: FC<Props> = ({devices, type}) => {
   const [open, setOpen] = useState(false);
+  const [dataSource, setDataSource] = useState<DataSource | null>(null);
   const [location, setLocation] = useState<DeviceLocation | null>(null);
 
-  const [mutate, searchRes] = useMutation(getReports, {
+  const [mutate, {isLoading}] = useMutation(getReports, {
     onSuccess: () => setOpen(true),
   });
 
   async function handleSearch(values: ReportSearchParam) {
-    await mutate({
+    const searchRes = await mutate({
       deviceID: values.deviceID,
       startTime: values.fromTo[0],
       endTime: values.fromTo[1],
       type: type,
+    });
+    setDataSource({
+      [type]: searchRes?.data || [],
     });
   }
 
@@ -37,8 +45,8 @@ const ReportLayout: FC<Props> = ({devices, type}) => {
           <ReportTable
             type={type}
             viewLocation={(vl) => setLocation(vl)}
-            data={searchRes?.data?.data || []}
-            loading={searchRes.isLoading}
+            data={dataSource?.[type] || []}
+            loading={isLoading}
           />
         </Drawer>
       </StyledSearchResult>

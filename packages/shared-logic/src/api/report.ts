@@ -1,5 +1,5 @@
 import {ServerResponse} from '../types/response';
-import {AlertEnum, Report} from '..';
+import {ReportType, Report} from '..';
 import {secureInstance} from './base';
 
 export async function getReportList(
@@ -17,7 +17,7 @@ type ReportQuery = {
   deviceID: string;
   startTime: string;
   endTime: string;
-  type: AlertEnum;
+  type: ReportType;
 };
 export async function getReports({
   deviceID,

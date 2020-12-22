@@ -21,8 +21,8 @@ export type Report = {
 };
 
 export enum ReportType {
-  MOVING = 0,
-  ENGINE = 1,
-  SPEED = 2,
-  ZONE = 3,
+  MOVING = '0',
+  ENGINE = '1',
+  SPEED = '2',
+  ZONE = '3',
 }

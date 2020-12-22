@@ -5,8 +5,8 @@ export enum RoutesEnum {
   UserManagement = 'nguoi-dung',
   CompaniesManagement = 'cong-ty',
   AlertMovingReport = 0,
-  TurnOnOfReport = 1,
-  OverSpeedReport = 2,
+  OverSpeedReport = 1,
+  TurnOnOfReport = 2,
   InOutSafeZoneReport = 3,
 }
 

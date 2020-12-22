@@ -31,11 +31,7 @@ const ReportLayout: FC<Props> = ({devices, type}) => {
 
   return (
     <StyledContainer>
-      <ReportHeader
-        onSubmit={handleSearch}
-        devices={devices || []}
-        type={type}
-      />
+      <ReportHeader onSubmit={handleSearch} devices={devices || []} />
       <StyledSearchResult>
         <Drawer toggle={() => setOpen(!open)} open={open}>
           <ReportTable

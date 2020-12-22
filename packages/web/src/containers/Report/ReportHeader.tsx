@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styled from 'styled-components';
 import {Button, DatePicker, Form} from 'antd';
-import {Device, format, SEARCH_HISTORY_FORMATTED_TIME} from 'shared-logic';
+import {format, SEARCH_HISTORY_FORMATTED_TIME} from 'shared-logic';
 const {RangePicker} = DatePicker;
 import SelectDevices from '../Devices/SelectDevices';
 
@@ -13,7 +13,6 @@ export type ReportSearchParam = {
 
 type Props = {
   onSubmit?: (ReportSearchParam: any) => void;
-  devices: Device[];
 };
 
 const ReportHeader: FC<Props> = ({onSubmit}) => {

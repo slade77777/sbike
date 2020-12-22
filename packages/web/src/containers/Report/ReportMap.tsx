@@ -1,15 +1,15 @@
 import React, {FC, useMemo, useState} from 'react';
-import {Device, DeviceLocation} from 'shared-logic';
+import {DeviceLocation} from 'shared-logic';
 import {HANOI_LOCATION} from '../../contants/common';
 import GoogleMap from '../../components/GoogleMap';
+import {useGlobalState} from '../../context/devices-context';
 import useReportMap from './useReportMap';
 
 type Props = {
   location: DeviceLocation | null;
-  devices?: Array<Device>;
 };
 
-const ReportMap: FC<Props> = ({location, devices}) => {
+const ReportMap: FC<Props> = ({location}) => {
   const [state, setState] = useState<{
     mapApiLoaded: boolean;
     mapInstance: any;
@@ -19,6 +19,8 @@ const ReportMap: FC<Props> = ({location, devices}) => {
     mapInstance: null,
     mapApi: null,
   });
+
+  const {devices} = useGlobalState();
 
   const carNumber = useMemo(
     () =>

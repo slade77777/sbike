@@ -3,8 +3,8 @@ import {Table, Space, Button, Spin} from 'antd';
 import {EnvironmentOutlined} from '@ant-design/icons';
 import {SizeType} from 'antd/es/config-provider/SizeContext';
 import {Link, useRouteMatch} from 'react-router-dom';
-import {Device, getDeviceByCompany, useUserInfo, format} from 'shared-logic';
-import {useQuery} from 'react-query';
+import {Device, format} from 'shared-logic';
+import {useGlobalState} from '../../context/devices-context';
 import UpdateDevice from './UpdateDevice';
 
 type Props = {
@@ -15,14 +15,7 @@ type Props = {
 
 const DevicesTable: FC<Props> = ({columns, ...props}) => {
   const routeMatch = useRouteMatch();
-  const userRes = useUserInfo();
-  const {data, isLoading} = useQuery(
-    [
-      'companyDevice',
-      userRes.data?.data?.companyID && userRes.data.data.companyID,
-    ],
-    getDeviceByCompany,
-  );
+  const {devices, loadingDevices} = useGlobalState();
   const initialColumns = columns || [
     {
       title: 'Mã thiết bị',
@@ -78,13 +71,13 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
     },
   ];
   return (
-    <Spin spinning={isLoading}>
+    <Spin spinning={loadingDevices}>
       <Table
         {...props}
         rowKey="deviceID"
         columns={initialColumns}
         dataSource={
-          data?.data?.map((device) => ({
+          devices?.map((device) => ({
             ...device,
             carNumber: device.carNumber || 'unknown',
           })) || []

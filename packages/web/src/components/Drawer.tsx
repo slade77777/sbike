@@ -7,18 +7,29 @@ type Props = {
   toggle: () => void;
   open: boolean;
   children: React.ReactNode;
+  label?: string;
 };
 
-const Drawer: FC<Props> = ({open, toggle, children}) => {
+const Drawer: FC<Props> = ({label, open, toggle, children}) => {
   return (
     <StyledDrawer className={open ? 'open' : ''}>
-      <Button
-        className="expand_btn"
-        onClick={toggle}
-        type="primary"
-        icon={open ? <ArrowLeftOutlined /> : <ArrowRightOutlined />}
-        style={{width: 32, height: 32}}
-      />
+      {label ? (
+        <Button
+          className={`expand_btn_has_label ${open ? 'btn-small' : ''}`}
+          onClick={toggle}
+          type="primary"
+          icon={open ? <ArrowLeftOutlined /> : <ArrowRightOutlined />}>
+          {!open && label}
+        </Button>
+      ) : (
+        <Button
+          className="expand_btn"
+          onClick={toggle}
+          type="primary"
+          icon={open ? <ArrowLeftOutlined /> : <ArrowRightOutlined />}
+          style={{width: 32, height: 32}}
+        />
+      )}
       <div>{children}</div>
     </StyledDrawer>
   );
@@ -38,6 +49,20 @@ const StyledDrawer = styled.div`
   &.open {
     transform: translateX(0);
     transition: all ease-in-out 300ms;
+  }
+  .expand_btn_has_label {
+    position: absolute;
+    top: 5px;
+    left: 355px;
+    z-index: 8;
+    transition: all ease-in-out 300ms;
+    width: 140px;
+    height: 32px;
+    &.btn-small {
+      transition: all ease-in-out 300ms;
+      width: 32px;
+      height: 32px;
+    }
   }
   .expand_btn {
     position: absolute;

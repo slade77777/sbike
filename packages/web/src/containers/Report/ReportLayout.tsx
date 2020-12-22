@@ -2,8 +2,8 @@ import React, {FC, useState} from 'react';
 import {useMutation} from 'react-query';
 import styled from 'styled-components';
 import {Device, DeviceLocation, getReports, ReportType} from 'shared-logic';
+import Drawer from '../../components/Drawer';
 import ReportHeader, {ReportSearchParam} from './ReportHeader';
-import Drawer from './Drawer';
 import ReportTable from './ReportTable';
 import ReportMap from './ReportMap';
 

@@ -1,12 +1,11 @@
 import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
 import styled from 'styled-components';
-import {useQuery} from 'react-query';
-import {Device, getDeviceByCompany, LatLng, useUserInfo} from 'shared-logic';
-import DevicesDropDown from '../Devices/DevicesDropDown';
+import {Device, LatLng} from 'shared-logic';
 import GoogleMap from '../../components/GoogleMap';
 import {apiIsLoaded} from '../../utils/googleMapUtils';
-
+import {useGlobalState} from '../../context/devices-context';
 import InfoWindow from './InfoWindow';
+import DevicesList from './DevicesList';
 
 const defaultPosition = {
   lat: 21.027763,
@@ -24,11 +23,6 @@ function mappingData(data: Array<Device>): Array<LatLng> {
       ?.filter((lc) => lc.lng && lc.lat) || []
   );
 }
-// const Marker: FC<{
-//   children: any;
-//   lat: number;
-//   lng: number;
-// }> = ({children}) => children;
 
 const Tracking: FC = () => {
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
@@ -47,16 +41,9 @@ const Tracking: FC = () => {
     setSelectedDevice(device);
   }
 
-  const userRes = useUserInfo();
-  const {data} = useQuery(
-    [
-      'companyDevice',
-      userRes.data?.data?.companyID && userRes.data.data.companyID,
-    ],
-    getDeviceByCompany,
-  );
+  const {devices} = useGlobalState();
 
-  const places = useMemo(() => mappingData(data?.data || []), [data]);
+  const places = useMemo(() => mappingData(devices || []), [devices]);
 
   useEffect(() => {
     if (state?.mapApiLoaded) {
@@ -68,7 +55,7 @@ const Tracking: FC = () => {
   return (
     <StyledContainer>
       <StyledButton>
-        <DevicesDropDown onSelectDevice={goToLocation} />
+        <DevicesList onSelectDevice={goToLocation} />
       </StyledButton>
       <StyledGoogleMap>
         <GoogleMap
@@ -89,9 +76,9 @@ const Tracking: FC = () => {
             })
           }
         />
-        {state?.mapApiLoaded && data?.data && (
+        {state?.mapApiLoaded && devices && (
           <InfoWindow
-            devices={data?.data}
+            devices={devices}
             map={state?.mapInstance}
             maps={state?.mapApi}
           />
@@ -111,8 +98,8 @@ const StyledGoogleMap = styled.div`
 
 const StyledButton = styled.div`
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 0px;
+  left: 0px;
   z-index: 9;
 `;
 

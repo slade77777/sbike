@@ -7,18 +7,21 @@ import {
   format,
   SEARCH_HISTORY_FORMATTED_TIME,
 } from 'shared-logic';
+import SelectDevices from './SelectDevices';
 
 const {RangePicker} = DatePicker;
 
 type Props = {
-  onSubmit: (params: any) => void;
+  onSubmit: (params: {deviceID: string; fromTo: Array<string>}) => void;
+  selectedDeviceId?: string;
 };
 
-type FormProps = {
+export type FormProps = {
+  deviceID: string;
   fromTo: Array<Date>;
 };
 
-const DeviceSearchForm: FC<Props> = ({onSubmit}) => {
+const DeviceSearchForm: FC<Props> = ({onSubmit, selectedDeviceId}) => {
   const [form] = Form.useForm();
   const onFinish = (fieldsValue: FormProps) => {
     const rangeTimeValue = fieldsValue['fromTo'];
@@ -47,8 +50,13 @@ const DeviceSearchForm: FC<Props> = ({onSubmit}) => {
         onFinish={onFinish}
         form={form}>
         <Form.Item
+          name="deviceID"
+          label="Chọn xe"
+          initialValue={selectedDeviceId}>
+          <SelectDevices />
+        </Form.Item>
+        <Form.Item
           name="fromTo"
-          label="Thời gian"
           rules={[
             {type: 'array', required: true, message: 'Please select time!'},
           ]}>
@@ -60,22 +68,22 @@ const DeviceSearchForm: FC<Props> = ({onSubmit}) => {
         </Form.Item>
         <Form.Item>
           <Button onClick={() => searchByRange(SearchType.TODAY)}>
-            Ngày hôm nay
+            Hôm nay
           </Button>
         </Form.Item>
         <Form.Item>
           <Button onClick={() => searchByRange(SearchType.YESTERDAY)}>
-            Ngày hôm qua
+            Hôm qua
           </Button>
         </Form.Item>
         <Form.Item>
           <Button onClick={() => searchByRange(SearchType.ONE_HOUR_AGO)}>
-            1 giờ trước
+            1h trước
           </Button>
         </Form.Item>
         <Form.Item>
           <Button onClick={() => searchByRange(SearchType.THIRTY_MINUTES_AGO)}>
-            30 phút trước
+            30p trước
           </Button>
         </Form.Item>
         <Form.Item>

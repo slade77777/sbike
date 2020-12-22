@@ -1,20 +1,28 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {useMutation} from 'react-query';
 import {useParams} from 'react-router-dom';
 import {Card, message} from 'antd';
 import {getHistory, useDeviceId} from 'shared-logic';
 import DeviceSearchForm from './DeviceSearchForm';
 import DetailWrapper from './DetailWrapper';
-import DeviceInfo from './DeviceInfo';
 
 const DeviceDetail: FC = () => {
   let {deviceID} = useParams();
+  const [selectedDevice, setSelectedDevice] = useState<string>(deviceID);
   const [mutate, historyMovingData] = useMutation(getHistory);
-  const deviceRes = useDeviceId(deviceID);
+  const deviceRes = useDeviceId(selectedDevice);
 
-  const handleSubmit = async ({fromTo}: any) => {
+  const handleSubmit = async (values: {
+    deviceID: string;
+    fromTo: Array<string>;
+  }) => {
+    setSelectedDevice(values.deviceID);
     try {
-      const res = await mutate({deviceID, from: fromTo[0], to: fromTo[1]});
+      const res = await mutate({
+        deviceID: values.deviceID,
+        from: values.fromTo[0],
+        to: values.fromTo[1],
+      });
       if (res?.data?.length === 0 || !res?.data) {
         message.warning('Không có dữ liệu');
       }
@@ -27,15 +35,11 @@ const DeviceDetail: FC = () => {
     <>
       <DetailWrapper
         info={
-          <Card
-            title={
-              <DeviceInfo
-                carNumber={deviceRes?.data?.data?.carNumber || ''}
-                isLoading={deviceRes?.isLoading}
-              />
-            }
-            size="small">
-            <DeviceSearchForm onSubmit={handleSubmit} />
+          <Card size="small">
+            <DeviceSearchForm
+              onSubmit={handleSubmit}
+              selectedDeviceId={deviceID}
+            />
           </Card>
         }
         locations={historyMovingData?.data?.data}

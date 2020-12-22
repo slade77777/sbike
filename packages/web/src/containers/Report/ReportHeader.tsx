@@ -16,7 +16,7 @@ type Props = {
   devices: Device[];
 };
 
-const ReportHeader: FC<Props> = ({devices, onSubmit}) => {
+const ReportHeader: FC<Props> = ({onSubmit}) => {
   const onFinish = (fieldsValue: ReportSearchParam) => {
     const rangeTimeValue = fieldsValue['fromTo'];
     const values = {
@@ -32,7 +32,7 @@ const ReportHeader: FC<Props> = ({devices, onSubmit}) => {
     <StyledHeader>
       <Form layout="inline" onFinish={onFinish}>
         <Form.Item name="deviceID" label="Chọn xe">
-          <SelectDevices devices={devices} />
+          <SelectDevices />
         </Form.Item>
         <Form.Item
           name="fromTo"

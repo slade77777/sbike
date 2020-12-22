@@ -57,7 +57,7 @@ const DetailWrapper: FC<Props> = ({locations, deviceInfo, info}) => {
 
 const StyledGoogleWrapper = styled.div`
   width: 100%;
-  height: calc(100vh - 107px);
+  height: calc(100vh - 58px);
   position: relative;
 `;
 

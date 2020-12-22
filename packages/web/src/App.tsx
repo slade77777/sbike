@@ -3,6 +3,7 @@ import {QueryCache, ReactQueryCacheProvider} from 'react-query';
 import {AuthProvider} from './context/auth-context';
 import Home from './pages/Home';
 import {ModalProvider} from './context/modal-context';
+import {GlobalProvider} from './context/devices-context';
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -16,9 +17,11 @@ export default function App() {
   return (
     <ReactQueryCacheProvider queryCache={queryCache}>
       <AuthProvider>
-        <ModalProvider>
-          <Home />
-        </ModalProvider>
+        <GlobalProvider>
+          <ModalProvider>
+            <Home />
+          </ModalProvider>
+        </GlobalProvider>
       </AuthProvider>
     </ReactQueryCacheProvider>
   );

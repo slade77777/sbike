@@ -10,6 +10,8 @@ export type User = {
   permission?: Array<string>;
   active?: boolean;
   notificationMessage?: string;
+  userToken?: string;
+  originalPassword?: string;
 };
 
 export interface UserResponse {

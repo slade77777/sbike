@@ -66,7 +66,9 @@ const AppRoot = () => {
                 } else {
                   signIn(user.userName, user.originalPassword);
                 }
-              });
+              }).catch(() => {
+                dispatch({type: 'RESTORE_TOKEN', userData: {}});
+              });;
             }
           } else {
             dispatch({type: 'RESTORE_TOKEN', userData: {}});

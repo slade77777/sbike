@@ -1,9 +1,11 @@
 import React, {FC} from 'react';
 import {login, setToken, logout} from 'shared-logic';
 import AsyncStorage from '@react-native-community/async-storage';
-
 const AES = require('react-native-crypto-js').AES;
 import CryptoJS from 'react-native-crypto-js';
+import messaging from '@react-native-firebase/messaging';
+import {registerTopic} from 'shared-logic/src/api/firebase';
+import {User} from 'shared-logic/src';
 
 type AuthType = {
   state: any;
@@ -66,13 +68,37 @@ const AuthProvider: FC<Props> = ({children}) => {
         if (data?.errorCode) {
           return alert(data.message);
         }
-        let userData = data.user;
-        userData.userToken = data.session;
+        let userData: User = data?.user || {};
+        userData.userToken = data?.session;
         userData.originalPassword = password;
         AsyncStorage.setItem('userData', JSON.stringify(userData))
           .then(() => {
+            setToken(userData?.userToken || '');
             dispatch({type: 'SIGN_IN', userData});
-            setToken(userData.userToken);
+            messaging()
+              .requestPermission()
+              .then((result) => {
+                const enabled =
+                  result === messaging.AuthorizationStatus.AUTHORIZED ||
+                  result === messaging.AuthorizationStatus.PROVISIONAL;
+                console.log(enabled);
+                if (enabled) {
+                  messaging()
+                    .getToken()
+                    .then((token) => {
+                      registerTopic(userData?.companyID || '', token)
+                        .then((result) => {
+                          console.log(result);
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    });
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           })
           .catch(() => console.log('error'));
       })

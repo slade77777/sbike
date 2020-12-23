@@ -1,6 +1,6 @@
 import {useEffect, useMemo} from 'react';
-import {DeviceLocation} from 'shared-logic';
-import {genInfoWindowContent} from '../../utils/googleMapUtils';
+import {AlertPolygon, DeviceLocation} from 'shared-logic';
+import {genInfoWindowContent, polyOptions} from '../../utils/googleMapUtils';
 
 // @ts-ignore
 import carPng from '../../images/car.png';
@@ -10,6 +10,7 @@ export default (
   maps: any,
   location: DeviceLocation | null,
   carNumber: string,
+  safeZone?: Array<AlertPolygon>,
 ) => {
   const infoWindow = useMemo(
     () =>
@@ -19,6 +20,21 @@ export default (
           })
         : null,
     [carNumber, location, maps],
+  );
+
+  const polygon = useMemo(
+    () =>
+      maps && safeZone
+        ? new maps.Polygon({
+            paths: safeZone.map((p) => ({
+              lat: p.latitude,
+              lng: p.longitude,
+            })),
+            ...polyOptions,
+            editable: false,
+          })
+        : null,
+    [maps, safeZone],
   );
 
   const marker = useMemo(
@@ -49,4 +65,15 @@ export default (
       }
     };
   }, [infoWindow, map, marker]);
+
+  useEffect(() => {
+    if (map) {
+      polygon.setMap(map);
+    }
+    return () => {
+      if (polygon) {
+        polygon.setMap(null);
+      }
+    };
+  }, [map, polygon]);
 };

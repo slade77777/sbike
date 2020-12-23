@@ -1,5 +1,5 @@
 import React, {FC, useMemo, useState} from 'react';
-import {DeviceLocation} from 'shared-logic';
+import {AlertPolygon, DeviceLocation, useDeviceId} from 'shared-logic';
 import {HANOI_LOCATION} from '../../contants/common';
 import GoogleMap from '../../components/GoogleMap';
 import {useGlobalState} from '../../context/devices-context';
@@ -7,9 +7,11 @@ import useReportMap from './useReportMap';
 
 type Props = {
   location: DeviceLocation | null;
+  selectedDeviceID?: string;
+  safeZoneLatLong?: Array<AlertPolygon>;
 };
 
-const ReportMap: FC<Props> = ({location}) => {
+const ReportMap: FC<Props> = ({selectedDeviceID, location}) => {
   const [state, setState] = useState<{
     mapApiLoaded: boolean;
     mapInstance: any;
@@ -22,6 +24,8 @@ const ReportMap: FC<Props> = ({location}) => {
 
   const {devices} = useGlobalState();
 
+  const deviceByIdRes = useDeviceId(selectedDeviceID || '');
+
   const carNumber = useMemo(
     () =>
       devices?.find((dv) => dv.deviceID === location?.deviceID)?.carNumber ||
@@ -29,7 +33,18 @@ const ReportMap: FC<Props> = ({location}) => {
     [devices, location],
   );
 
-  useReportMap(state?.mapInstance, state?.mapApi, location, carNumber);
+  const alertPolygon = useMemo(
+    () => deviceByIdRes?.data?.data?.alertConfig?.alertPolygon || [],
+    [deviceByIdRes],
+  );
+
+  useReportMap(
+    state?.mapInstance,
+    state?.mapApi,
+    location,
+    carNumber,
+    alertPolygon,
+  );
 
   return (
     <GoogleMap

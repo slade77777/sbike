@@ -19,12 +19,14 @@ const ReportLayout: FC<Props> = ({type}) => {
   const [open, setOpen] = useState(false);
   const [dataSource, setDataSource] = useState<DataSource | null>(null);
   const [location, setLocation] = useState<DeviceLocation | null>(null);
+  const [selectedDevice, setSelectedDevice] = useState<string>('');
 
   const [mutate, {isLoading}] = useMutation(getReports, {
     onSuccess: () => setOpen(true),
   });
 
   async function handleSearch(values: ReportSearchParam) {
+    setSelectedDevice(values?.deviceID);
     const searchRes = await mutate({
       deviceID: values.deviceID,
       startTime: values.fromTo[0],
@@ -50,7 +52,7 @@ const ReportLayout: FC<Props> = ({type}) => {
         </Drawer>
       </StyledSearchResult>
       <StyledGoogleMap>
-        <ReportMap location={location} />
+        <ReportMap location={location} selectedDeviceID={selectedDevice} />
       </StyledGoogleMap>
     </StyledContainer>
   );

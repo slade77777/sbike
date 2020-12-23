@@ -44,6 +44,13 @@ const engineColumn = {
   render: (text: string) => text || 'N/A',
 };
 
+const safeZoneMessageColumn = {
+  title: 'Trạng thái',
+  dataIndex: 'message',
+  key: 'message',
+  render: (text: string) => text || 'N/A',
+};
+
 const ReportTable: FC<Props> = ({type, data, loading, viewLocation}) => {
   const positionColumn = useMemo(
     () => ({
@@ -73,6 +80,9 @@ const ReportTable: FC<Props> = ({type, data, loading, viewLocation}) => {
 
       case '2':
         return [timeColumn, engineColumn, positionColumn];
+
+      case '3':
+        return [timeColumn, safeZoneMessageColumn, positionColumn];
 
       default:
         return [timeColumn, positionColumn];

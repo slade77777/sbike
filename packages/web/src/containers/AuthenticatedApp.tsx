@@ -5,11 +5,13 @@ import '../styles/main.scss';
 import Logo from '../components/Logo';
 import Navigations from '../components/Navigations';
 import Routes from '../Routes';
+import useFirebaseMessaging from '../hooks/useFirebaseMessaging';
 import HelloUser from './Authen/HelloUser';
 import Logout from './Authen/Logout';
 
 const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
+  useFirebaseMessaging();
 
   return (
     <BrowserRouter>

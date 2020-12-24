@@ -7,6 +7,7 @@ const Dotenv = require('dotenv-webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const packages = path.resolve(__dirname, '..');
 
 module.exports = (env) => {
@@ -50,6 +51,17 @@ module.exports = (env) => {
       new Dotenv({
         path: path.resolve(__dirname, './.env'),
         systemvars: true,
+      }),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, './public/firebase-messaging-sw.js'),
+            to: path.resolve(__dirname, 'dist'),
+          },
+        ],
+        options: {
+          concurrency: 100,
+        },
       }),
     ].concat(
       devMode

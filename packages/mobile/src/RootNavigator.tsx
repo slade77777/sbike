@@ -68,7 +68,9 @@ const AppRoot = () => {
                 }
               }).catch(() => {
                 dispatch({type: 'RESTORE_TOKEN', userData: {}});
-              });;
+              });
+            } else {
+              dispatch({type: 'RESTORE_TOKEN', userData: {}});
             }
           } else {
             dispatch({type: 'RESTORE_TOKEN', userData: {}});

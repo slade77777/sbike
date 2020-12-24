@@ -75,30 +75,6 @@ const AuthProvider: FC<Props> = ({children}) => {
           .then(() => {
             setToken(userData?.userToken || '');
             dispatch({type: 'SIGN_IN', userData});
-            messaging()
-              .requestPermission()
-              .then((result) => {
-                const enabled =
-                  result === messaging.AuthorizationStatus.AUTHORIZED ||
-                  result === messaging.AuthorizationStatus.PROVISIONAL;
-                console.log(enabled);
-                if (enabled) {
-                  messaging()
-                    .getToken()
-                    .then((token) => {
-                      registerTopic(userData?.companyID || '', token)
-                        .then((result) => {
-                          console.log(result);
-                        })
-                        .catch((error) => {
-                          console.log(error);
-                        });
-                    });
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-              });
           })
           .catch(() => console.log('error'));
       })

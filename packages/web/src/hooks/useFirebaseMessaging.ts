@@ -52,8 +52,7 @@ export default () => {
         console.log('Message received. ', payload);
         notification.info({
           message: 'Thông báo',
-          description:
-            'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+          description: payload?.notification || 'Có thông báo mới',
         });
       });
     }

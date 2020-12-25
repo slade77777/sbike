@@ -9,6 +9,12 @@ export async function getDeviceByCompany(
   return secureInstance.get(`/device/GetDeviceByCompany/${companyId}`);
 }
 
+export async function getDevicesByCompanyID(
+  companyId: string,
+): ServerResponse<Device[]> {
+  return secureInstance.get(`/device/GetDeviceByCompany/${companyId}`);
+}
+
 export async function getDeviceById(
   _: string,
   deviceId: string,

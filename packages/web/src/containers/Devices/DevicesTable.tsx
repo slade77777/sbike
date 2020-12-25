@@ -4,7 +4,7 @@ import {EnvironmentOutlined} from '@ant-design/icons';
 import {SizeType} from 'antd/es/config-provider/SizeContext';
 import {Link, useRouteMatch} from 'react-router-dom';
 import {Device, format} from 'shared-logic';
-import {useGlobalState} from '../../context/devices-context';
+import {useAuthState} from '../../context/auth-context';
 import UpdateDevice from './UpdateDevice';
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 
 const DevicesTable: FC<Props> = ({columns, ...props}) => {
   const routeMatch = useRouteMatch();
-  const {devices, loadingDevices} = useGlobalState();
+  const {devices, loadingDevices} = useAuthState();
   const initialColumns = columns || [
     {
       title: 'Mã thiết bị',

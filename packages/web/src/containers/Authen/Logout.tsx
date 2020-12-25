@@ -6,7 +6,7 @@ import {logout} from 'shared-logic';
 import {useAuthState} from '../../context/auth-context';
 
 const Logout: FC<{hideText?: boolean}> = ({hideText = false}) => {
-  const {handleLogout} = useAuthState();
+  const {handleLogout, firebaseToken} = useAuthState();
 
   const [logoutMutation] = useMutation(logout, {
     onSuccess: () => {
@@ -17,12 +17,14 @@ const Logout: FC<{hideText?: boolean}> = ({hideText = false}) => {
     },
   });
 
+  async function logoutAsync() {
+    if (firebaseToken) {
+      await logoutMutation(firebaseToken);
+    }
+  }
+
   return (
-    <Button
-      type="link"
-      block
-      icon={<LogoutOutlined />}
-      onClick={async () => await logoutMutation()}>
+    <Button type="link" block icon={<LogoutOutlined />} onClick={logoutAsync}>
       {hideText ? '' : 'Đăng xuất'}
     </Button>
   );

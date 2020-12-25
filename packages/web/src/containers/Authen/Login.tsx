@@ -2,12 +2,19 @@ import React from 'react';
 import {Form, Input, Button, Alert} from 'antd';
 import {useMutation} from 'react-query';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-import {login, User} from 'shared-logic';
+import {getDeviceByCompany, login, User} from 'shared-logic';
 import {encrypt} from '../../utils/aesUtil';
 import {useAuthState} from '../../context/auth-context';
 
 const Login = () => {
-  const [loginMutate, {isLoading, error, isError}] = useMutation(login);
+  const [loginMutate, {isLoading, error, isError}] = useMutation(login, {
+    onSuccess: async ({data}) => {
+      if (data?.session && data?.errorCode === 0) {
+        handleLoginSuccess(data);
+        getDeviceByCompany('', data.user.companyID || '');
+      }
+    },
+  });
   const {handleLoginSuccess} = useAuthState();
 
   const onFinish = async (values: User) => {
@@ -15,10 +22,7 @@ const Login = () => {
       ...values,
       password: encrypt(values.password),
     };
-    const dataLogin = await loginMutate(encryptedValues);
-    if (dataLogin?.data?.session && dataLogin?.data?.errorCode === 0) {
-      handleLoginSuccess(dataLogin?.data);
-    }
+    await loginMutate(encryptedValues);
   };
 
   return (

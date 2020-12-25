@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Device, LatLng} from 'shared-logic';
 import GoogleMap from '../../components/GoogleMap';
 import {apiIsLoaded} from '../../utils/googleMapUtils';
-import {useGlobalState} from '../../context/devices-context';
+import {useAuthState} from '../../context/auth-context';
 import InfoWindow from './InfoWindow';
 import DevicesList from './DevicesList';
 
@@ -41,7 +41,7 @@ const Tracking: FC = () => {
     setSelectedDevice(device);
   }
 
-  const {devices} = useGlobalState();
+  const {devices} = useAuthState();
 
   const places = useMemo(() => mappingData(devices || []), [devices]);
 

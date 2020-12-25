@@ -1,5 +1,15 @@
 import React, {FC, useEffect, useState} from 'react';
-import {setToken, User, UserResponse} from 'shared-logic';
+import {
+  Device,
+  getDevicesByCompanyID,
+  registerFCMTopics,
+  setToken,
+  User,
+  UserResponse,
+} from 'shared-logic';
+import {useMutation} from 'react-query';
+import {message} from 'antd';
+import useFirebaseToken from '../hooks/useFirebaseToken';
 
 type AuthType = {
   isAuth: boolean;
@@ -7,6 +17,9 @@ type AuthType = {
   handleLogout: () => void;
   handleLoginSuccess: (data: UserResponse) => void;
   loginLoading?: boolean;
+  devices?: Device[];
+  firebaseToken?: string;
+  loadingDevices?: boolean;
 };
 
 const AuthContext = React.createContext<AuthType>({
@@ -14,6 +27,9 @@ const AuthContext = React.createContext<AuthType>({
   handleLogout: () => null,
   handleLoginSuccess: () => null,
   userInfo: null,
+  devices: [],
+  firebaseToken: '',
+  loadingDevices: false,
 });
 
 type Props = {
@@ -25,6 +41,7 @@ const AuthProvider: FC<Props> = ({children}) => {
     () => !!localStorage.getItem('session'),
   );
   const [userInfo, setUserInfo] = useState<User | null>(null);
+  const firebaseToken = useFirebaseToken();
 
   useEffect(() => {
     const localSession = localStorage.getItem('session');
@@ -38,11 +55,24 @@ const AuthProvider: FC<Props> = ({children}) => {
     setIsAuth(false);
   }
 
-  function handleLoginSuccess(data: UserResponse) {
+  const [getDevicesMutation, devicesRes] = useMutation(getDevicesByCompanyID);
+
+  const [registerTopicMutation] = useMutation(registerFCMTopics, {
+    onError: () => {
+      message.error('Đăng ký nhận thông báo thất bại');
+    },
+  });
+
+  async function handleLoginSuccess(data: UserResponse) {
     setIsAuth(true);
     setUserInfo(data?.user);
     localStorage.setItem('session', data?.session);
     setToken(data?.session);
+    await getDevicesMutation(data.user.companyID);
+    await registerTopicMutation({
+      companyID: data.user.companyID || '',
+      token: firebaseToken || '',
+    });
   }
 
   return (
@@ -52,6 +82,9 @@ const AuthProvider: FC<Props> = ({children}) => {
         userInfo,
         handleLogout,
         handleLoginSuccess,
+        devices: devicesRes?.data?.data || [],
+        loadingDevices: devicesRes.isLoading,
+        firebaseToken,
       }}>
       {children}
     </AuthContext.Provider>

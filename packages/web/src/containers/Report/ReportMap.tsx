@@ -2,7 +2,7 @@ import React, {FC, useMemo, useState} from 'react';
 import {AlertPolygon, DeviceLocation, useDeviceId} from 'shared-logic';
 import {HANOI_LOCATION} from '../../contants/common';
 import GoogleMap from '../../components/GoogleMap';
-import {useGlobalState} from '../../context/devices-context';
+import {useAuthState} from '../../context/auth-context';
 import useReportMap from './useReportMap';
 
 type Props = {
@@ -22,7 +22,7 @@ const ReportMap: FC<Props> = ({selectedDeviceID, location}) => {
     mapApi: null,
   });
 
-  const {devices} = useGlobalState();
+  const {devices} = useAuthState();
 
   const deviceByIdRes = useDeviceId(selectedDeviceID || '');
 

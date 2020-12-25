@@ -2,6 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {
   Device,
   getDevicesByCompanyID,
+  logout,
   registerFCMTopics,
   setToken,
   User,
@@ -14,7 +15,7 @@ import useFirebaseToken from '../hooks/useFirebaseToken';
 type AuthType = {
   isAuth: boolean;
   userInfo?: User | null;
-  handleLogout: () => void;
+  onLogout: () => void;
   handleLoginSuccess: (data: UserResponse) => void;
   loginLoading?: boolean;
   devices?: Device[];
@@ -24,7 +25,7 @@ type AuthType = {
 
 const AuthContext = React.createContext<AuthType>({
   isAuth: false,
-  handleLogout: () => null,
+  onLogout: () => null,
   handleLoginSuccess: () => null,
   userInfo: null,
   devices: [],
@@ -50,8 +51,35 @@ const AuthProvider: FC<Props> = ({children}) => {
     }
   }, []);
 
+  useEffect(() => {
+    const companyID = localStorage.getItem('companyID');
+    if (companyID) {
+      fetchDevices(companyID);
+    }
+  }, []);
+
+  async function fetchDevices(companyID: string) {
+    await getDevicesMutation(companyID);
+  }
+
+  const [logoutMutation] = useMutation(logout, {
+    onSuccess: () => {
+      handleLogout();
+    },
+    onError: () => {
+      handleLogout();
+    },
+  });
+
+  async function logoutAsync() {
+    if (firebaseToken) {
+      await logoutMutation(firebaseToken);
+    }
+  }
+
   function handleLogout() {
     localStorage.removeItem('session');
+    localStorage.removeItem('companyID');
     setIsAuth(false);
   }
 
@@ -67,8 +95,9 @@ const AuthProvider: FC<Props> = ({children}) => {
     setIsAuth(true);
     setUserInfo(data?.user);
     localStorage.setItem('session', data?.session);
+    localStorage.setItem('companyID', data?.user?.companyID || '');
     setToken(data?.session);
-    await getDevicesMutation(data.user.companyID);
+    await fetchDevices(data.user.companyID || '');
     await registerTopicMutation({
       companyID: data.user.companyID || '',
       token: firebaseToken || '',
@@ -80,7 +109,7 @@ const AuthProvider: FC<Props> = ({children}) => {
       value={{
         isAuth,
         userInfo,
-        handleLogout,
+        onLogout: logoutAsync,
         handleLoginSuccess,
         devices: devicesRes?.data?.data || [],
         loadingDevices: devicesRes.isLoading,

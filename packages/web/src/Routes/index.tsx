@@ -5,7 +5,7 @@ import {RoutesEnum} from '../enum';
 const TrackingPage = React.lazy(() => import('../pages/TrackingPage'));
 const ProfilePage = React.lazy(() => import('../pages/ProfilePage'));
 const DevicePage = React.lazy(() => import('../pages/DevicePage'));
-const ManagementPage = React.lazy(() => import('../pages/ManagementPage'));
+// const ManagementPage = React.lazy(() => import('../pages/ManagementPage'));
 const ReportPage = React.lazy(() => import('../pages/ReportPage'));
 
 const Routes = () => {
@@ -21,9 +21,9 @@ const Routes = () => {
         <Route path={RoutesEnum.Devices}>
           <DevicePage />
         </Route>
-        <Route path={RoutesEnum.Management}>
-          <ManagementPage />
-        </Route>
+        {/*<Route path={RoutesEnum.Management}>*/}
+        {/*  <ManagementPage />*/}
+        {/*</Route>*/}
         <Route path={`/bao-cao`}>
           <ReportPage />
         </Route>

@@ -1,7 +1,12 @@
 import React, {FC} from 'react';
 import styled from 'styled-components';
 import {Button, DatePicker, Form} from 'antd';
-import {format, SEARCH_HISTORY_FORMATTED_TIME} from 'shared-logic';
+import {
+  format,
+  SEARCH_HISTORY_FORMATTED_TIME,
+  SearchType,
+  getTimeRange,
+} from 'shared-logic';
 const {RangePicker} = DatePicker;
 import SelectDevices from '../Devices/SelectDevices';
 
@@ -16,6 +21,7 @@ type Props = {
 };
 
 const ReportHeader: FC<Props> = ({onSubmit}) => {
+  const [form] = Form.useForm();
   const onFinish = (fieldsValue: ReportSearchParam) => {
     const rangeTimeValue = fieldsValue['fromTo'];
     const values = {
@@ -27,15 +33,24 @@ const ReportHeader: FC<Props> = ({onSubmit}) => {
     };
     onSubmit?.(values);
   };
+
+  function searchByRange(type: SearchType) {
+    const range = getTimeRange(type);
+    form.setFieldsValue({
+      fromTo: range?.original,
+    });
+  }
+
   return (
     <StyledHeader>
-      <Form layout="inline" onFinish={onFinish}>
-        <Form.Item name="deviceID" label="Chọn xe">
+      <Form layout="inline" onFinish={onFinish} form={form}>
+        <Form.Item
+          name="deviceID"
+          rules={[{required: true, message: 'Chưa chọn xe'}]}>
           <SelectDevices />
         </Form.Item>
         <Form.Item
           name="fromTo"
-          label="Thời gian"
           rules={[
             {type: 'array', required: true, message: 'Please select time!'},
           ]}>
@@ -44,6 +59,26 @@ const ReportHeader: FC<Props> = ({onSubmit}) => {
             format="YYYY-MM-DD HH:mm:ss"
             placeholder={['Từ lúc', 'Tới lúc']}
           />
+        </Form.Item>
+        <Form.Item>
+          <Button onClick={() => searchByRange(SearchType.TODAY)}>
+            Hôm nay
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button onClick={() => searchByRange(SearchType.YESTERDAY)}>
+            Hôm qua
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button onClick={() => searchByRange(SearchType.ONE_HOUR_AGO)}>
+            1h trước
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button onClick={() => searchByRange(SearchType.THIRTY_MINUTES_AGO)}>
+            30p trước
+          </Button>
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">

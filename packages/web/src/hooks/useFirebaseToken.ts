@@ -4,27 +4,24 @@ import {messaging} from 'shared-logic';
 export default () => {
   const isFirst = useRef(true);
   const [token, setToken] = useState('');
+
   useEffect(() => {
+    getTokenAsync();
+  }, []);
+
+  async function getTokenAsync() {
     if (messaging && isFirst) {
-      messaging
-        .getToken({
+      try {
+        const currentToken = await messaging.getToken({
           vapidKey:
             'BNXuiqXSTKIddEz2Vliwaqu3ELyW1RmBdJ40CvGypMr6aM7MBrq1qmtUZO5EfvEO972g-xEx7cUL-PNwT0xyFpw',
-        })
-        .then((currentToken) => {
-          // eslint-disable-next-line promise/always-return
-          if (currentToken) {
-            isFirst.current = false;
-            setToken(currentToken);
-          } else {
-            setToken('');
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setToken('');
         });
+        setToken(currentToken);
+        isFirst.current = false;
+      } catch (e) {
+        setToken('');
+      }
     }
-  }, []);
+  }
   return token;
 };

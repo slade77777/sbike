@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import {setupBusinessLayer} from 'shared-logic';
 import App from './src/App';
 
-setupBusinessLayer(process.env.API_URL || 'https://sbike.bytech.vn:2650/api');
+setupBusinessLayer(process.env.API_URL || 'https://api.giamsatxemay.vn');
 
 ReactDOM.render(
   <React.StrictMode>

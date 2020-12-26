@@ -273,7 +273,11 @@ const Observer: React.FC<Props> = ({}) => {
         zoomEnabled={true}
         provider={PROVIDER_GOOGLE}
         region={states.mapLocation}
-        onRegionChange={(coordinate) => debouncedSetLocation(coordinate)}>
+        onRegionChange={(coordinate) => {
+          if (coordinate.latitudeDelta < 1 && coordinate.latitudeDelta < 1) {
+            debouncedSetLocation(coordinate)
+          }
+        }}>
         {states.deviceLocation.latitude ? (
           <Marker coordinate={states.deviceLocation}>
             <Icon name="car" color={color.yellow} size={25} />

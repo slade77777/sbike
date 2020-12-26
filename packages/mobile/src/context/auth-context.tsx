@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 const AES = require('react-native-crypto-js').AES;
 import CryptoJS from 'react-native-crypto-js';
 import messaging from '@react-native-firebase/messaging';
-import {registerTopic} from 'shared-logic/src/api/firebase';
 import {User} from 'shared-logic/src';
 
 type AuthType = {
@@ -82,11 +81,22 @@ const AuthProvider: FC<Props> = ({children}) => {
   };
 
   const handleLogout = () => {
-    logout().then(() => {
-      AsyncStorage.removeItem('userData').then(() => {
-        dispatch({type: 'SIGN_OUT'});
+    messaging()
+      .getToken()
+      .then((token) => {
+        logout(token).then(() => {
+          AsyncStorage.removeItem('userData').then(() => {
+            dispatch({type: 'SIGN_OUT'});
+          });
+        });
+      }).catch(() => {
+      logout('').then(() => {
+        AsyncStorage.removeItem('userData').then(() => {
+          dispatch({type: 'SIGN_OUT'});
+        });
       });
     });
+
   };
 
   return (

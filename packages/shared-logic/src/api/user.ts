@@ -22,8 +22,8 @@ export async function createOrUpdateUser({
   return secureInstance.put(`/user/${type}`, params);
 }
 
-export async function logout(): ServerResponse<UserLogoutResponse> {
-  return secureInstance.get('/user/logout');
+export async function logout(token?: string): ServerResponse<UserLogoutResponse> {
+  return secureInstance.post('/user/logout', {token});
 }
 
 export async function getUserInfo(): ServerResponse<User> {

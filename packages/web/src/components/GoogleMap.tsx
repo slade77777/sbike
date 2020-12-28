@@ -10,6 +10,7 @@ const Wrapper = styled.div`
 type Props =
   | {
       children: React.ReactNode;
+      options?: any;
     }
   | GoogleMapProps;
 
@@ -22,6 +23,15 @@ const GoogleMap: FC<Props> = ({children, ...props}) => (
           process.env.GOOGLE_MAPS_KEY ||
           'AIzaSyDjgghF4mwFy-wsFzQnlTYpnbMJXEqIlNg',
         libraries: ['drawing', 'geometry'],
+      }}
+      options={{
+        ...props.options,
+        styles: [
+          {
+            featureType: 'all',
+            stylers: [{visibility: 'on'}],
+          },
+        ],
       }}
       {...props}>
       {children}

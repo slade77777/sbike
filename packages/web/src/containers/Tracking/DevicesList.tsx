@@ -17,9 +17,11 @@ const DevicesList: FC<Props> = ({onSelectDevice, showModal}) => {
     <Drawer label="Danh sách xe" toggle={() => setOpen(!open)} open={open}>
       <DevicesTable
         size="small"
+        scroll={{y: 500}}
         columns={[
           {
             title: 'Biển số',
+            width: 140,
             align: 'center',
             dataIndex: 'carNumber',
             key: 'carNumber',
@@ -59,6 +61,7 @@ const DevicesList: FC<Props> = ({onSelectDevice, showModal}) => {
             dataIndex: 'action',
             key: 'action',
             align: 'center',
+            width: 50,
             render: (_: string, record: any) => (
               <Dropdown
                 overlay={

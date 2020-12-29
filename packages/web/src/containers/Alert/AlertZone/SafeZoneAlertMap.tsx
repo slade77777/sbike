@@ -3,7 +3,11 @@ import {Button, message, Space} from 'antd';
 import {LatLng} from 'shared-logic';
 import styled from 'styled-components';
 import GoogleMap from '../../../components/GoogleMap';
-import {initDrawingManager, polyOptions} from '../../../utils/googleMapUtils';
+import {
+  apiIsLoaded,
+  initDrawingManager,
+  polyOptions,
+} from '../../../utils/googleMapUtils';
 
 const defaultPosition = {
   lat: 21.027763,
@@ -47,6 +51,9 @@ const SafeZoneAlertMap: FC<Props> = ({isSubmitting, initialData, onSubmit}) => {
   useEffect(() => {
     if (initialPolygon && !shape.current) {
       initialPolygon.setMap(state?.map);
+      if (initialData && initialData.length > 0) {
+        apiIsLoaded(state?.map, state?.maps, initialData || []);
+      }
       setVisible(true);
     }
     if (drawingManager) {

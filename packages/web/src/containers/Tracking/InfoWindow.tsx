@@ -21,7 +21,7 @@ const InfoWindow: FC<Props> = ({maps, map, devices}) => {
         map,
         icon: {
           url: carPng,
-          scaledSize: new maps.Size(50, 50),
+          scaledSize: new maps.Size(32, 32),
         },
       });
       markers.push(marker);
@@ -35,7 +35,7 @@ const InfoWindow: FC<Props> = ({maps, map, devices}) => {
         ),
       });
       infoWindow.open(map, marker);
-      marker.addListener('mouseover', () => {
+      marker.addListener('click', () => {
         infoWindow.open(map, marker);
       });
     }

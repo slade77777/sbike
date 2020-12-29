@@ -2,12 +2,12 @@ import React, {FC} from 'react';
 import {Form, InputNumber, Button} from 'antd';
 
 const formItemLayout = {
-  labelCol: {span: 6},
-  wrapperCol: {span: 14},
+  labelCol: {span: 9},
+  wrapperCol: {span: 15},
 };
 
 const buttonItemLayout = {
-  wrapperCol: {span: 10, offset: 6},
+  wrapperCol: {span: 10, offset: 9},
 };
 
 type Props = {
@@ -22,7 +22,7 @@ const AlertSpeedForm: FC<Props> = ({onSubmit, isLoading}) => {
       layout="horizontal"
       form={form}
       onFinish={onSubmit}>
-      <Form.Item label="Vận tốc giới hạn" name="limitedSpeed">
+      <Form.Item label="Thiết lập mới" name="limitedSpeed">
         <InputNumber placeholder="Vận tốc giới hạn" style={{width: '100%'}} />
       </Form.Item>
       <Form.Item {...buttonItemLayout}>

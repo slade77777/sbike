@@ -78,7 +78,7 @@ export const genInfoWindowContent = (
           info?.carNumber
         }</span></div>
         <div><span class="value">${format(
-          location?.deviceTime,
+          location?.serverTime,
           'HH:mm:ss DD/MM/YYYY',
         )}</span></div>
         <p><span class="label">Tốc độ: </span> <span class="value">${

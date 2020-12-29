@@ -75,6 +75,9 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       <Table
         {...props}
         rowKey="deviceID"
+        pagination={{
+          defaultPageSize: 20,
+        }}
         columns={initialColumns}
         dataSource={
           devices?.map((device) => ({

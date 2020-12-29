@@ -59,13 +59,11 @@ const Tracking: FC = () => {
       </StyledButton>
       <StyledGoogleMap>
         <GoogleMap
-          defaultZoom={10}
-          center={
-            {
-              lat: selectedDevice?.position?.latitude || 0,
-              lng: selectedDevice?.position?.longitude || 0,
-            } || defaultPosition
-          }
+          zoom={selectedDevice ? 15 : 12}
+          center={{
+            lat: selectedDevice?.position?.latitude || defaultPosition.lat,
+            lng: selectedDevice?.position?.longitude || defaultPosition.lng,
+          }}
           defaultCenter={defaultPosition}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({map, maps}) =>

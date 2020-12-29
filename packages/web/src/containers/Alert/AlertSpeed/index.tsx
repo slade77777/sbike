@@ -1,5 +1,5 @@
 import React, {FC, useMemo} from 'react';
-import {Button} from 'antd';
+import {Button, Space} from 'antd';
 import {useParams} from 'react-router-dom';
 import {useDeviceId} from 'shared-logic';
 import useAlertMutation from '../useAlertMutation';
@@ -38,7 +38,14 @@ const AlertSpeed: FC<Props> = ({deviceID}) => {
       payload: {
         title: `Cảnh báo quá tốc độ (Biển số: ${device?.carNumber})`,
         modalComponent: (
-          <AlertSpeedForm onSubmit={handleSubmit} isLoading={isLoading} />
+          <Space direction="vertical" size={10}>
+            <span>
+              Đang giới hạn: {device?.alertConfig?.alertSpeed || 'N/A'} km/h
+            </span>
+            <div>
+              <AlertSpeedForm onSubmit={handleSubmit} isLoading={isLoading} />
+            </div>
+          </Space>
         ),
       },
     });

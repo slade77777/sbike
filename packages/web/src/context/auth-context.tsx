@@ -8,7 +8,7 @@ import {
   User,
   UserResponse,
 } from 'shared-logic';
-import {useMutation} from 'react-query';
+import {useMutation, useQuery} from 'react-query';
 import {message} from 'antd';
 import useFirebaseToken from '../hooks/useFirebaseToken';
 
@@ -51,16 +51,7 @@ const AuthProvider: FC<Props> = ({children}) => {
     }
   }, []);
 
-  useEffect(() => {
-    const companyID = localStorage.getItem('companyID');
-    if (companyID) {
-      fetchDevices(companyID);
-    }
-  }, []);
-
-  async function fetchDevices(companyID: string) {
-    await getDevicesMutation(companyID);
-  }
+  const companyID = localStorage.getItem('companyID');
 
   const [logoutMutation] = useMutation(logout, {
     onSuccess: () => {
@@ -83,7 +74,13 @@ const AuthProvider: FC<Props> = ({children}) => {
     setIsAuth(false);
   }
 
-  const [getDevicesMutation, devicesRes] = useMutation(getDevicesByCompanyID);
+  const devicesRes = useQuery(
+    [companyID && companyID, 'devices'],
+    getDevicesByCompanyID,
+    {
+      refetchInterval: 30000,
+    },
+  );
 
   const [registerTopicMutation] = useMutation(registerFCMTopics, {
     onError: () => {
@@ -97,7 +94,6 @@ const AuthProvider: FC<Props> = ({children}) => {
     localStorage.setItem('session', data?.session);
     localStorage.setItem('companyID', data?.user?.companyID || '');
     setToken(data?.session);
-    await fetchDevices(data.user.companyID || '');
     await registerTopicMutation({
       companyID: data.user.companyID || '',
       token: firebaseToken || '',

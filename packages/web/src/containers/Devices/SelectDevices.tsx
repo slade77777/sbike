@@ -8,7 +8,14 @@ const {Option} = Select;
 const SelectDevices: FC = (props) => {
   const {devices} = useAuthState();
   return (
-    <Select {...props} showSearch placeholder="Chọn xe" style={{width: 120}}>
+    <Select
+      {...props}
+      showSearch
+      placeholder="Chọn xe"
+      style={{width: 120}}
+      filterOption={(input, option) =>
+        option?.children?.toLowerCase().indexOf(input?.toLowerCase()) >= 0
+      }>
       {devices?.map((dv: Device, index: number) => (
         <Option value={dv?.deviceID || ''} key={index}>
           {dv.carNumber}

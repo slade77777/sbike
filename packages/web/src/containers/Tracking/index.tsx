@@ -46,7 +46,7 @@ const Tracking: FC = () => {
   const places = useMemo(() => mappingData(devices || []), [devices]);
 
   useEffect(() => {
-    if (state?.mapApiLoaded) {
+    if (state?.mapApiLoaded && isFirst) {
       apiIsLoaded(state?.mapInstance, state?.mapApi, places);
       isFirst.current = false;
     }

@@ -14,6 +14,8 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+let isFirst = true;
+
 messaging.onBackgroundMessage(function (payload) {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
@@ -21,5 +23,8 @@ messaging.onBackgroundMessage(function (payload) {
     icon: payload.notification.icon,
   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  if (isFirst) {
+    self.registration.showNotification(notificationTitle, notificationOptions);
+    isFirst = false;
+  }
 });

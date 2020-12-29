@@ -26,12 +26,7 @@ const GoogleMap: FC<Props> = ({children, ...props}) => (
       }}
       options={{
         ...props.options,
-        styles: [
-          {
-            featureType: 'all',
-            stylers: [{visibility: 'on'}],
-          },
-        ],
+        styles: ['default'],
       }}
       {...props}>
       {children}

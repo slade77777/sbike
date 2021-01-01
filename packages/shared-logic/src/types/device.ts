@@ -56,3 +56,5 @@ export type LatLng = {
   batteryVoltage?: number;
   status?: number;
 };
+
+export type DayType = string | dayjs.Dayjs;

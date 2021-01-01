@@ -1,16 +1,21 @@
 import React, {FC} from 'react';
-import {Table, Space, Button, Spin} from 'antd';
+import {Table, Space, Button, Spin, Typography} from 'antd';
 import {EnvironmentOutlined} from '@ant-design/icons';
 import {SizeType} from 'antd/es/config-provider/SizeContext';
 import {Link, useRouteMatch} from 'react-router-dom';
-import {Device, format} from 'shared-logic';
+import {Device, format, getFullYear} from 'shared-logic';
 import {useAuthState} from '../../context/auth-context';
 import UpdateDevice from './UpdateDevice';
+
+const {Text} = Typography;
 
 type Props = {
   devices?: Device[];
   columns?: Array<any> | null;
   size?: SizeType;
+  scroll?: {
+    y: number;
+  };
 };
 
 const DevicesTable: FC<Props> = ({columns, ...props}) => {
@@ -34,6 +39,7 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       align: 'center',
       dataIndex: 'deviceType',
       key: 'deviceType',
+      render: (text: string) => text || '...',
     },
     {
       title: 'Ngày hết hạn',
@@ -41,7 +47,13 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       dataIndex: 'expriedDate',
       key: 'expriedDate',
       render: (_: string, record: any) =>
-        format(record.expriedDate, 'DD/MM/YYYY'),
+        getFullYear(record.expriedDate) > 1 ? (
+          <Text type="secondary">
+            {format(record.expriedDate, 'DD/MM/YYYY')}
+          </Text>
+        ) : (
+          '...'
+        ),
     },
     {
       title: 'Cập nhật lúc',
@@ -49,12 +61,16 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       dataIndex: 'serverTime',
       key: 'serverTime',
       render: (_: string, record: any) =>
-        record.position?.serverTime?.includes('0001-01-01')
-          ? ''
-          : format(record.position?.serverTime, 'HH:mm:ss DD/MM/YYYY'),
+        getFullYear(record.position?.serverTime) > 1 ? (
+          <Text type="secondary">
+            {format(record.position?.serverTime, 'HH:mm:ss DD/MM/YYYY')}
+          </Text>
+        ) : (
+          '...'
+        ),
     },
     {
-      title: 'Hành động',
+      title: '',
       align: 'center',
       key: 'action',
       render: (_: string, record: any) => (
@@ -85,7 +101,7 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
             carNumber: device.carNumber || 'unknown',
           })) || []
         }
-        bordered
+        bordered={false}
       />
     </Spin>
   );

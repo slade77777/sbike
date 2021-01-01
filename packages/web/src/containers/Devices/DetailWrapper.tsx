@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
 import styled from 'styled-components';
-import {DeviceLocation} from 'shared-logic';
+import {DayType, DeviceLocation} from 'shared-logic';
 import {HANOI_LOCATION} from '../../contants/common';
 import GoogleMap from '../../components/GoogleMap';
 import ViewHistory from './ViewHistory';
@@ -10,7 +10,7 @@ type Props = {
   locations?: Array<DeviceLocation>;
   deviceInfo?: {
     carNumber: string;
-    expriedDate: string;
+    expriedDate: DayType;
   };
 };
 

@@ -1,4 +1,4 @@
-import {DeviceLocation, format, LatLng} from 'shared-logic';
+import {DayType, DeviceLocation, format, LatLng} from 'shared-logic';
 import {MAP_PATH_STYLES} from '../contants/common';
 
 export function genIcons(maps: any) {
@@ -67,7 +67,7 @@ export interface InfoWindowContent extends DeviceLocation {
 export const genInfoWindowContent = (
   info?: {
     carNumber?: string;
-    expriedDate?: string;
+    expriedDate?: DayType;
   },
   location?: DeviceLocation,
 ) =>

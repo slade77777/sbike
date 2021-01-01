@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {DeviceLocation} from 'shared-logic';
+import {DayType, DeviceLocation} from 'shared-logic';
 import styled from 'styled-components';
 import {PlayCircleFilled, PauseCircleFilled} from '@ant-design/icons';
 import {Button} from 'antd';
@@ -22,7 +22,7 @@ type Props = {
   map: any;
   deviceInfo?: {
     carNumber: string;
-    expriedDate: string;
+    expriedDate: DayType;
   };
 };
 
@@ -246,4 +246,4 @@ const StyledController = styled.div`
   box-shadow: 0 2px 8px #f0f1f2;
 `;
 
-export default ViewHistory;
+export default React.memo(ViewHistory);

@@ -96,6 +96,18 @@ export function getTimeRange(
       return null;
   }
 }
+
+export function checkIsValidDate(date: dayjs.Dayjs | string | Date): boolean {
+  return dayjs(date).isValid();
+}
+
+export function getFullYear(date: dayjs.Dayjs | string | Date): number {
+  if (!checkIsValidDate(date)) {
+    return 0;
+  }
+  return dayjs(date).year();
+}
+
 //
 // export function formatDeviceTime(time): string {
 //   if (!dayjs(time).isValid()) {

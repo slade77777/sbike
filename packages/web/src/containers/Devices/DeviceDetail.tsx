@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import {useMutation} from 'react-query';
 import {useParams} from 'react-router-dom';
 import {Card, message} from 'antd';
@@ -31,6 +31,13 @@ const DeviceDetail: FC = () => {
     }
   };
 
+  const deviceInfo = useMemo(() => {
+    return {
+      carNumber: deviceRes?.data?.data?.carNumber || '',
+      expriedDate: deviceRes?.data?.data?.expriedDate || '',
+    };
+  }, [deviceRes?.data?.data?.carNumber, deviceRes?.data?.data?.expriedDate]);
+
   return (
     <>
       <DetailWrapper
@@ -43,10 +50,7 @@ const DeviceDetail: FC = () => {
           </Card>
         }
         locations={historyMovingData?.data?.data}
-        deviceInfo={{
-          carNumber: deviceRes?.data?.data?.carNumber || '',
-          expriedDate: deviceRes?.data?.data?.expriedDate || '',
-        }}
+        deviceInfo={deviceInfo}
       />
     </>
   );

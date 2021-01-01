@@ -66,13 +66,13 @@ const AuthProvider: FC<Props> = ({children}) => {
   }
 
   const logoutMutation = useMutation(logout, {
-    onSuccess: () => {
+    onSuccess: async () => {
       handleLogout();
     },
-    onError: () => {
+    onError: async () => {
       handleLogout();
     },
-    onSettled: () => {
+    onSettled: async () => {
       handleLogout();
     },
   });

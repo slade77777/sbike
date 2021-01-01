@@ -1,41 +1,14 @@
-import React, {useEffect} from 'react';
-import {useMutation} from 'react-query';
-import {getUserInfo} from 'shared-logic';
-import {Spin} from 'antd';
+import React from 'react';
 import styled from 'styled-components';
 import {useAuthState} from '../../context/auth-context';
 
 const HelloUser = () => {
-  const {onLogout} = useAuthState();
-
-  const getUserMutation = useMutation(getUserInfo, {
-    onSuccess: async (res) => {
-      if (res.status === 401) {
-        onLogout();
-      }
-    },
-    onError: async () => {
-      onLogout();
-    },
-  });
-
-  async function getUserInfoAsync() {
-    await getUserMutation.mutate();
-  }
-
-  useEffect(() => {
-    getUserInfoAsync();
-  }, []);
+  const {userInfo} = useAuthState();
 
   return (
-    <Spin spinning={getUserMutation.isLoading}>
-      <StyledText>
-        Xin chào:{' '}
-        {getUserMutation?.data?.data?.fullName ||
-          getUserMutation?.data?.data?.userName ||
-          ''}
-      </StyledText>
-    </Spin>
+    <StyledText>
+      Xin chào: {userInfo?.fullName || userInfo?.userName || ''}
+    </StyledText>
   );
 };
 

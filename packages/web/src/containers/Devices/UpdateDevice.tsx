@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {EditOutlined} from '@ant-design/icons';
 import {Button} from 'antd';
-import {Device} from 'shared-logic';
+import {Device, getFullYear} from 'shared-logic';
 import dayjs from 'dayjs';
 import {useModalContext} from '../../context/modal-context';
 import useAlertMutation from '../Alert/useAlertMutation';
@@ -15,9 +15,10 @@ type Props = {
 function formatValues(device: Device) {
   return {
     ...device,
-    expriedDate: dayjs(device.expriedDate).isValid()
-      ? dayjs(device.expriedDate)
-      : dayjs(new Date()),
+    expriedDate:
+      getFullYear(device.expriedDate || '') > 1
+        ? dayjs(device.expriedDate)
+        : '',
   };
 }
 

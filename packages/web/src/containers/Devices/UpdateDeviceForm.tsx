@@ -24,7 +24,7 @@ const UpdateDevice: FC<Props> = ({onSubmit, initialValues}) => {
         <Form.Item name="carNumber" label="Biển số" shouldUpdate>
           <Input />
         </Form.Item>
-        <Form.Item label="IMEI">{initialValues?.factoryID || 'N/A'}</Form.Item>
+        <Form.Item label="IMEI">{initialValues?.deviceID || 'N/A'}</Form.Item>
         <Form.Item label="Loại thiết bị">
           {initialValues?.deviceType || 'N/A'}
         </Form.Item>

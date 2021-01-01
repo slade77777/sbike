@@ -1,32 +1,23 @@
-import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
+import React, {FC, useState} from 'react';
 import styled from 'styled-components';
-import {Device, LatLng} from 'shared-logic';
+import {Device} from 'shared-logic';
 import GoogleMap from '../../components/GoogleMap';
-import {apiIsLoaded} from '../../utils/googleMapUtils';
+// import {apiIsLoaded} from '../../utils/googleMapUtils';
 import {useAuthState} from '../../context/auth-context';
-import InfoWindow from './InfoWindow';
+
+// @ts-ignore
+import CarSvg from '../../images/car.svg';
+
 import DevicesList from './DevicesList';
+import InfoMaker from './InfoMaker';
 
 const defaultPosition = {
   lat: 21.027763,
   lng: 105.83416,
 };
 
-function mappingData(data: Array<Device>): Array<LatLng> {
-  return (
-    data
-      .map((dv) => ({
-        lat: dv?.position?.latitude || 0,
-        lng: dv?.position?.longitude || 0,
-        direction: dv?.position?.direction || 0,
-      }))
-      ?.filter((lc) => lc.lng && lc.lat) || []
-  );
-}
-
 const Tracking: FC = () => {
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
-  const isFirst = useRef(true);
   const [state, setState] = useState<{
     mapApiLoaded: boolean;
     mapInstance: any;
@@ -39,18 +30,14 @@ const Tracking: FC = () => {
 
   function goToLocation(device: Device) {
     setSelectedDevice(device);
+    state?.mapInstance?.setZoom(18);
+    state?.mapInstance.panTo({
+      lat: device?.position?.latitude,
+      lng: device?.position?.longitude,
+    });
   }
 
   const {devices} = useAuthState();
-
-  const places = useMemo(() => mappingData(devices || []), [devices]);
-
-  useEffect(() => {
-    if (state?.mapApiLoaded && isFirst) {
-      apiIsLoaded(state?.mapInstance, state?.mapApi, places);
-      isFirst.current = false;
-    }
-  }, [places, state]);
 
   return (
     <StyledContainer>
@@ -59,11 +46,7 @@ const Tracking: FC = () => {
       </StyledButton>
       <StyledGoogleMap>
         <GoogleMap
-          zoom={selectedDevice ? 15 : 12}
-          center={{
-            lat: selectedDevice?.position?.latitude || defaultPosition.lat,
-            lng: selectedDevice?.position?.longitude || defaultPosition.lng,
-          }}
+          defaultZoom={12}
           defaultCenter={defaultPosition}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({map, maps}) =>
@@ -72,15 +55,22 @@ const Tracking: FC = () => {
               mapApi: maps,
               mapApiLoaded: true,
             })
-          }
-        />
-        {state?.mapApiLoaded && devices && (
-          <InfoWindow
-            devices={devices}
-            map={state?.mapInstance}
-            maps={state?.mapApi}
-          />
-        )}
+          }>
+          {devices?.map((dv) => (
+            <StyledMaker
+              onClick={() => setSelectedDevice(dv)}
+              key={dv.deviceID}
+              lat={dv?.position?.latitude}
+              lng={dv?.position?.longitude}>
+              <CarSvg width={32} />
+              {selectedDevice && selectedDevice.deviceID === dv.deviceID && (
+                <StyledInfoWindow>
+                  <InfoMaker device={selectedDevice} />
+                </StyledInfoWindow>
+              )}
+            </StyledMaker>
+          ))}
+        </GoogleMap>
       </StyledGoogleMap>
     </StyledContainer>
   );
@@ -94,11 +84,28 @@ const StyledGoogleMap = styled.div`
   height: 100vh;
 `;
 
+type Props = {
+  lat: number | undefined;
+  lng: number | undefined;
+};
+
+const StyledMaker = styled.div<Props>`
+  position: relative;
+`;
+
+const StyledInfoWindow = styled.div`
+  position: absolute;
+  bottom: 44px;
+  left: 50%;
+  transform: translateX(calc(-50% + 20px));
+  z-index: 16;
+`;
+
 const StyledButton = styled.div`
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   z-index: 9;
 `;
 
-export default Tracking;
+export default React.memo(Tracking);

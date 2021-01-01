@@ -46,16 +46,9 @@ const InfoWindow: FC<Props> = ({maps, map, devices}) => {
         }
       }
     };
-  }, [
-    devices,
-    map,
-    maps.Animation.DROP,
-    maps.InfoWindow,
-    maps.Marker,
-    maps.Size,
-  ]);
+  }, [devices, map, maps.InfoWindow, maps.Marker, maps.Size]);
 
   return <></>;
 };
 
-export default InfoWindow;
+export default React.memo(InfoWindow);

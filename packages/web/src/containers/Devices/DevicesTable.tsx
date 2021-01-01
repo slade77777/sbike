@@ -14,7 +14,7 @@ type Props = {
   columns?: Array<any> | null;
   size?: SizeType;
   scroll?: {
-    y: number;
+    y: number | string;
   };
 };
 

@@ -11,13 +11,17 @@ type Props = {
   showModal?: (deviceID: string) => void;
 };
 
+const scrollOps = {
+  y: 'calc(100vh - 180px)',
+};
+
 const DevicesList: FC<Props> = ({onSelectDevice, showModal}) => {
   const [open, setOpen] = useState(true);
   return (
     <Drawer label="Danh sách xe" toggle={() => setOpen(!open)} open={open}>
       <DevicesTable
         size="small"
-        scroll={{y: 500}}
+        scroll={scrollOps}
         columns={[
           {
             title: 'Biển số',

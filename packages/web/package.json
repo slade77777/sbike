@@ -22,7 +22,7 @@
     "jest": "^26.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-query": "^2.25.2",
+    "react-query": "^3.5.6",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "shared-logic": "^0.0.0",

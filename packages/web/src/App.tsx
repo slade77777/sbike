@@ -1,11 +1,12 @@
 import React from 'react';
-import {QueryCache, ReactQueryCacheProvider} from 'react-query';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import {ReactQueryDevtools} from 'react-query/devtools';
 import {AuthProvider} from './context/auth-context';
 import Home from './pages/Home';
 import {ModalProvider} from './context/modal-context';
 
-const queryCache = new QueryCache({
-  defaultConfig: {
+const queryClient = new QueryClient({
+  defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
     },
@@ -14,12 +15,13 @@ const queryCache = new QueryCache({
 
 export default function App() {
   return (
-    <ReactQueryCacheProvider queryCache={queryCache}>
+    <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ModalProvider>
           <Home />
         </ModalProvider>
       </AuthProvider>
-    </ReactQueryCacheProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }

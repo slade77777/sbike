@@ -9,7 +9,13 @@ import DetailWrapper from './DetailWrapper';
 const DeviceDetail: FC = () => {
   let {deviceID} = useParams();
   const [selectedDevice, setSelectedDevice] = useState<string>(deviceID);
-  const [mutate, historyMovingData] = useMutation(getHistory);
+  const historyMutation = useMutation(getHistory, {
+    onSuccess: async (data) => {
+      if (data?.data.length === 0 || !data?.data) {
+        message.warning('Không có dữ liệu');
+      }
+    },
+  });
   const deviceRes = useDeviceId(selectedDevice);
 
   const handleSubmit = async (values: {
@@ -17,18 +23,11 @@ const DeviceDetail: FC = () => {
     fromTo: Array<string>;
   }) => {
     setSelectedDevice(values.deviceID);
-    try {
-      const res = await mutate({
-        deviceID: values.deviceID,
-        from: values.fromTo[0],
-        to: values.fromTo[1],
-      });
-      if (res?.data?.length === 0 || !res?.data) {
-        message.warning('Không có dữ liệu');
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    await historyMutation.mutate({
+      deviceID: values.deviceID,
+      from: values.fromTo[0],
+      to: values.fromTo[1],
+    });
   };
 
   const deviceInfo = useMemo(() => {
@@ -49,7 +48,7 @@ const DeviceDetail: FC = () => {
             />
           </Card>
         }
-        locations={historyMovingData?.data?.data}
+        locations={historyMutation?.data?.data}
         deviceInfo={deviceInfo}
       />
     </>

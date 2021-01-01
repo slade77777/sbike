@@ -8,7 +8,7 @@ import {useAuthState} from '../../context/auth-context';
 const HelloUser = () => {
   const {onLogout} = useAuthState();
 
-  const [getUserMutation, {data, isLoading}] = useMutation(getUserInfo, {
+  const getUserMutation = useMutation(getUserInfo, {
     onSuccess: async (res) => {
       if (res.status === 401) {
         onLogout();
@@ -20,7 +20,7 @@ const HelloUser = () => {
   });
 
   async function getUserInfoAsync() {
-    await getUserMutation();
+    await getUserMutation.mutate();
   }
 
   useEffect(() => {
@@ -28,9 +28,12 @@ const HelloUser = () => {
   }, []);
 
   return (
-    <Spin spinning={isLoading}>
+    <Spin spinning={getUserMutation.isLoading}>
       <StyledText>
-        Xin chào: {data?.data?.fullName || data?.data?.userName || ''}
+        Xin chào:{' '}
+        {getUserMutation?.data?.data?.fullName ||
+          getUserMutation?.data?.data?.userName ||
+          ''}
       </StyledText>
     </Spin>
   );

@@ -4,5 +4,8 @@ import {secureInstance} from '../api/base';
 
 export default function (options?: QueryConfig<any>) {
   const session = secureInstance?.defaults?.headers?.API_KEY || '';
-  return useQuery('userInfo', session && getUserInfo, options);
+  return useQuery('userInfo', getUserInfo, {
+    ...options,
+    enabled: !!session,
+  });
 }

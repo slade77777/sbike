@@ -23,14 +23,14 @@ type Props = {
 };
 
 const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
-  const [createOrUpdateMutate, {isLoading}] = useMutation(createOrUpdateUser);
+  const createOrUpdateMutate = useMutation(createOrUpdateUser);
 
   const handleCreatingOrUpdatingUser = async (values: User) => {
     const params = {
       ...values,
       password: encrypt(values.password),
     };
-    const res = await createOrUpdateMutate({
+    const res = await createOrUpdateMutate.mutateAsync({
       params,
       type: updatingUser ? AccountAction.UPDATE : AccountAction.INSERT,
     });
@@ -124,7 +124,11 @@ const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
       </Form.Item>
 
       <Form.Item wrapperCol={{span: 8, offset: 8}}>
-        <Button type="primary" htmlType="submit" block loading={isLoading}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          block
+          loading={createOrUpdateMutate.isLoading}>
           {updatingUser ? 'Cập nhật' : 'Tạo mới'}
         </Button>
       </Form.Item>

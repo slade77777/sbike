@@ -28,22 +28,22 @@ const NAVS = [
     icon: <CarOutlined />,
     permissions: [],
   },
-  // {
-  //   key: 'management',
-  //   route: '/quan-ly',
-  //   icon: <PieChartOutlined />,
-  //   title: 'Quản lý',
-  //   subMenus: [
-  //     {
-  //       key: RoutesEnum.UserManagement,
-  //       permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
-  //     },
-  //     {
-  //       key: RoutesEnum.CompaniesManagement,
-  //       permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
-  //     },
-  //   ],
-  // },
+  {
+    key: 'management',
+    route: '/quan-ly',
+    icon: <PieChartOutlined />,
+    title: 'Quản lý',
+    subMenus: [
+      {
+        key: RoutesEnum.UserManagement,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+      {
+        key: RoutesEnum.CompaniesManagement,
+        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      },
+    ],
+  },
   {
     key: 'report',
     icon: <LineChartOutlined />,

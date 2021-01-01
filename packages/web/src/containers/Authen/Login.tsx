@@ -7,7 +7,7 @@ import {encrypt} from '../../utils/aesUtil';
 import {useAuthState} from '../../context/auth-context';
 
 const Login = () => {
-  const [loginMutate, {isLoading, error, isError}] = useMutation(login, {
+  const {mutate, isError, isLoading, error} = useMutation(login, {
     onSuccess: async ({data}) => {
       if (data?.session && data?.errorCode === 0) {
         handleLoginSuccess(data);
@@ -22,7 +22,7 @@ const Login = () => {
       ...values,
       password: encrypt(values.password),
     };
-    await loginMutate(encryptedValues);
+    await mutate(encryptedValues);
   };
 
   return (

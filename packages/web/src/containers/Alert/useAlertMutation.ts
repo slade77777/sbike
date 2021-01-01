@@ -3,7 +3,7 @@ import {message} from 'antd';
 import {Device, updateDeviceInfo} from 'shared-logic';
 
 export default (device: Device, onSuccessCallback?: () => void) => {
-  const [mutate, {isLoading}] = useMutation(updateDeviceInfo, {
+  const {mutate, isLoading} = useMutation(updateDeviceInfo, {
     onSuccess: () => {
       message.success('Thiết lập thành công!');
       onSuccessCallback?.();

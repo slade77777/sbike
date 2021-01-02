@@ -71,7 +71,7 @@ const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
         name="password"
         label="Mật khẩu"
         wrapperCol={{span: 16}}
-        rules={[{required: true, message: 'Chưa nhập mật khẩu'}]}>
+        rules={[{required: !updatingUser, message: 'Chưa nhập mật khẩu'}]}>
         <Input allowClear type="text" placeholder="Nhập mật khẩu" />
       </Form.Item>
       <Form.Item

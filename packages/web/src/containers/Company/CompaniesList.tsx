@@ -1,14 +1,13 @@
 import React, {FC} from 'react';
-import {Table, Space, Button, Spin} from 'antd';
-import {EditOutlined, EyeOutlined} from '@ant-design/icons';
+import {Table, Spin} from 'antd';
 import {Company, format} from 'shared-logic';
+import UpdateCompanyButton from './UpdateCompanyButton';
 
 type Props = {
   companies: Company[];
   isLoading?: boolean;
-  selectCompany?: (vl: Company) => void;
 };
-const CompaniesList: FC<Props> = ({companies, isLoading, selectCompany}) => {
+const CompaniesList: FC<Props> = ({companies, isLoading}) => {
   const columns = [
     {
       title: 'Mã công ty',
@@ -40,17 +39,7 @@ const CompaniesList: FC<Props> = ({companies, isLoading, selectCompany}) => {
       title: '',
       key: 'action',
       render: (_: string, record: any) => (
-        <Space size="middle">
-          <Button type="link" icon={<EditOutlined />}>
-            Sửa
-          </Button>
-          <Button
-            type="link"
-            icon={<EyeOutlined />}
-            onClick={() => selectCompany?.(record)}>
-            Chi tiết
-          </Button>
-        </Space>
+        <UpdateCompanyButton currentCompany={record} />
       ),
     },
   ];

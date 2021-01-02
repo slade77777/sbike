@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 
 export type Company = {
-  companyID: string;
+  companyID?: string;
   companyName: string;
-  companyManagerID: string;
+  companyManagerID?: string;
   createBy?: string;
   updateTime?: dayjs.Dayjs | string | Date;
 };

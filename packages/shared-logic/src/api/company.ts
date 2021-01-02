@@ -15,3 +15,9 @@ export function getCompanyByCompanyId(
 export function getGroupCompany(companyID: string): ServerResponse<Company[]> {
   return secureInstance.get(`/company/GetGroupCompany/${companyID}`);
 }
+
+export function createOrUpdateCompany(
+  company: Company,
+): ServerResponse<Company> {
+  return secureInstance.post(`/company/UpdateCompany`, company);
+}

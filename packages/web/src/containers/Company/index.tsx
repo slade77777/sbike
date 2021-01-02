@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useQuery} from 'react-query';
-import {Card, Drawer} from 'antd';
-import {Company, getAllCompanies} from 'shared-logic';
+import {Card} from 'antd';
+import {getAllCompanies} from 'shared-logic';
 import {useAuthState} from '../../context/auth-context';
 import {canGetAllCompanies} from '../../utils/checkPermission';
 import CompaniesList from './CompaniesList';
+import CreateNewCompanyButton from './CreateNewCompanyButton';
 
 const CompanyWrapper = () => {
   const {userInfo} = useAuthState();
@@ -16,39 +17,13 @@ const CompanyWrapper = () => {
     enabled: havePermissionToGetAllCompanies,
   });
 
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
-
-  const onClose = () => {
-    setSelectedCompany(null);
-  };
-
-  function openDrawerDetail(vl: Company) {
-    setSelectedCompany(vl);
-  }
-
   return (
-    <>
-      <Card title="Danh sách công ty" bodyStyle={{padding: 0}}>
-        <CompaniesList
-          companies={data?.data || []}
-          isLoading={isLoading}
-          selectCompany={openDrawerDetail}
-        />
-      </Card>
-      <Drawer
-        title={`Chi tiết công ty ${selectedCompany?.companyName}`}
-        placement="right"
-        width={320}
-        closable={false}
-        onClose={onClose}
-        visible={!!selectedCompany}>
-        <div>
-          <div>Mã công ty: {selectedCompany?.companyID}</div>
-          <div>Công ty quản lý: {selectedCompany?.companyManagerID}</div>
-          <div>Tạo bởi: {selectedCompany?.createBy}</div>
-        </div>
-      </Drawer>
-    </>
+    <Card
+      title="Danh sách công ty"
+      bodyStyle={{padding: 0}}
+      extra={<CreateNewCompanyButton />}>
+      <CompaniesList companies={data?.data || []} isLoading={isLoading} />
+    </Card>
   );
 };
 

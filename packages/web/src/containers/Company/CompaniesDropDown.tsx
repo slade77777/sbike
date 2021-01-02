@@ -21,7 +21,7 @@ const CompaniesDropDown: FC<Props> = (props) => {
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }>
       {data?.data?.map((company: Company) => (
-        <Option key={company.companyID} value={company.companyID}>
+        <Option key={company.companyID} value={company.companyID || ''}>
           {company.companyName}
         </Option>
       ))}

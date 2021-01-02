@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {getRoleNameByValue, User, useUsersByCompany} from 'shared-logic';
-import {Table, Button, Space, Tag, Switch, Spin} from 'antd';
-import {CheckOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
+import {Table, Button, Space, Tag, Spin, Badge} from 'antd';
+import {EditOutlined, DeleteOutlined} from '@ant-design/icons';
 
 type Props = {
   editUser?: (user: User) => void;
@@ -15,7 +15,7 @@ const AccountsList: FC<Props> = ({editUser}) => {
       title: 'Họ tên',
       dataIndex: 'fullName',
       key: 'fullName',
-      render: (text: string) => text || 'Unknown',
+      render: (text: string) => text || '...',
     },
     {
       title: 'Tên đăng nhập',
@@ -49,7 +49,10 @@ const AccountsList: FC<Props> = ({editUser}) => {
       dataIndex: 'active',
       key: 'active',
       render: (value: boolean) => (
-        <Switch checkedChildren={<CheckOutlined />} checked={value} />
+        <Badge
+          count={value ? 'Active' : 'Inactive'}
+          style={{backgroundColor: value ? '#52c41a' : '#d9d9d9'}}
+        />
       ),
     },
     {

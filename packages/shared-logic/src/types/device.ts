@@ -1,10 +1,10 @@
 export type Device = {
   alertConfig?: AlertConfig;
-  carNumber?: string;
+  carNumber: string;
   cityCode?: string;
-  companyID?: string;
+  companyID: string;
   countryCode?: string;
-  deviceID?: string;
+  deviceID: string;
   deviceType?: string;
   expriedDate?: string;
   factoryID?: string;

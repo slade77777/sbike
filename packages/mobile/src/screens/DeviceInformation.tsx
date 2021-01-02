@@ -110,7 +110,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
       <View style={style.wrapper}>
         <View style={style.row}>
           <Text style={style.label}>Trạng thái</Text>
-          <Text style={style.value}>{(deviceInfo?.position?.status && deviceInfo.position.status & 1) ? 'tắt' : 'bật'}</Text>
+          <Text style={style.value}>{deviceInfo?.position?.serverTime ? ((new Date().getTime() - new Date(deviceInfo.position.serverTime).getTime())/60000 < 30 ? 'Online' : 'Offline') : 'Offline'}</Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Cập nhật lúc</Text>
@@ -124,7 +124,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
         </View>
         <View style={style.row}>
           <Text style={style.label}>Động cơ</Text>
-          <Text style={style.value}>{deviceInfo.terminalString}</Text>
+          <Text style={style.value}>{(deviceInfo?.position?.status && deviceInfo.position.status & 1) ? 'tắt' : 'bật'}</Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Toạ độ</Text>

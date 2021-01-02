@@ -18,7 +18,6 @@ import {useRoute} from '@react-navigation/native';
 import color from '../config/color';
 import {Svg, Circle} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/AntDesign';
-import EntyIcon from 'react-native-vector-icons/Entypo';
 // @ts-ignore
 import _ from 'lodash';
 import {useDeviceId} from 'shared-logic/src';
@@ -234,22 +233,18 @@ const TransportHistory: React.FC<Props> = () => {
       <View
         style={{
           position: 'absolute',
-          left: 20,
-          bottom: 100,
+          left: 0,
+          top: 0,
           width: width - 100,
           borderRadius: 10,
           padding: 10,
-          backgroundColor: 'white',
-          alignItems: 'center',
           justifyContent: 'center',
           opacity: 0.7
         }}>
-        <Text style={{ textAlign: 'center' }}>{deviceData.carNumber}</Text>
-        <Text style={{ textAlign: 'center' }}>{dayjs(dataPos[time].deviceTime).format('h:mm:s D/M/YYYY')}</Text>
-        <Text style={{ textAlign: 'center' }}>Tốc độ: {dataPos[time].speed}km/h</Text>
-        <Text style={{ textAlign: 'center' }}>Toạ độ: {dataPos[time].latitude}, {dataPos[time].longitude}</Text>
-        <Text style={{ textAlign: 'center' }}>Điện áp ắc quý: {dataPos[time].batteryVoltage/1000}V</Text>
-        <Text style={{ textAlign: 'center' }}>Cường độ sóng: {(dataPos[time].status & 1) > 0 ? 'Bật' : 'Tắt'}</Text>
+        <Text style={styles.detail}>{deviceData.carNumber} {dayjs(dataPos[time].deviceTime).format('h:mm:s D/M/YYYY')}</Text>
+        <Text style={styles.detail}>Toạ độ: {dataPos[time].latitude}, {dataPos[time].longitude}</Text>
+        <Text style={styles.detail}>Điện áp ắc quy: {dataPos[time].batteryVoltage/1000}V</Text>
+        <Text style={styles.detail}>Động cơ: {(dataPos[time].status & 1) > 0 ? 'Bật' : 'Tắt'}</Text>
       </View>
       <View style={{position: 'absolute', right: 20, bottom: 100, width: 50}}>
         {speedOpt.map((item) => {
@@ -260,4 +255,10 @@ const TransportHistory: React.FC<Props> = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  detail: {
+    color: 'red',
+    textShadowColor: 'white'
+  }
+});
 export default TransportHistory;

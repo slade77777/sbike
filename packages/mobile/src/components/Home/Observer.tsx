@@ -362,6 +362,12 @@ const Observer: React.FC<Props> = ({}) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <TouchableOpacity
+              style={{
+                position: 'absolute',
+                left: 10,
+                top: 15,
+                zIndex: 2
+              }}
               onPress={() => {
                 setState({modalVisible: false});
               }}>
@@ -416,7 +422,7 @@ const styles = StyleSheet.create({
     maxHeight: height * 0.7,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 15,
+    paddingVertical: 15,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -442,17 +448,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tableRow: {
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 0.5,
+    borderColor: '#bdbdbd',
     height: 50,
     flexDirection: 'row',
   },
   tableCol: {
-    width: (width * 0.8 - 31) / 4,
-    borderLeftWidth: 1,
-    borderLeftColor: 'black',
-    borderRightWidth: 1,
-    borderRightColor: 'black',
+    width: (width * 0.8) / 4,
+    borderLeftWidth: 0.5,
+    borderLeftColor: '#bdbdbd',
+    borderRightWidth: 0.5,
+    borderRightColor: '#bdbdbd',
     height: 48,
     justifyContent: 'center',
     alignItems: 'center',

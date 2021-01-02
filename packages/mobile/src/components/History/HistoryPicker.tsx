@@ -19,7 +19,7 @@ export const HistoryPicker: React.FC<Props> = ({chooseDate, dateChoice}) => {
   return (
     <View>
       <TouchableOpacity onPress={() => setPickerVisible(true)} style={style.input} >
-        <Text>
+        <Text style={{ fontSize: 10}}>
           {dayjs(dateChoice).format('DD/MM/YYYY H:mm')}
         </Text>
       </TouchableOpacity>
@@ -42,7 +42,7 @@ const style = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'grey',
-    height: 50,
+    height: 40,
     width: 150,
   },
 });

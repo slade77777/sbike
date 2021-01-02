@@ -33,7 +33,7 @@ export const SearchView:FC<Props> = ({onSearch}) => {
     <ScrollView style={styles.container}>
       <View style={{...styles.row, zIndex: 5}}>
         <Text style={styles.label}>Thiết bị</Text>
-        <SearchDevice onPress={(id) => setDeviceId(id)}/>
+        <SearchDevice deviceChoice={deviceId} onPress={(id) => setDeviceId(id)}/>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Từ</Text>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderColor: 'grey',
     paddingHorizontal: 10,
-    height: 80,
+    height: 70,
   },
   label: {
     fontSize: 16,

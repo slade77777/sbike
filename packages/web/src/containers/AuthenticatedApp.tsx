@@ -7,7 +7,6 @@ import Navigations from '../components/Navigations';
 import Routes from '../Routes';
 import useFirebaseMessaging from '../hooks/useFirebaseMessaging';
 import HelloUser from './Authen/HelloUser';
-import Logout from './Authen/Logout';
 
 const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -29,15 +28,6 @@ const AuthenticatedApp = () => {
           <Logo status={collapsed ? 'small' : 'large'} />
           {!collapsed && <HelloUser />}
           <Navigations />
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 80,
-              padding: '0 10px',
-              width: '100%',
-            }}>
-            <Logout hideText={collapsed} />
-          </div>
         </Layout.Sider>
         <Layout className="site-layout">
           <Suspense fallback={<Spin />}>

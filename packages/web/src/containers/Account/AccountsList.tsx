@@ -49,7 +49,7 @@ const AccountsList: FC<Props> = ({editUser}) => {
       dataIndex: 'active',
       key: 'active',
       render: (value: boolean) => (
-        <Switch checkedChildren={<CheckOutlined />} checked={!!value} />
+        <Switch checkedChildren={<CheckOutlined />} checked={value} />
       ),
     },
     {
@@ -71,7 +71,7 @@ const AccountsList: FC<Props> = ({editUser}) => {
   ];
   return (
     <Spin spinning={isLoading}>
-      <Table dataSource={data?.data} columns={columns} />
+      <Table dataSource={data?.data} columns={columns} rowKey="userName" />
     </Spin>
   );
 };

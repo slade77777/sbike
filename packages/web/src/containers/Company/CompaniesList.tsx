@@ -56,7 +56,7 @@ const CompaniesList: FC<Props> = ({companies, isLoading, selectCompany}) => {
   ];
   return (
     <Spin spinning={isLoading}>
-      <Table columns={columns} dataSource={companies} />
+      <Table rowKey="companyID" columns={columns} dataSource={companies} />
     </Spin>
   );
 };

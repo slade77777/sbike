@@ -60,13 +60,13 @@ const NAVS = [
       {
         subId: 'user-management',
         route: '/nguoi-dung',
-        name: 'Quản lý công ty',
+        name: 'Quản lý người dùng',
         permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
       },
       {
         subId: 'companies-management',
         route: '/cong-ty',
-        name: 'Quản lý người dùng',
+        name: 'Quản lý công ty',
         permissions: [PERMISSION_UPDATE_COMPANY, PERMISSION_GET_ALL_COMPANY],
       },
     ],

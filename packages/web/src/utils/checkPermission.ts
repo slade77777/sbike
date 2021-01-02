@@ -11,3 +11,7 @@ export function hasUserPermission(permissions: Array<string>) {
 export function hasCompanyPermission(permissions: Array<string>) {
   return hasPermission(PERMISSION_GET_ALL_COMPANY, permissions || []);
 }
+
+export function canGetAllCompanies(permissions: Array<string>): boolean {
+  return hasPermission(PERMISSION_GET_ALL_COMPANY, permissions || []);
+}

@@ -14,14 +14,8 @@ import {
   PERMISSION_UPDATE_USER,
 } from 'shared-logic';
 import {ROUTES, RoutesEnum} from '../enum';
-import {useAuthState} from '../context/auth-context';
-import {
-  hasCompanyPermission,
-  hasUserPermission,
-} from '../utils/checkPermission';
 
 const Navigations = () => {
-  const {userInfo} = useAuthState();
   const NAVS = [
     {
       key: RoutesEnum.Tracking,
@@ -44,12 +38,10 @@ const Navigations = () => {
         {
           key: RoutesEnum.UserManagement,
           permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
-          canSee: hasUserPermission(userInfo?.permission || []),
         },
         {
           key: RoutesEnum.CompaniesManagement,
           permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
-          canSee: hasCompanyPermission(userInfo?.permission || []),
         },
       ],
     },
@@ -90,16 +82,13 @@ const Navigations = () => {
       {NAVS.map((nav) =>
         nav.subMenus ? (
           <Menu.SubMenu key={nav.key} icon={nav.icon} title={nav.title}>
-            {nav.subMenus.map(
-              (sub) =>
-                sub.canSee && (
-                  <Menu.Item key={sub.key}>
-                    <Link to={`${nav.route}/${ROUTES[sub.key].route}`}>
-                      {ROUTES[sub.key].title}
-                    </Link>
-                  </Menu.Item>
-                ),
-            )}
+            {nav.subMenus.map((sub) => (
+              <Menu.Item key={sub.key}>
+                <Link to={`${nav.route}/${ROUTES[sub.key].route}`}>
+                  {ROUTES[sub.key].title}
+                </Link>
+              </Menu.Item>
+            ))}
           </Menu.SubMenu>
         ) : (
           <Menu.Item key={nav.key} icon={nav.icon}>

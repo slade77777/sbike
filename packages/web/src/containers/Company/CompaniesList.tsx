@@ -1,47 +1,40 @@
 import React, {FC} from 'react';
-import {Table, Space, Button} from 'antd';
+import {Table, Space, Button, Spin} from 'antd';
 import {EditOutlined, EyeOutlined} from '@ant-design/icons';
-import {Link, useRouteMatch} from 'react-router-dom';
-import {Device} from 'shared-logic';
+import {Company, format} from 'shared-logic';
 
-// const data = [
-//   {
-//     key: '1',
-//     deviceID: '022202700999',
-//     cardNumber: '30F88888',
-//     deviceType: 'Xe may',
-//     expiredDate: '30/11/2020',
-//     updatedDate: '30/11/2020',
-//   },
-// ];
-
-const CompaniesList: FC<{devices: Device[]}> = ({devices}) => {
-  const routeMatch = useRouteMatch();
+type Props = {
+  companies: Company[];
+  isLoading?: boolean;
+  selectCompany?: (vl: Company) => void;
+};
+const CompaniesList: FC<Props> = ({companies, isLoading, selectCompany}) => {
   const columns = [
     {
-      title: 'Mã thiết bị',
-      dataIndex: 'deviceID',
-      key: 'deviceID',
+      title: 'Mã công ty',
+      dataIndex: 'companyID',
+      key: 'companyID',
     },
     {
-      title: 'Biển số xe',
-      dataIndex: 'cardNumber',
-      key: 'cardNumber',
+      title: 'Công ty',
+      dataIndex: 'companyName',
+      key: 'companyName',
     },
     {
-      title: 'Loại thiết bị',
-      dataIndex: 'deviceType',
-      key: 'deviceType',
+      title: 'Mã công ty quản lý',
+      dataIndex: 'companyManagerID',
+      key: 'companyManagerID',
     },
     {
-      title: 'Ngày hết hạn',
-      dataIndex: 'expiredDate',
-      key: 'expiredDate',
+      title: 'Tạo bởi',
+      dataIndex: 'createBy',
+      key: 'createBy',
     },
     {
       title: 'Cập nhật',
-      dataIndex: 'updatedDate',
-      key: 'updatedDate',
+      dataIndex: 'updateTime',
+      key: 'updateTime',
+      render: (text: string) => format(text),
     },
     {
       title: '',
@@ -51,17 +44,20 @@ const CompaniesList: FC<{devices: Device[]}> = ({devices}) => {
           <Button type="link" icon={<EditOutlined />}>
             Sửa
           </Button>
-          <Button type="link" icon={<EyeOutlined />}>
-            <Link to={`${routeMatch.path}/${record.deviceID}`}>Chi tiết</Link>
+          <Button
+            type="link"
+            icon={<EyeOutlined />}
+            onClick={() => selectCompany?.(record)}>
+            Chi tiết
           </Button>
         </Space>
       ),
     },
   ];
   return (
-    <div>
-      <Table columns={columns} dataSource={devices || []} bordered />
-    </div>
+    <Spin spinning={isLoading}>
+      <Table columns={columns} dataSource={companies} />
+    </Spin>
   );
 };
 

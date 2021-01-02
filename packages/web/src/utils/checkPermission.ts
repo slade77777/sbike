@@ -33,6 +33,9 @@ export function checkMatchingPermissions(
   requiredPermissions: Array<string>,
   userPermissions: Array<string>,
 ) {
+  if (requiredPermissions.length === 0) {
+    return true;
+  }
   return (
     requiredPermissions.filter((rp) => userPermissions.includes(rp))?.length > 0
   );

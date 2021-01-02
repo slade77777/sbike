@@ -79,7 +79,12 @@ const AuthProvider: FC<Props> = ({children}) => {
 
   async function logoutAsync() {
     if (firebaseToken) {
+      // For browser supported firebase cloud messaging
       await logoutMutation.mutate(firebaseToken);
+    } else {
+      localStorage.removeItem('session');
+      localStorage.removeItem('companyID');
+      setIsAuth(false);
     }
   }
 

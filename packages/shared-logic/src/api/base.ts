@@ -21,6 +21,14 @@ export function setSecureAxiosInstance(baseURL: string) {
   secureInstance.interceptors.response.use(
     function (response) {
       if (response.status !== 200) {
+        if (response.status === 401) {
+          if (window) {
+            window.localStorage?.removeItem('session');
+            window.localStorage?.removeItem('companyID');
+            window.location.href = '/';
+            return Promise.reject(response);
+          }
+        }
         return Promise.reject(response.data);
       } else if (response.status === 200 && response.data.errorCode === 1) {
         return Promise.reject(response.data);

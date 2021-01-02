@@ -1,20 +1,10 @@
 import React, {FC} from 'react';
-// import {v4 as uuidv4} from 'uuid';
-import {
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  message,
-  Row,
-  Select,
-  Switch,
-} from 'antd';
+import {Button, Checkbox, Col, Form, Input, message, Row, Switch} from 'antd';
 import {AccountAction, createOrUpdateUser, ROLES, User} from 'shared-logic';
 import {useMutation} from 'react-query';
 import {decrypt, encrypt} from '../../utils/aesUtil';
 import {ACTION_ERROR, ACTION_SUCCESS} from '../../contants/common';
+import CompaniesDropDown from '../Company/CompaniesDropDown';
 
 type Props = {
   onSuccess?: (type: AccountAction, data?: User) => void;
@@ -96,9 +86,7 @@ const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
         name="companyID"
         label="Công ty"
         rules={[{required: true, message: 'Chưa chọn công ty!'}]}>
-        <Select placeholder="Chọn công ty">
-          <Select.Option value="53680">SBIKE</Select.Option>
-        </Select>
+        <CompaniesDropDown />
       </Form.Item>
 
       <Form.Item label="Trạng thái" name="active">

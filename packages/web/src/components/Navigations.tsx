@@ -22,18 +22,19 @@ const Navigations = () => {
       icon: <DashboardOutlined />,
       route: '/',
       name: 'Giám sát',
-      permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+      permissions: null,
     },
     {
       key: RoutesEnum.Devices,
       icon: <CarOutlined />,
-      permissions: [],
+      permissions: null,
     },
     {
       key: 'management',
       route: '/quan-ly',
       icon: <PieChartOutlined />,
       title: 'Quản lý',
+      permissions: null,
       subMenus: [
         {
           key: RoutesEnum.UserManagement,
@@ -41,7 +42,7 @@ const Navigations = () => {
         },
         {
           key: RoutesEnum.CompaniesManagement,
-          permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+          permissions: [PERMISSION_UPDATE_COMPANY, PERMISSION_GET_ALL_COMPANY],
         },
       ],
     },
@@ -50,23 +51,23 @@ const Navigations = () => {
       icon: <LineChartOutlined />,
       route: '/bao-cao',
       title: 'Báo cáo',
-      permissions: [PERMISSION_UPDATE_COMPANY, PERMISSION_GET_ALL_COMPANY],
+      permissions: null,
       subMenus: [
         {
           key: RoutesEnum.AlertMovingReport,
-          permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+          permissions: null,
         },
         {
           key: RoutesEnum.TurnOnOfReport,
-          permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+          permissions: null,
         },
         {
           key: RoutesEnum.OverSpeedReport,
-          permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+          permissions: null,
         },
         {
           key: RoutesEnum.InOutSafeZoneReport,
-          permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+          permissions: null,
         },
       ],
     },
@@ -82,7 +83,7 @@ const Navigations = () => {
       {NAVS.map((nav) =>
         nav.subMenus ? (
           <Menu.SubMenu key={nav.key} icon={nav.icon} title={nav.title}>
-            {nav.subMenus.map((sub) => (
+            {nav.subMenus.map((sub: any) => (
               <Menu.Item key={sub.key}>
                 <Link to={`${nav.route}/${ROUTES[sub.key].route}`}>
                   {ROUTES[sub.key].title}

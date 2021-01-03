@@ -8,8 +8,9 @@ import {
 
 import {secureInstance} from './base';
 
-export function login(params: User): ServerResponse<UserResponse> {
-  return secureInstance.post('/user/login', params);
+export async function login(params: User): ServerResponse<UserResponse> {
+  const {data} = await secureInstance.post('/user/login', params);
+  return data;
 }
 
 export async function createOrUpdateUser({

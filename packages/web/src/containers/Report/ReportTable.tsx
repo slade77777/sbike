@@ -94,6 +94,7 @@ const ReportTable: FC<Props> = ({type, data, loading, viewLocation}) => {
       <Table
         size="small"
         dataSource={data}
+        rowKey="time"
         columns={columns}
         scroll={{x: 300, y: 500}}
       />

@@ -1,20 +1,10 @@
 import React, {FC} from 'react';
-// import {v4 as uuidv4} from 'uuid';
-import {
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  message,
-  Row,
-  Select,
-  Switch,
-} from 'antd';
+import {Button, Checkbox, Col, Form, Input, message, Row, Switch} from 'antd';
 import {AccountAction, createOrUpdateUser, ROLES, User} from 'shared-logic';
 import {useMutation} from 'react-query';
 import {decrypt, encrypt} from '../../utils/aesUtil';
 import {ACTION_ERROR, ACTION_SUCCESS} from '../../contants/common';
+import CompaniesDropDown from '../Company/CompaniesDropDown';
 
 type Props = {
   onSuccess?: (type: AccountAction, data?: User) => void;
@@ -23,14 +13,14 @@ type Props = {
 };
 
 const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
-  const [createOrUpdateMutate, {isLoading}] = useMutation(createOrUpdateUser);
+  const createOrUpdateMutate = useMutation(createOrUpdateUser);
 
   const handleCreatingOrUpdatingUser = async (values: User) => {
     const params = {
       ...values,
       password: encrypt(values.password),
     };
-    const res = await createOrUpdateMutate({
+    const res = await createOrUpdateMutate.mutateAsync({
       params,
       type: updatingUser ? AccountAction.UPDATE : AccountAction.INSERT,
     });
@@ -81,7 +71,7 @@ const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
         name="password"
         label="Mật khẩu"
         wrapperCol={{span: 16}}
-        rules={[{required: true, message: 'Chưa nhập mật khẩu'}]}>
+        rules={[{required: !updatingUser, message: 'Chưa nhập mật khẩu'}]}>
         <Input allowClear type="text" placeholder="Nhập mật khẩu" />
       </Form.Item>
       <Form.Item
@@ -96,9 +86,7 @@ const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
         name="companyID"
         label="Công ty"
         rules={[{required: true, message: 'Chưa chọn công ty!'}]}>
-        <Select placeholder="Chọn công ty">
-          <Select.Option value="53680">SBIKE</Select.Option>
-        </Select>
+        <CompaniesDropDown />
       </Form.Item>
 
       <Form.Item label="Trạng thái" name="active">
@@ -124,7 +112,11 @@ const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
       </Form.Item>
 
       <Form.Item wrapperCol={{span: 8, offset: 8}}>
-        <Button type="primary" htmlType="submit" block loading={isLoading}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          block
+          loading={createOrUpdateMutate.isLoading}>
           {updatingUser ? 'Cập nhật' : 'Tạo mới'}
         </Button>
       </Form.Item>

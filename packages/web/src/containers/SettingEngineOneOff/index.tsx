@@ -8,7 +8,7 @@ import ToggleButton from './ToggleButton';
 
 const SettingEngineOnOff: FC<{device: Device}> = ({device}) => {
   const {dispatch} = useModalContext();
-  const [mutate, {isLoading}] = useMutation(updateDeviceInfo, {
+  const {mutate, isLoading} = useMutation(updateDeviceInfo, {
     onSuccess: () => {
       message.success('Cập nhật thành công!');
       dispatch?.({type: 'close'});

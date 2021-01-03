@@ -1,38 +1,37 @@
-import React, {useEffect} from 'react';
-import {useMutation} from 'react-query';
-import {getUserInfo} from 'shared-logic';
-import {Spin} from 'antd';
+import React from 'react';
 import styled from 'styled-components';
+import {Menu, Dropdown} from 'antd';
+import {CaretDownOutlined} from '@ant-design/icons';
 import {useAuthState} from '../../context/auth-context';
+import Logout from './Logout';
+import ChangedPassword from './ChangedPassword';
 
 const HelloUser = () => {
-  const {onLogout} = useAuthState();
+  const {userInfo} = useAuthState();
 
-  const [getUserMutation, {data, isLoading}] = useMutation(getUserInfo, {
-    onSuccess: async (res) => {
-      if (res.status === 401) {
-        onLogout();
-      }
-    },
-    onError: async () => {
-      onLogout();
-    },
-  });
-
-  async function getUserInfoAsync() {
-    await getUserMutation();
-  }
-
-  useEffect(() => {
-    getUserInfoAsync();
-  }, []);
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <ChangedPassword />
+      </Menu.Item>
+      <Menu.Item>
+        <Logout />
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
-    <Spin spinning={isLoading}>
-      <StyledText>
-        Xin chào: {data?.data?.fullName || data?.data?.userName || ''}
-      </StyledText>
-    </Spin>
+    <StyledText>
+      <Dropdown overlay={menu}>
+        <div>
+          Xin chào:{' '}
+          <a>
+            {userInfo?.fullName || userInfo?.userName || ''}{' '}
+            <CaretDownOutlined />
+          </a>
+        </div>
+      </Dropdown>
+    </StyledText>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {Button, DatePicker, Form, Input} from 'antd';
 import {Device} from 'shared-logic';
+import CompaniesDropDown from '../Company/CompaniesDropDown';
 
 type Props = {
   initialValues: Device;
@@ -32,7 +33,7 @@ const UpdateDevice: FC<Props> = ({onSubmit, initialValues}) => {
           <DatePicker />
         </Form.Item>
         <Form.Item name="companyID" label="Mã công ty">
-          <Input />
+          <CompaniesDropDown />
         </Form.Item>
         <Form.Item
           wrapperCol={{

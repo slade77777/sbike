@@ -9,6 +9,25 @@ export type Role = {
   label: string;
 };
 
+export const ROLES_ARR = [
+  PERMISSION_UPDATE_PERMISSION,
+  PERMISSION_UPDATE_USER,
+  PERMISSION_UPDATE_COMPANY,
+  PERMISSION_MANAGER_USER,
+  PERMISSION_GET_ALL_COMPANY,
+];
+
+export type RoleType =
+  | typeof PERMISSION_UPDATE_PERMISSION
+  | typeof PERMISSION_UPDATE_USER
+  | typeof PERMISSION_UPDATE_COMPANY
+  | typeof PERMISSION_MANAGER_USER
+  | typeof PERMISSION_GET_ALL_COMPANY;
+
+export function hasPermission(roleFunc: RoleType, yourRoles: Array<string>) {
+  return yourRoles.includes(roleFunc);
+}
+
 export const ROLES: Role[] = [
   {
     name: PERMISSION_UPDATE_PERMISSION,

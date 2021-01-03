@@ -8,6 +8,7 @@ export * from './types/user';
 export * from './types/response';
 export * from './types/device';
 export * from './types/report';
+export * from './types/company';
 
 // TODO should rewrite as a action on reducer ???
 //export api call for agent
@@ -19,6 +20,7 @@ export * from './firebase';
 export * from './api/report';
 export * from './api/firebase';
 export * from './constants/roles';
+export * from './api/company';
 export {default as useUserInfo} from './hooks/useUserInfo';
 export {default as useUsersByCompany} from './hooks/useUsersByCompany';
 export {default as useDeviceByCompany} from './hooks/useDeviceCompany';

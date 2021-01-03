@@ -21,20 +21,22 @@ const ReportLayout: FC<Props> = ({type}) => {
   const [location, setLocation] = useState<DeviceLocation | null>(null);
   const [selectedDevice, setSelectedDevice] = useState<string>('');
 
-  const [mutate, {isLoading}] = useMutation(getReports, {
-    onSuccess: () => setOpen(true),
+  const {mutate, isLoading} = useMutation(getReports, {
+    onSuccess: async ({data}) => {
+      setOpen(true);
+      setDataSource({
+        [type]: data || [],
+      });
+    },
   });
 
   async function handleSearch(values: ReportSearchParam) {
     setSelectedDevice(values?.deviceID);
-    const searchRes = await mutate({
+    await mutate({
       deviceID: values.deviceID,
       startTime: values.fromTo[0],
       endTime: values.fromTo[1],
       type: type,
-    });
-    setDataSource({
-      [type]: searchRes?.data || [],
     });
   }
 

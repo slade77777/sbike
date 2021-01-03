@@ -1,10 +1,27 @@
 import React, {FC} from 'react';
 import {Device, format, getFullYear} from 'shared-logic';
 import styled from 'styled-components';
+import {Badge} from 'antd';
 
 type Props = {
   device: Device;
 };
+
+const EngineStatus: FC<{status: number}> = ({status}) => {
+  if (status == 0) {
+    return (
+      <Badge
+        count="Tắt"
+        size="small"
+        style={{backgroundColor: '#d9d9d9', color: '#999'}}
+      />
+    );
+  }
+  return (
+    <Badge count="Bật" size="small" style={{backgroundColor: '#52c41a'}} />
+  );
+};
+
 const InfoMaker: FC<Props> = ({device}) => {
   return (
     <StyledWrapper>
@@ -22,7 +39,9 @@ const InfoMaker: FC<Props> = ({device}) => {
         Tọa độ: {device?.position?.latitude}, {device?.position?.latitude}
       </span>
       <div>Cường độ sóng: {device?.position?.csq}</div>
-      <div>Động cơ: {(device?.position?.status! & 1) == 0 ? 'Tắt' : 'Bật'}</div>
+      <div>
+        Động cơ: <EngineStatus status={device?.position?.status! & 1} />
+      </div>
       <div>Điện áp ắc quy: {device?.position?.batteryVoltage}</div>
       <div>
         Ngày hết hạn:{' '}
@@ -39,9 +58,10 @@ const StyledWrapper = styled.div`
   min-width: 200px;
   padding: 10px;
   height: auto;
-  line-height: 16px;
+  line-height: 17px;
+  font-weight: 300;
   background-color: #fff;
-  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
   position: relative;
   &:before {

@@ -2,6 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {
   Device,
   getDevicesByCompanyID,
+  getUserInfo,
   logout,
   registerFCMTopics,
   setToken,
@@ -48,23 +49,42 @@ const AuthProvider: FC<Props> = ({children}) => {
     const localSession = localStorage.getItem('session');
     if (localSession) {
       setToken(localSession);
+      fetchUserInfo();
     }
   }, []);
 
   const companyID = localStorage.getItem('companyID');
 
-  const [logoutMutation] = useMutation(logout, {
-    onSuccess: () => {
+  const userInfoMutation = useMutation(getUserInfo, {
+    onSuccess: async (data) => {
+      setUserInfo(data?.data || null);
+    },
+  });
+
+  async function fetchUserInfo() {
+    await userInfoMutation.mutate();
+  }
+
+  const logoutMutation = useMutation(logout, {
+    onSuccess: async () => {
       handleLogout();
     },
-    onError: () => {
+    onError: async () => {
+      handleLogout();
+    },
+    onSettled: async () => {
       handleLogout();
     },
   });
 
   async function logoutAsync() {
     if (firebaseToken) {
-      await logoutMutation(firebaseToken);
+      // For browser supported firebase cloud messaging
+      await logoutMutation.mutate(firebaseToken);
+    } else {
+      localStorage.removeItem('session');
+      localStorage.removeItem('companyID');
+      setIsAuth(false);
     }
   }
 
@@ -75,14 +95,16 @@ const AuthProvider: FC<Props> = ({children}) => {
   }
 
   const devicesRes = useQuery(
-    [companyID && companyID, 'devices'],
-    getDevicesByCompanyID,
+    [companyID, 'devices'],
+    () => getDevicesByCompanyID(companyID || ''),
     {
       refetchInterval: 30000,
+      refetchIntervalInBackground: true,
+      enabled: !!companyID,
     },
   );
 
-  const [registerTopicMutation] = useMutation(registerFCMTopics, {
+  const registerTopicMutation = useMutation(registerFCMTopics, {
     onError: () => {
       message.error('Đăng ký nhận thông báo thất bại');
     },
@@ -94,7 +116,7 @@ const AuthProvider: FC<Props> = ({children}) => {
     localStorage.setItem('session', data?.session);
     localStorage.setItem('companyID', data?.user?.companyID || '');
     setToken(data?.session);
-    await registerTopicMutation({
+    await registerTopicMutation.mutate({
       companyID: data.user.companyID || '',
       token: firebaseToken || '',
     });

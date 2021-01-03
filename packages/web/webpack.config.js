@@ -58,6 +58,10 @@ module.exports = (env) => {
             from: path.resolve(__dirname, './public/firebase-messaging-sw.js'),
             to: path.resolve(__dirname, 'dist'),
           },
+          {
+            from: path.resolve(__dirname, './public/favicon.ico'),
+            to: path.resolve(__dirname, 'dist'),
+          },
         ],
         options: {
           concurrency: 100,

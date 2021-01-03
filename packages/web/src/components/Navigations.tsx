@@ -10,8 +10,6 @@ import {Link} from 'react-router-dom';
 import {
   PERMISSION_GET_ALL_COMPANY,
   PERMISSION_MANAGER_USER,
-  PERMISSION_UPDATE_COMPANY,
-  PERMISSION_UPDATE_USER,
 } from 'shared-logic';
 import {useAuthState} from '../context/auth-context';
 import {
@@ -61,13 +59,13 @@ const NAVS = [
         subId: 'user-management',
         route: '/nguoi-dung',
         name: 'Quản lý người dùng',
-        permissions: [PERMISSION_UPDATE_USER, PERMISSION_MANAGER_USER],
+        permissions: [PERMISSION_MANAGER_USER],
       },
       {
         subId: 'companies-management',
         route: '/cong-ty',
         name: 'Quản lý công ty',
-        permissions: [PERMISSION_UPDATE_COMPANY, PERMISSION_GET_ALL_COMPANY],
+        permissions: [PERMISSION_GET_ALL_COMPANY],
       },
     ],
   },

@@ -5,6 +5,7 @@ import {useMutation} from 'react-query';
 import {decrypt, encrypt} from '../../utils/aesUtil';
 import {ACTION_ERROR, ACTION_SUCCESS} from '../../contants/common';
 import CompaniesDropDown from '../Company/CompaniesDropDown';
+import usePermission from '../../hooks/usePermission';
 
 type Props = {
   onSuccess?: (type: AccountAction, data?: User) => void;
@@ -14,6 +15,7 @@ type Props = {
 
 const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
   const createOrUpdateMutate = useMutation(createOrUpdateUser);
+  const {canEditPermission} = usePermission();
 
   const handleCreatingOrUpdatingUser = async (values: User) => {
     const params = {
@@ -93,23 +95,25 @@ const AccountForm: FC<Props> = ({onSuccess, onError, updatingUser}) => {
         <Switch />
       </Form.Item>
 
-      <Form.Item
-        name="permission"
-        label="Phân quyền"
-        wrapperCol={{span: 16}}
-        rules={[{required: true, message: 'Chưa chọn quyền'}]}>
-        <Checkbox.Group>
-          <Row>
-            {ROLES.map((role) => (
-              <Col span={24} key={role.name}>
-                <Checkbox value={role.name} style={{lineHeight: '32px'}}>
-                  {role.label}
-                </Checkbox>
-              </Col>
-            ))}
-          </Row>
-        </Checkbox.Group>
-      </Form.Item>
+      {canEditPermission && (
+        <Form.Item
+          name="permission"
+          label="Phân quyền"
+          wrapperCol={{span: 16}}
+          rules={[{required: true, message: 'Chưa chọn quyền'}]}>
+          <Checkbox.Group>
+            <Row>
+              {ROLES.map((role) => (
+                <Col span={24} key={role.name}>
+                  <Checkbox value={role.name} style={{lineHeight: '32px'}}>
+                    {role.label}
+                  </Checkbox>
+                </Col>
+              ))}
+            </Row>
+          </Checkbox.Group>
+        </Form.Item>
+      )}
 
       <Form.Item wrapperCol={{span: 8, offset: 8}}>
         <Button

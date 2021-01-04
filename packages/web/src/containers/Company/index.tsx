@@ -2,19 +2,15 @@ import React from 'react';
 import {useQuery} from 'react-query';
 import {Card} from 'antd';
 import {getAllCompanies} from 'shared-logic';
-import {useAuthState} from '../../context/auth-context';
-import {canGetAllCompanies} from '../../utils/checkPermission';
+import usePermission from '../../hooks/usePermission';
 import CompaniesList from './CompaniesList';
 import CreateNewCompanyButton from './CreateNewCompanyButton';
 
 const CompanyWrapper = () => {
-  const {userInfo} = useAuthState();
-  const havePermissionToGetAllCompanies = canGetAllCompanies(
-    userInfo?.permission || [],
-  );
+  const {canViewCompanies} = usePermission();
 
   const {data, isLoading} = useQuery('companies', getAllCompanies, {
-    enabled: havePermissionToGetAllCompanies,
+    enabled: canViewCompanies,
   });
 
   return (

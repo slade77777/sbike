@@ -3,14 +3,9 @@ import {Table, Space, Button, Spin, Typography} from 'antd';
 import {EnvironmentOutlined} from '@ant-design/icons';
 import {SizeType} from 'antd/es/config-provider/SizeContext';
 import {Link, useRouteMatch} from 'react-router-dom';
-import {
-  Device,
-  format,
-  getFullYear,
-  hasPermission,
-  PERMISSION_UPDATE_COMPANY,
-} from 'shared-logic';
+import {Device, format, getFullYear} from 'shared-logic';
 import {useAuthState} from '../../context/auth-context';
+import usePermission from '../../hooks/usePermission';
 import UpdateDevice from './UpdateDevice';
 
 const {Text} = Typography;
@@ -26,12 +21,8 @@ type Props = {
 
 const DevicesTable: FC<Props> = ({columns, ...props}) => {
   const routeMatch = useRouteMatch();
-  const {devices, loadingDevices, userInfo} = useAuthState();
-
-  const hasEditPermission = hasPermission(
-    PERMISSION_UPDATE_COMPANY,
-    userInfo?.permission || [],
-  );
+  const {devices, loadingDevices} = useAuthState();
+  const {isAdmin} = usePermission();
 
   const initialColumns = columns || [
     {
@@ -87,7 +78,7 @@ const DevicesTable: FC<Props> = ({columns, ...props}) => {
       key: 'action',
       render: (_: string, record: any) => (
         <Space size="middle">
-          {hasEditPermission && <UpdateDevice device={record} type="icon" />}
+          {isAdmin && <UpdateDevice device={record} type="icon" />}
           <Button type="link" icon={<EnvironmentOutlined />}>
             <Link to={`${routeMatch.path}/${record.deviceID}`}>
               {' '}

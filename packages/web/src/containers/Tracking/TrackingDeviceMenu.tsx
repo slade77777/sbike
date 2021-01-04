@@ -8,6 +8,7 @@ import UpdateDevice from '../Devices/UpdateDevice';
 import SettingEngineOnOff from '../SettingEngineOneOff';
 import AlertSwitchButton from '../Alert/AlertSwitchButton';
 import AlertSpeed from '../Alert/AlertSpeed';
+import usePermission from '../../hooks/usePermission';
 
 type DropdownMenuProps = {
   device: Device;
@@ -17,7 +18,7 @@ type DropdownMenuProps = {
 };
 const TrackingDeviceMenus: FC<DropdownMenuProps> = ({device}) => {
   const history = useHistory();
-
+  const {isAdmin} = usePermission();
   return (
     <Menu>
       <Menu.Item>
@@ -25,9 +26,11 @@ const TrackingDeviceMenus: FC<DropdownMenuProps> = ({device}) => {
           <Button type="text">Xem lại lộ trình</Button>
         </Link>
       </Menu.Item>
-      <Menu.Item>
-        <UpdateDevice type="text" device={device} />
-      </Menu.Item>
+      {isAdmin && (
+        <Menu.Item>
+          <UpdateDevice type="text" device={device} />
+        </Menu.Item>
+      )}
       <Menu.Item>
         <SettingEngineOnOff device={device} />
       </Menu.Item>

@@ -2,26 +2,24 @@ import React, {FC} from 'react';
 import {Select} from 'antd';
 import {useQuery} from 'react-query';
 import {Company, getAllCompanies} from 'shared-logic';
-import {useAuthState} from '../../context/auth-context';
-import {hasCompanyPermission} from '../../utils/checkPermission';
+import usePermission from '../../hooks/usePermission';
 
 const {Option} = Select;
 
 type Props = {};
 
 const CompaniesDropDown: FC<Props> = (props) => {
-  const {userInfo} = useAuthState();
-  const hasPermission = hasCompanyPermission(userInfo?.permission || []);
+  const {canEditUser} = usePermission();
 
   const {data, isLoading} = useQuery('companies', getAllCompanies, {
-    enabled: hasPermission,
+    enabled: canEditUser,
   });
 
   return (
     <Select
       showSearch
       {...props}
-      disabled={!hasPermission}
+      disabled={!canEditUser}
       loading={isLoading}
       style={{width: 200}}
       placeholder="Chọn công ty"

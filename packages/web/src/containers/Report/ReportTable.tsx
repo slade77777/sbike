@@ -31,7 +31,7 @@ const timeColumn = {
   key: 'time',
   render: (_: string, record: any) => (
     <Space direction="vertical" align="center" size={0}>
-      <span>{format(record?.time, 'HH:ss:mm')}</span>
+      <span>{format(record?.time, 'HH:mm:ss')}</span>
       <span>{format(record?.time, 'DD/MM/YYYY')}</span>
     </Space>
   ),

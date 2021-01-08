@@ -1,7 +1,11 @@
 import React, {FC, useState} from 'react';
 import {Button, Dropdown} from 'antd';
 import {Device, format} from 'shared-logic';
-import {MenuOutlined} from '@ant-design/icons';
+import {
+  ClockCircleOutlined,
+  DashboardOutlined,
+  MenuOutlined,
+} from '@ant-design/icons';
 import Drawer from '../../components/Drawer';
 import DevicesTable from '../Devices/DevicesTable';
 import TrackingDeviceMenus from './TrackingDeviceMenu';
@@ -25,7 +29,7 @@ const DevicesList: FC<Props> = ({onSelectDevice, showModal}) => {
         columns={[
           {
             title: 'Biển số',
-            width: 140,
+            width: 120,
             align: 'center',
             dataIndex: 'carNumber',
             key: 'carNumber',
@@ -38,9 +42,10 @@ const DevicesList: FC<Props> = ({onSelectDevice, showModal}) => {
           {
             title: (
               <span>
-                Vận tốc <br /> (km/h)
+                <DashboardOutlined /> (km/h)
               </span>
             ),
+            width: 80,
             align: 'center',
             dataIndex: 'speed',
             key: 'speed',
@@ -49,7 +54,7 @@ const DevicesList: FC<Props> = ({onSelectDevice, showModal}) => {
           {
             title: (
               <span>
-                Thời gian <br /> (HH:mm)
+                <ClockCircleOutlined /> HH:mm
               </span>
             ),
             align: 'center',

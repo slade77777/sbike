@@ -33,16 +33,16 @@ const InfoMaker: FC<Props> = ({device}) => {
           ? format(device?.position?.serverTime, 'HH:mm:ss - DD/MM/YYYY')
           : ''}
       </div>
-      <div>Tốc độ: {device?.position?.speed}</div>
+      <div>Tốc độ: {device?.position?.speed} km/h</div>
       <br />
       <span>
-        Tọa độ: {device?.position?.latitude}, {device?.position?.latitude}
+        Tọa độ: {device?.position?.latitude}, {device?.position?.longitude}
       </span>
-      <div>Cường độ sóng: {device?.position?.csq}</div>
+      <div>Cường độ sóng (GSM, GPS): {device?.position?.csq}</div>
       <div>
         Động cơ: <EngineStatus status={device?.position?.status! & 1} />
       </div>
-      <div>Điện áp ắc quy: {device?.position?.batteryVoltage}</div>
+      <div>Điện áp ắc quy: {device?.position?.batteryVoltage} mV</div>
       <div>
         Ngày hết hạn:{' '}
         {getFullYear(device?.expriedDate || '') > 1

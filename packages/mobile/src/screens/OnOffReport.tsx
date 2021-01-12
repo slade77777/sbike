@@ -8,7 +8,7 @@ import {Report} from "shared-logic";
 
 export const OnOffReport = () => {
   const [dataList, setDataList] = useState([]);
-  const [timeChoice, setTimeChoice] = useState();
+  const [timeChoice, setTimeChoice] = useState<Report>();
   const onSearch = (deviceId: string, timeStart: string, timeEnd: string) => {
     getReportList(deviceId, timeStart, timeEnd, 2)
       .then((res) => {

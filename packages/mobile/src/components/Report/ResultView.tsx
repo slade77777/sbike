@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 type Props = {
   data: Array<any>;
   displaySpeed?: boolean;
-  chooseTime: () => void;
+  chooseTime: (item: Report) => void;
   timeChoice?: string;
 };
 
@@ -33,7 +33,7 @@ export const ResultView: React.FC<Props> = ({
         }}
         onPress={() => chooseTime(item)}>
         <View>
-          <Text>{dayjs(item.time).format('H:mm:ss DD/M/YYYY')}</Text>
+          <Text>{dayjs(item.time).format('HH:mm:ss DD/MM/YYYY')}</Text>
           {displaySpeed && <Text>{item.position.speed}km/h</Text>}
         </View>
         <Text style={{fontWeight: 'bold', lineHeight: 20, fontSize: 15}}>

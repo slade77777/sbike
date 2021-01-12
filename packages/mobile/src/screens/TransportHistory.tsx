@@ -39,7 +39,7 @@ const TransportHistory: React.FC<Props> = () => {
   const dataPos = route?.params?.data;
   const deviceId = route?.params?.deviceId;
   const {data} = useDeviceId(deviceId);
-  const deviceData = data?.data || {};
+  const deviceData = data?.data;
   const [time, setTime] = useState(0);
   const [mapLocation, setMapLocation] = useState({
     latitude: 0,
@@ -201,18 +201,18 @@ const TransportHistory: React.FC<Props> = () => {
       </TouchableOpacity>
       <View
         style={{
-          width: width - 70,
+          width: width - 90,
           height: 10,
           position: 'absolute',
           backgroundColor: 'white',
           bottom: 50,
-          left: 45,
+          left: 65,
           zIndex: 0,
         }}>
         <View
           {...rulerResponder.panHandlers}
           style={{
-            width: width - 70,
+            width: width - 90,
             height: 70,
             position: 'absolute',
             top: -30,
@@ -222,7 +222,7 @@ const TransportHistory: React.FC<Props> = () => {
           }}>
           <Svg height="50" width={width - 70} viewBox="0 0 300 12">
             <Circle
-              cx={(time * (width - 110)) / dataPos.length}
+              cx={(time * (width - 70)) / dataPos.length}
               cy={5}
               r="10"
               fill={color.blue}
@@ -235,13 +235,17 @@ const TransportHistory: React.FC<Props> = () => {
           position: 'absolute',
           left: 0,
           top: 0,
-          width: width - 100,
+          width: 230,
           borderRadius: 10,
-          padding: 10,
+          marginLeft: 10,
+          marginTop: 10,
+          padding: 5,
           justifyContent: 'center',
-          opacity: 0.7
+          opacity: 0.7,
+          borderWidth: 0.5,
+          backgroundColor: 'green'
         }}>
-        <Text style={styles.detail}>{deviceData.carNumber} {dayjs(dataPos[time].deviceTime).format('h:mm:s D/M/YYYY')}</Text>
+        <Text style={styles.detail}>{deviceData ? deviceData.carNumber : ''} {dayjs(dataPos[time].deviceTime).format('h:mm:s D/M/YYYY')}</Text>
         <Text style={styles.detail}>Toạ độ: {dataPos[time].latitude}, {dataPos[time].longitude}</Text>
         <Text style={styles.detail}>Điện áp ắc quy: {dataPos[time].batteryVoltage/1000}V</Text>
         <Text style={styles.detail}>Động cơ: {(dataPos[time].status & 1) > 0 ? 'Bật' : 'Tắt'}</Text>
@@ -257,8 +261,8 @@ const TransportHistory: React.FC<Props> = () => {
 
 const styles = StyleSheet.create({
   detail: {
-    color: 'red',
-    textShadowColor: 'white'
+    color: 'white',
+    textShadowColor: 'red',
   }
 });
 export default TransportHistory;

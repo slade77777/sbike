@@ -26,7 +26,7 @@ export const DateTimeSearchItem = (props) => {
     <View>
       <SearchItem 
         title={props.title} 
-        value={dayjs(selectedDate).format('HH:mm DD/M/YYYY')} 
+        value={dayjs(selectedDate).format('HH:mm DD/MM/YYYY')}
         onPress={showPicker}
       />
       <DateTimePickerModal

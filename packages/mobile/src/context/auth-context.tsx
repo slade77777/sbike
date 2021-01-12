@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {login, setToken, logout} from 'shared-logic';
 import AsyncStorage from '@react-native-community/async-storage';
 const AES = require('react-native-crypto-js').AES;
+// @ts-ignore
 import CryptoJS from 'react-native-crypto-js';
 import messaging from '@react-native-firebase/messaging';
 import {User} from 'shared-logic/src';
@@ -39,19 +40,29 @@ const AuthProvider: FC<Props> = ({children}) => {
             ...prevState,
             isSignout: false,
             userData: action.userData,
+            isLoading: false,
+            isSubmitting: false,
           };
         case 'SIGN_OUT':
           return {
             ...prevState,
             isSignout: true,
+            isLoading: false,
             userData: {},
+            isSubmitting: false,
           };
+        case 'SUBMITTING':
+          return {
+            ...prevState,
+            isSubmitting: true
+          }
       }
     },
     {
       isLoading: true,
       isSignout: false,
       userData: {},
+      isSubmitting: false
     },
   );
 
@@ -65,19 +76,32 @@ const AuthProvider: FC<Props> = ({children}) => {
       .then((data) => data.data)
       .then((data) => {
         if (data?.errorCode) {
-          return alert(data.message);
+          dispatch({type: 'SIGN_OUT'});
+          setTimeout(() => {
+            alert(data.message);
+          }, 1000)
+        } else {
+          // @ts-ignore
+          let userData: User = data?.user || {};
+          userData.userToken = data?.session;
+          userData.originalPassword = password;
+          AsyncStorage.setItem('userData', JSON.stringify(userData))
+            .then(() => {
+              setToken(userData?.userToken || '');
+              dispatch({type: 'SIGN_IN', userData});
+            })
+            .catch(() => {
+              dispatch({type: 'SIGN_OUT'});
+              console.log('error')
+            });
         }
-        let userData: User = data?.user || {};
-        userData.userToken = data?.session;
-        userData.originalPassword = password;
-        AsyncStorage.setItem('userData', JSON.stringify(userData))
-          .then(() => {
-            setToken(userData?.userToken || '');
-            dispatch({type: 'SIGN_IN', userData});
-          })
-          .catch(() => console.log('error'));
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => {
+        dispatch({type: 'SIGN_OUT'});
+        setTimeout(() => {
+          alert(error.message);
+        }, 100)
+      });
   };
 
   const handleLogout = () => {

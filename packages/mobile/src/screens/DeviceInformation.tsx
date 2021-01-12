@@ -98,7 +98,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
           <Text style={style.label}>Thời gian hết hạn</Text>
           <Text style={style.value}>
             {deviceInfo.expriedDate
-              ? dayjs(deviceInfo.expriedDate).format('DD/M/YYYY')
+              ? dayjs(deviceInfo.expriedDate).format('DD/MM/YYYY')
               : ''}
           </Text>
         </View>
@@ -117,7 +117,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
           <Text style={style.value}>
             {deviceInfo?.position?.deviceTime
               ? dayjs(deviceInfo?.position?.deviceTime).format(
-                  'HH:ss DD/M/YYYY',
+                  'HH:mm DD/MM/YYYY',
                 )
               : ''}
           </Text>

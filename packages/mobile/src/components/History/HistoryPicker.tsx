@@ -19,8 +19,8 @@ export const HistoryPicker: React.FC<Props> = ({chooseDate, dateChoice}) => {
   return (
     <View>
       <TouchableOpacity onPress={() => setPickerVisible(true)} style={style.input} >
-        <Text style={{ fontSize: 10}}>
-          {dayjs(dateChoice).format('DD/MM/YYYY H:mm')}
+        <Text style={{ fontSize: 16}}>
+          {dayjs(dateChoice).format('DD/MM/YYYY HH:mm')}
         </Text>
       </TouchableOpacity>
       <DateTimePickerModal
@@ -41,7 +41,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: 'grey',
+    borderColor: 'black',
     height: 40,
     width: 150,
   },

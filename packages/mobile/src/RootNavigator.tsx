@@ -46,6 +46,8 @@ const AppRoot = () => {
     const bootstrapAsync = async () => {
       AsyncStorage.getItem('userData')
         .then((userData) => {
+          // dispatch({type: 'RESTORE_TOKEN', userData: {}});
+
           if (userData) {
             const user = JSON.parse(userData);
             if (user.userToken) {

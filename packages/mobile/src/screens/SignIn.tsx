@@ -32,11 +32,13 @@ const SignIn: React.FC = () => {
         <InputText
           label={'username'}
           onChangeText={(val) => setUsername(val)}
-          keyboardType={'default'}
+          keyboardType='default'
         />
         <InputText
           label={'password'}
           onChangeText={(val) => setPassword(val)}
+          keyboardType='default'
+          secureTextEntry={true}
         />
         <View style={{marginTop: 50}}>
           <TouchableOpacity

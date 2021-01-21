@@ -44,6 +44,7 @@ module.exports = {
   watchFolders: [root],
 
   resolver: {
+    sourceExts: ['jsx', 'js', 'ts', 'tsx'],
     // We need to blacklist the peerDependencies we've collected in packages' node_modules
     blacklistRE: blacklist(
       [].concat(

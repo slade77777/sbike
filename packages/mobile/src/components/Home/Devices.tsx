@@ -41,7 +41,7 @@ const Devices: React.FC<Props> = ({}) => {
           </Text>
           <Text style={{fontSize: 13}}>
             {item?.position?.deviceTime
-              ? dayjs(item.position.deviceTime).format('HH:mm DD/M/YYYY')
+              ? dayjs(item.position.deviceTime).format('HH:mm DD/MM/YYYY')
               : ''}
           </Text>
         </View>

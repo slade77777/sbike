@@ -18,9 +18,10 @@ import {useRoute} from '@react-navigation/native';
 import color from '../config/color';
 import {Svg, Circle} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/AntDesign';
-import EntyIcon from 'react-native-vector-icons/Entypo';
 // @ts-ignore
 import _ from 'lodash';
+import {useDeviceId} from 'shared-logic/src';
+import dayjs from "dayjs";
 
 const {width} = Dimensions.get('window');
 
@@ -35,7 +36,10 @@ type Coordinate = {
 
 const TransportHistory: React.FC<Props> = () => {
   const route = useRoute<any>();
-  const data = route?.params?.data;
+  const dataPos = route?.params?.data;
+  const deviceId = route?.params?.deviceId;
+  const {data} = useDeviceId(deviceId);
+  const deviceData = data?.data;
   const [time, setTime] = useState(0);
   const [mapLocation, setMapLocation] = useState({
     latitude: 0,
@@ -47,13 +51,13 @@ const TransportHistory: React.FC<Props> = () => {
   useEffect(() => {
     setTimeout(() => {
       setMapLocation({
-        latitude: data[0].latitude,
-        longitude: data[0].longitude,
+        latitude: dataPos[0].latitude,
+        longitude: dataPos[0].longitude,
         longitudeDelta: 0.05,
         latitudeDelta: 0.05,
-      })
-    }, 500)
-  }, [])
+      });
+    }, 500);
+  }, []);
 
   const [isPlaying, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(500);
@@ -72,9 +76,9 @@ const TransportHistory: React.FC<Props> = () => {
     setPlaying(false);
     const time = evt.nativeEvent.locationX;
     if (time >= 0 && time <= width - 100) {
-      const pos = Math.round((data.length * time) / (width - 100));
+      const pos = Math.round((dataPos.length * time) / (width - 100));
       setTimeout(() => {
-        data[pos] && setTime(pos);
+        dataPos[pos] && setTime(pos);
       }, 500);
     }
   };
@@ -87,13 +91,13 @@ const TransportHistory: React.FC<Props> = () => {
   ];
 
   useEffect(() => {
-    if (isPlaying && time < data.length - 1) {
+    if (isPlaying && time < dataPos.length - 1) {
       if (Platform.OS === 'android') {
         if (marker) {
           marker?.current?.animateMarkerToCoordinate(
             {
-              latitude: data[time].latitude,
-              longitude: data[time].longitude,
+              latitude: dataPos[time].latitude,
+              longitude: dataPos[time].longitude,
             },
             speed,
           );
@@ -103,16 +107,16 @@ const TransportHistory: React.FC<Props> = () => {
         setTime(time + 1);
         const mapLimit = getBoundingBox(mapLocation);
         if (
-          data[time].latitude > mapLimit[3] ||
-          data[time].latitude < mapLimit[1] ||
-          data[time].longitude > mapLimit[2] ||
-          data[time].longitude < mapLimit[0]
+          dataPos[time].latitude > mapLimit[3] ||
+          dataPos[time].latitude < mapLimit[1] ||
+          dataPos[time].longitude > mapLimit[2] ||
+          dataPos[time].longitude < mapLimit[0]
         ) {
           setMapLocation({
             ...mapLocation,
-            latitude: data[time].latitude,
-            longitude: data[time].longitude,
-          })
+            latitude: dataPos[time].latitude,
+            longitude: dataPos[time].longitude,
+          });
         }
       }, speed);
     }
@@ -139,8 +143,8 @@ const TransportHistory: React.FC<Props> = () => {
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 25,
-        borderColor: speed === 500/index ? 'black' : 'white',
-        borderWidth: 1
+        borderColor: speed === 500 / index ? 'black' : 'white',
+        borderWidth: 1,
       }}>
       <Text style={{color: 'black', fontWeight: 'bold'}}>X{index}</Text>
     </TouchableOpacity>
@@ -159,18 +163,25 @@ const TransportHistory: React.FC<Props> = () => {
         style={StyleSheet.absoluteFillObject}
         zoomEnabled={true}
         provider={PROVIDER_GOOGLE}
-        onRegionChange={(coordinate: Coordinate) => debouncedSetLocation(coordinate)}
+        onRegionChange={(coordinate: Coordinate) =>
+          debouncedSetLocation(coordinate)
+        }
         region={new AnimatedRegion(mapLocation)}>
         <MapView.Marker.Animated
           ref={marker}
-          rotation={data[time].direction - 45}
+          // rotation={dataPos[time].direction - 45}
           coordinate={{
-            latitude: data[time].latitude,
-            longitude: data[time].longitude,
+            latitude: dataPos[time].latitude,
+            longitude: dataPos[time].longitude,
           }}>
-          <EntyIcon name="direction" color={color.yellow} size={25} />
+          {/*<EntyIcon name="direction" color={color.yellow} size={15} />*/}
+          <Icon name="car" color={color.yellow} size={15} />
         </MapView.Marker.Animated>
-        <Polyline coordinates={data} strokeWidth={4} strokeColor={color.blue} />
+        <Polyline
+          coordinates={dataPos}
+          strokeWidth={4}
+          strokeColor={color.blue}
+        />
       </Animated>
       <TouchableOpacity
         onPress={() => handlePlay()}
@@ -190,18 +201,18 @@ const TransportHistory: React.FC<Props> = () => {
       </TouchableOpacity>
       <View
         style={{
-          width: width - 70,
+          width: width - 90,
           height: 10,
           position: 'absolute',
           backgroundColor: 'white',
           bottom: 50,
-          left: 45,
+          left: 65,
           zIndex: 0,
         }}>
         <View
           {...rulerResponder.panHandlers}
           style={{
-            width: width - 70,
+            width: width - 90,
             height: 70,
             position: 'absolute',
             top: -30,
@@ -211,13 +222,33 @@ const TransportHistory: React.FC<Props> = () => {
           }}>
           <Svg height="50" width={width - 70} viewBox="0 0 300 12">
             <Circle
-              cx={(time * (width - 110)) / data.length}
+              cx={(time * (width - 70)) / dataPos.length}
               cy={5}
               r="10"
               fill={color.blue}
             />
           </Svg>
         </View>
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: 230,
+          borderRadius: 10,
+          marginLeft: 10,
+          marginTop: 10,
+          padding: 5,
+          justifyContent: 'center',
+          opacity: 0.7,
+          borderWidth: 0.5,
+          backgroundColor: 'green'
+        }}>
+        <Text style={styles.detail}>{deviceData ? deviceData.carNumber : ''} {dayjs(dataPos[time].deviceTime).format('h:mm:s D/M/YYYY')}</Text>
+        <Text style={styles.detail}>Toạ độ: {dataPos[time].latitude}, {dataPos[time].longitude}</Text>
+        <Text style={styles.detail}>Điện áp ắc quy: {dataPos[time].batteryVoltage/1000}V</Text>
+        <Text style={styles.detail}>Động cơ: {(dataPos[time].status & 1) > 0 ? 'Bật' : 'Tắt'}</Text>
       </View>
       <View style={{position: 'absolute', right: 20, bottom: 100, width: 50}}>
         {speedOpt.map((item) => {
@@ -228,4 +259,10 @@ const TransportHistory: React.FC<Props> = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  detail: {
+    color: 'white',
+    textShadowColor: 'red',
+  }
+});
 export default TransportHistory;

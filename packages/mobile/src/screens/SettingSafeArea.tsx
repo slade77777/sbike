@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Text,
+  Alert,
 } from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {useMutation, useQueryCache} from 'react-query';
@@ -50,12 +51,22 @@ export const SettingSafeArea = () => {
   }, []);
 
   const [mutate, {isLoading}] = useMutation(updateDeviceInfo, {
-    onSuccess: () => alert('đã cập nhật'),
+    onSuccess: () =>
+      Alert.alert(
+        'Thông báo',
+        'Đã cập nhật',
+        [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        {cancelable: true},
+      ),
     onError: () => alert('có lỗi xảy ra, vui lòng thử lại'),
     onSettled: () => {
       queryCache.invalidateQueries(['deviceId', deviceId]);
     },
   });
+
+  const resetArea = () => {
+    setMarkers([]);
+  }
 
   const updateDevice = () => {
     let data = Object.assign(deviceInfo);
@@ -82,35 +93,42 @@ export const SettingSafeArea = () => {
         region={mapLocation}
         onRegionChange={(coordinate) => debouncedSetLocation(coordinate)}
         onPress={(e) => onMapPress(e.nativeEvent.coordinate)}>
-        <Polygon
-          coordinates={markers}
-          strokeColor="#000"
-          fillColor="rgba(255,0,0,0.5)"
-          strokeWidth={1}
-        />
+        {
+          markers.length > 0 && <Polygon
+            coordinates={markers}
+            strokeColor="#000"
+            fillColor="rgba(255,0,0,0.5)"
+            strokeWidth={1}
+          />
+        }
         {markers.map((marker, index) => (
           <Marker key={index} coordinate={marker}>
             <Icon name="map-marker" color={'red'} size={15} />
           </Marker>
         ))}
       </MapView>
-      <TouchableOpacity
-        onPress={() => !isLoading && updateDevice()}
+      <View
         style={{
           position: 'absolute',
-          width: 100,
-          left: (width - 100) / 2,
+          width: 300,
+          left: (width - 300) / 2,
           bottom: 50,
-          backgroundColor: 'white',
-          borderRadius: 5,
-          height: 40,
           alignItems: 'center',
-          justifyContent: 'center',
-          borderWidth: 1,
-          borderColor: 'black',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
+          opacity: 0.7
         }}>
-        <Text>Cập nhật</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => resetArea()}>
+          <Text>Đặt lại</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => !isLoading && updateDevice()}>
+          <Text>Cập nhật</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -135,10 +153,14 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   button: {
-    width: 80,
-    paddingHorizontal: 12,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'black',
+    width: 100,
+    height: 40,
     alignItems: 'center',
-    marginHorizontal: 10,
+    justifyContent: 'center'
   },
   buttonContainer: {
     flexDirection: 'row',

@@ -98,7 +98,7 @@ const DeviceInformation: React.FC<Props> = ({}) => {
           <Text style={style.label}>Thời gian hết hạn</Text>
           <Text style={style.value}>
             {deviceInfo.expriedDate
-              ? dayjs(deviceInfo.expriedDate).format('DD/M/YYYY')
+              ? dayjs(deviceInfo.expriedDate).format('DD/MM/YYYY')
               : ''}
           </Text>
         </View>
@@ -110,21 +110,21 @@ const DeviceInformation: React.FC<Props> = ({}) => {
       <View style={style.wrapper}>
         <View style={style.row}>
           <Text style={style.label}>Trạng thái</Text>
-          <Text style={style.value}>{(deviceInfo?.position?.status && deviceInfo.position.status & 1) ? 'tắt' : 'bật'}</Text>
+          <Text style={style.value}>{deviceInfo?.position?.serverTime ? ((new Date().getTime() - new Date(deviceInfo.position.serverTime).getTime())/60000 < 30 ? 'Online' : 'Offline') : 'Offline'}</Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Cập nhật lúc</Text>
           <Text style={style.value}>
             {deviceInfo?.position?.deviceTime
               ? dayjs(deviceInfo?.position?.deviceTime).format(
-                  'HH:ss DD/M/YYYY',
+                  'HH:mm DD/MM/YYYY',
                 )
               : ''}
           </Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Động cơ</Text>
-          <Text style={style.value}>{deviceInfo.terminalString}</Text>
+          <Text style={style.value}>{(deviceInfo?.position?.status && deviceInfo.position.status & 1) ? 'tắt' : 'bật'}</Text>
         </View>
         <View style={style.row}>
           <Text style={style.label}>Toạ độ</Text>

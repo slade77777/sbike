@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -38,11 +38,11 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Sbike muốn lấy thông tin vị trí hiện tại</string>
+	<string>Hiển thị vị trí của bạn trên bản đồ, bạn có thể xem khoảng cách giữa bạn và chiếc xe của bạn</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Sbike muốn lấy thông tin vị trí hiện tại</string>
+	<string>Hiển thị vị trí của bạn trên bản đồ, bạn có thể xem khoảng cách giữa bạn và chiếc xe của bạn</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Sbike muốn lấy thông tin vị trí hiện tại</string>
+	<string>Hiển thị vị trí của bạn trên bản đồ, bạn có thể xem khoảng cách giữa bạn và chiếc xe của bạn</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

@@ -7,12 +7,14 @@ type Props = {
   style?: any;
   onChangeText?: (text: string) => void;
   other?: any;
+  secureTextEntry?: boolean;
 };
 
 const InputText: React.FC<Props> = ({
   keyboardType,
   label,
   style,
+  secureTextEntry,
   onChangeText,
   other,
 }) => {
@@ -25,6 +27,7 @@ const InputText: React.FC<Props> = ({
           placeholderTextColor={'grey'}
           onChangeText={(val) => onChangeText?.(val)}
           keyboardType={keyboardType}
+          secureTextEntry={secureTextEntry}
           style={[
             style,
             {

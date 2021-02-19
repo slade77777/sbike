@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {default as Icon5} from 'react-native-vector-icons/FontAwesome5';
 import {default as IconLine} from 'react-native-vector-icons/SimpleLineIcons';
 import { useNavigation } from '@react-navigation/native';
+import color from "../../config/color";
 
 const Report: React.FC = () => {
   const navigation = useNavigation();
@@ -16,11 +17,11 @@ const Report: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.row}>
         <TouchableOpacity style={styles.item} onPress={openMoveReport}>
-          <Icon5 name="shipping-fast" color={'gold'} size={50} />
+          <Icon5 name="shipping-fast" color={color.blue} size={50} />
           <Text style={styles.text}>Di chuyển</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.item} onPress={openOnOffReport}>
-          <Icon5 name="power-off" color={'gold'} size={50} />
+          <Icon5 name="power-off" color={color.yellow} size={50} />
           <Text style={styles.text}>Bật/tắt máy</Text>
         </TouchableOpacity>
       </View>
@@ -42,12 +43,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: 'stretch',
-    backgroundColor: 'gainsboro',
+    backgroundColor: color.green,
     padding: 5,
+    height: '100%'
   },
   row: {
     height: 150,
-    backgroundColor: 'transparent',
+    backgroundColor: color.green,
     flexDirection: 'row',
   },
   item: {

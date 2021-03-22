@@ -99,6 +99,12 @@ export const SettingWarning = () => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <TouchableOpacity
+              style={{
+                position: 'absolute',
+                top: 20,
+                left: 20,
+                zIndex: 2
+              }}
               onPress={() => {
                 setModalVisible(false);
               }}>

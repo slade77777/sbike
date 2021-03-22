@@ -51,7 +51,7 @@ const TransportHistoryFilter: React.FC<Props> = ({}) => {
           .then((res) => {
             const data = res.data;
             if (data.length > 0) {
-              navigation.navigate('TransportHistory', {data});
+              navigation.navigate('TransportHistory', {data, deviceId});
             } else {
               alert('Không có dữ liệu');
             }
